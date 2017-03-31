@@ -15,6 +15,7 @@ plugins {
 apply plugin: 'java'
 
 apply plugin: 'application'
+
 // In this section you declare where to find the dependencies of your project
 repositories {
     jcenter()
