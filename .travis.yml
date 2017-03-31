@@ -1,7 +1,6 @@
 language: java
 before_script:
  - chmod +x gradlew
- - ./gradlew assemble
 after_success:
 - ./gradlew jacocoTestReport coveralls
 
