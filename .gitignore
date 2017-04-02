@@ -1,6 +1,6 @@
 *.tmp
 build*
 !build.gradle
-
+/.gradle/
 /.nb-gradle/
 
