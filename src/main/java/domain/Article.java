@@ -3,7 +3,6 @@ package domain;
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -28,7 +27,7 @@ public class Article {
     Map<FieldName, Field> fields = new HashMap<>();
     
     public Article(Collection<Field> fields) {
-        this(mapFields(fields));
+        this(fieldMap(fields));
     }
     
     public Article(Map<FieldName, Field> fields) throws IllegalArgumentException {
@@ -47,7 +46,11 @@ public class Article {
         return fields.getOrDefault(name, null);
     }
     
-    private static Map<FieldName, Field> mapFields(Collection<Field> fields) {
+    public Map<FieldName, Field> getFieldMap() {
+        return fields;
+    }
+    
+    private static Map<FieldName, Field> fieldMap(Collection<Field> fields) {
         Map<FieldName, Field> fieldMap = new HashMap<>();
         
         for (Field field: fields) {
