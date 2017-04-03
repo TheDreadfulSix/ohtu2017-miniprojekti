@@ -12,14 +12,14 @@ import java.util.stream.Stream;
  * Contains reference information of an article.
  */
 public class Article {
-    Set<FieldName> requiredFields = EnumSet.of(
+    private static final Set<FieldName> requiredFields = EnumSet.of(
         FieldName.AUTHOR, 
         FieldName.JOURNAL, 
         FieldName.TITLE, 
         FieldName.YEAR
     );
     
-    Set<FieldName> optionalFields = EnumSet.of(
+    private static final Set<FieldName> optionalFields = EnumSet.of(
         FieldName.MONTH, 
         FieldName.NOTE, 
         FieldName.NUMBER, 
@@ -27,7 +27,7 @@ public class Article {
         FieldName.VOLUME
     );
     
-    Map<FieldName, Field> fields = new HashMap<>();
+    private Map<FieldName, Field> fields = new HashMap<>();
     
     /**
      * Initializes the article with given fields if they are valid. 
@@ -72,6 +72,14 @@ public class Article {
     
     public Map<FieldName, Field> getFieldMap() {
         return fields;
+    }
+    
+    public static Set<FieldName> getRequiredFields() {
+        return requiredFields;
+    }
+    
+    public static Set<FieldName> getOptionalFields() {
+        return optionalFields;
     }
     
     private static Map<FieldName, Field> fieldMap(Collection<Field> fields) {
