@@ -1,6 +1,6 @@
 package domain;
 
-public enum FieldType {
+public enum FieldName {
     AUTHOR,
     JOURNAL,
     TITLE,
