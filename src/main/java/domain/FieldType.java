@@ -9,5 +9,6 @@ public enum FieldType {
     NOTE,
     NUMBER,
     PAGES,
-    VOLUME;
+    VOLUME,
+    EDITION;
 }
