@@ -1,10 +1,10 @@
 package domain;
 
 public class Field {
-    FieldType type;
+    FieldName type;
     String value;
     
-    public Field(FieldType type, String value) {
+    public Field(FieldName type, String value) {
         this.type = type;
         this.value = value;
     }
@@ -13,7 +13,7 @@ public class Field {
         return value;
     }
     
-    public FieldType getType() {
+    public FieldName getType() {
         return type;
     }
 }
