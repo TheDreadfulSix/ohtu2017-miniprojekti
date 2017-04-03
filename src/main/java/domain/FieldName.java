@@ -1,5 +1,8 @@
 package domain;
 
+/**
+ * Possible fieldnames as enum type. 
+ */
 public enum FieldName {
     AUTHOR,
     JOURNAL,

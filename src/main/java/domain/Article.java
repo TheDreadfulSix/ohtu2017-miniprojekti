@@ -8,6 +8,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * Contains reference information of an article.
+ */
 public class Article {
     Set<FieldName> requiredFields = EnumSet.of(
         FieldName.AUTHOR, 
@@ -26,6 +29,17 @@ public class Article {
     
     Map<FieldName, Field> fields = new HashMap<>();
     
+    /**
+     * Initializes the article with given fields if they are valid. 
+     * 
+     * @param   fields
+     * 
+     * @see miniprojekti.domain.Field
+     * @see miniprojekti.domain.FieldName
+     * 
+     * @throws IllegalArgumentException on missing required fields
+     * @throws IllegalArgumentException on invalid optional fields
+     */
     public Article(Collection<Field> fields) {
         this(fieldMap(fields));
     }
@@ -42,6 +56,16 @@ public class Article {
         this.fields = fields;
     }
     
+    /**
+     * Gets the field of given fieldname.
+     * 
+     * @param   name
+     * 
+     * @see miniprojekti.domain.Field
+     * @see miniprojekti.domain.FieldName
+     * 
+     * @return Fieldname if one exists, otherwise null.
+     */
     public Field getField(FieldName name) {
         return fields.getOrDefault(name, null);
     }
@@ -54,7 +78,7 @@ public class Article {
         Map<FieldName, Field> fieldMap = new HashMap<>();
         
         for (Field field: fields) {
-            fieldMap.put(field.getType(), field);
+            fieldMap.put(field.getName(), field);
         }
         
         return fieldMap;

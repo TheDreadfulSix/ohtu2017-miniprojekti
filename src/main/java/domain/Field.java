@@ -1,11 +1,22 @@
 package domain;
 
+/**
+ * Contains fieldname and value.
+ */
 public class Field {
-    FieldName type;
+    FieldName name;
     String value;
     
-    public Field(FieldName type, String value) {
-        this.type = type;
+    /**
+     * Initiates a field of given name and value.
+     *
+     * @param   name
+     * @param   value
+     * 
+     * @see miniprojekti.domain.FieldName
+     */
+    public Field(FieldName name, String value) {
+        this.name = name;
         this.value = value;
     }
     
@@ -13,7 +24,7 @@ public class Field {
         return value;
     }
     
-    public FieldName getType() {
-        return type;
+    public FieldName getName() {
+        return name;
     }
 }
