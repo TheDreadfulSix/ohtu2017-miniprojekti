@@ -1,4 +1,4 @@
-package domain;
+package miniprojekti.domain;
 
 /**
  * Possible fieldnames as enum type. 

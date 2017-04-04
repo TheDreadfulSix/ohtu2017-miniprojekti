@@ -1,4 +1,4 @@
-package domain;
+package miniprojekti.domain;
 
 import java.util.Collection;
 import java.util.EnumSet;

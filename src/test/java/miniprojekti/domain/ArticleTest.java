@@ -1,8 +1,8 @@
 package miniprojekti.domain;
 
-import domain.Article;
-import domain.Field;
-import domain.FieldName;
+import miniprojekti.domain.Article;
+import miniprojekti.domain.Field;
+import miniprojekti.domain.FieldName;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
