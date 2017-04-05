@@ -15,11 +15,9 @@ import org.junit.rules.ExpectedException;
 public class ArticleTest {
     Article article;
     Set<Field> fields;
-    String citationKey;
     
     @Before
     public void setUp() {
-        citationKey = "RRR03";
         fields = new HashSet<>();
         
         fields.add(new Field(FieldName.AUTHOR, "Anthony Robins and Janet Rountree and Nathan Rountree"));
@@ -28,13 +26,14 @@ public class ArticleTest {
         fields.add(new Field(FieldName.YEAR, "20003"));
         fields.add(new Field(FieldName.VOLUME, "13"));
         fields.add(new Field(FieldName.PAGES, "137-172"));
+        
     }
     
     @Rule
     public ExpectedException expected = ExpectedException.none();
     
     @Test
-    public void initializationFailsWithMissingRequiredFields() {
+    public void constructorFailsWithMissingRequiredFields() {
         fields = new HashSet<>();
         
         fields.add(new Field(FieldName.AUTHOR, "Anthony Robins and Janet Rountree and Nathan Rountree"));
@@ -44,11 +43,11 @@ public class ArticleTest {
         expected.expect(IllegalArgumentException.class);
         expected.expectMessage("Required fields are missing");
         
-        article = new Article(citationKey, fields);
+        article = new Article(fields);
     }
     
     @Test
-    public void initializationFailsWithInvalidOptionalFields() {
+    public void constructorFailsWithInvalidOptionalFields() {
         fields = new HashSet<>();
         
         fields.add(new Field(FieldName.AUTHOR, "Anthony Robins and Janet Rountree and Nathan Rountree"));
@@ -61,11 +60,6 @@ public class ArticleTest {
         expected.expect(IllegalArgumentException.class);
         expected.expectMessage("Invalid optional fields");
         
-        article = new Article(citationKey, fields);
-    }
-    
-    @Test
-    public void initializationWorksWithValidFields() {
-        article = new Article(citationKey, fields);
+        article = new Article(fields);
     }
 }

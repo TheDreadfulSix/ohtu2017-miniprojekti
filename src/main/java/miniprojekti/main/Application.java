@@ -3,9 +3,6 @@ package miniprojekti.main;
 
 import javafx.scene.Scene;
 import miniprojekti.gui.GUI;
-import miniprojekti.io.BibFileWriter;
-import miniprojekti.io.BibReferenceFormatter;
-import miniprojekti.io.FormattedStringBufferBuilder;
 import miniprojekti.io.IO;
 import miniprojekti.logic.Logic;
 
@@ -28,7 +25,7 @@ public class Application {
     
     public static IO getIO(){
         if(Application.io == null)
-            io = new IO(new BibFileWriter("testi.bib", "US-ASCII"), new FormattedStringBufferBuilder(new BibReferenceFormatter()));
+            io = new IO();
         return io;
     }
     

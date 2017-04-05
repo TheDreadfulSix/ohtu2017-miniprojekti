@@ -27,24 +27,11 @@ public class Article {
         FieldName.VOLUME
     );
     
-    private String citationKey;
-    
     private Map<FieldName, Field> fields = new HashMap<>();
-    
-    /**
-     * Initialization with a collection of fields instead of a map, calls
-     * {@link #Article(java.lang.String, java.util.Map)}.
-     * 
-     * @see #Article(java.lang.String, java.util.Map)
-     */
-    public Article(String citationKey, Collection<Field> fields) {
-        this(citationKey, fieldMap(fields));
-    }
     
     /**
      * Initializes the article with given fields if they are valid. 
      * 
-     * @param   citationKey
      * @param   fields
      * 
      * @see miniprojekti.domain.Field
@@ -53,7 +40,11 @@ public class Article {
      * @throws IllegalArgumentException on missing required fields
      * @throws IllegalArgumentException on invalid optional fields
      */
-    public Article(String citationKey, Map<FieldName, Field> fields) throws IllegalArgumentException {
+    public Article(Collection<Field> fields) {
+        this(fieldMap(fields));
+    }
+    
+    public Article(Map<FieldName, Field> fields) throws IllegalArgumentException {
         if (!fields.keySet().containsAll(requiredFields)) {
             throw new IllegalArgumentException("Required fields are missing");
         }
@@ -62,7 +53,6 @@ public class Article {
             throw new IllegalArgumentException("Invalid optional fields");
         }
         
-        this.citationKey = citationKey;
         this.fields = fields;
     }
     
@@ -78,10 +68,6 @@ public class Article {
      */
     public Field getField(FieldName name) {
         return fields.getOrDefault(name, null);
-    }
-
-    public String getCitationKey() {
-        return citationKey;
     }
     
     public Map<FieldName, Field> getFieldMap() {
