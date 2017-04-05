@@ -5,10 +5,28 @@
  */
 package miniprojekti.io;
 
+import miniprojekti.domain.Article;
+import java.util.Collection;
+
 /**
  *
  * @author Joonas
  */
 public class IO {
-    
+
+    private BibFileWriter fileWriter;
+    private FormattedStringBufferBuilder bufferBuilder;
+
+    public IO (BibFileWriter bfw, FormattedStringBufferBuilder rsbb) {
+        fileWriter = bfw;
+        bufferBuilder = rsbb;
+    }
+
+    /**
+     * Write bib file for the given references
+     * @param articles Collection of references
+     */
+    public void writeBibFile(Collection<Article> articles) {
+        fileWriter.writeFile(bufferBuilder.formatReferences(articles).toString());
+    }
 }
