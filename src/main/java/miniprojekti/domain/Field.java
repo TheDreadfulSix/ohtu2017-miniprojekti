@@ -1,4 +1,4 @@
-package domain;
+package miniprojekti.domain;
 
 /**
  * Contains fieldname and value.
