@@ -4,6 +4,8 @@ import java.util.HashMap;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -27,8 +29,8 @@ public class GenerateBibFile {
     private static Stage window;
 
     /**
-    *Displays the window for choosing filename and generating .bib file.
-    */
+     * Displays the window for choosing filename and generating .bib file.
+     */
     public static void display() {
         window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
@@ -44,12 +46,12 @@ public class GenerateBibFile {
         window.setScene(scene);
         window.show();
     }
-    
-    /**
-    * Sets the layout for the window.
-    * @return returns the layout for the window
-    */
 
+    /**
+     * Sets the layout for the window.
+     *
+     * @return returns the layout for the window
+     */
     private static GridPane setLayout() {
         int y = 1;
         GridPane layout = new GridPane();
@@ -75,13 +77,21 @@ public class GenerateBibFile {
     }
 
     /**
-    * Calls the method in IO for writing a .bib file of all the references 
-    * currently in Logic's list. 
-    *
-    * @param filename The filename that the user has given for the .bib.
-    */
+     * Calls the method in IO for writing a .bib file of all the references
+     * currently in Logic's list. Checks if the list is empty first.
+     *
+     * @param filename The filename that the user has given for the .bib.
+     */
     public static void generate(String filename) {
+        if (App.getLogic().getList().size() == 0) {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("You must provide some references first.");
 
+            alert.showAndWait();
+            return;
+        }
         App.getIO().writeBibFile(filename, App.getLogic().getList());
         App.getGUI().setScene();
         window.close();
