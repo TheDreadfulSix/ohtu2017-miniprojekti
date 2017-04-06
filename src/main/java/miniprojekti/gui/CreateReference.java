@@ -16,6 +16,8 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -108,7 +110,7 @@ public class CreateReference {
         
         Button create = new Button("Create");
         GridPane.setConstraints(create, 1, y);
-        create.setOnAction(e -> validateInput(layout, setSource, input));
+        create.setOnAction(e -> validateInput(setSource, input));
         
         layout.getChildren().addAll(source,setSource,close,create,optional,required);
         layout.setVgap(8);
@@ -132,11 +134,20 @@ public class CreateReference {
         }
     }
     
-    private static void validateInput(GridPane layout, ChoiceBox source, HashMap<FieldName, TextField> input) {
+    private static void validateInput(ChoiceBox source, HashMap<FieldName, TextField> input) {
         HashMap<FieldName, Field> fields = new HashMap<>();
         for(FieldName fn : input.keySet()){
-            if(!input.get(fn).getText().isEmpty())
+            if(!input.get(fn).getText().isEmpty()) {
                 fields.put(fn, new Field(fn,input.get(fn).getText()));
+            }else if(Article.getRequiredFields().contains(fn)){
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Required field is empty!");
+
+                alert.showAndWait();
+                return;
+            }
         }
         Article article = new Article("",fields);
         App.getLogic().add(article);
