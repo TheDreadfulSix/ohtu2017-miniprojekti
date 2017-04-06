@@ -25,6 +25,7 @@ public class Main extends Application{
     public void start(Stage primaryStage) throws Exception {
         window = primaryStage;
         window.setTitle("Reference converter");
+        App.getGUI();
         window.show();
     }
     

@@ -25,8 +25,13 @@ public class IO {
     /**
      * Write bib file for the given references
      * @param articles Collection of references
+     * @param filename A filename given by the user.
      */
-    public void writeBibFile(Collection<Article> articles) {
+    public void writeBibFile(String filename,Collection<Article> articles) {
+        //! Here a new file name is set for filewriter, not a smart solution(?).
+        // The filewriter has been initialized in the App class with a different file name.
+        // Should be fixed. -Roosa
+        fileWriter.setName(filename);
         fileWriter.writeFile(bufferBuilder.formatReferences(articles).toString());
     }
 }

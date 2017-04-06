@@ -1,4 +1,3 @@
-
 package miniprojekti.main;
 
 import javafx.scene.Scene;
@@ -13,48 +12,51 @@ import miniprojekti.logic.Logic;
  *
  * @author Joonas
  */
-public class Application {
-    
-    
+public class App {
+
     private static GUI gui;
     private static IO io;
     private static Logic logic;
-    
-    public static GUI getGUI(){
-        if(Application.gui == null)
+
+    public static GUI getGUI() {
+        if (App.gui == null) {
             gui = new GUI();
+        }
         return gui;
     }
-    
-    public static IO getIO(){
-        if(Application.io == null)
+
+    public static IO getIO() {
+        if (App.io == null) {
             io = new IO(new BibFileWriter("testi.bib", "US-ASCII"), new FormattedStringBufferBuilder(new BibReferenceFormatter()));
+        }
+
         return io;
     }
-    
-    public static Logic getLogic(){
-        if(Application.logic == null)
+
+    public static Logic getLogic() {
+        if (App.logic == null) {
             logic = new Logic();
+        }
         return logic;
     }
-    
-    public static void setGUI(GUI newGui){
-        gui = newGui;    
+
+    public static void setGUI(GUI newGui) {
+        gui = newGui;
     }
-    
-    public static void setIO(IO newIo){
+
+    public static void setIO(IO newIo) {
         io = newIo;
     }
-    
-    public static void setLogic(Logic newLogic){
+
+    public static void setLogic(Logic newLogic) {
         logic = newLogic;
     }
-    
-    public static void close(){
+
+    public static void close() {
         Main.close();
     }
-    
-    public static void setScene(Scene newScene){
+
+    public static void setScene(Scene newScene) {
         Main.setScene(newScene);
-    } 
+    }
 }

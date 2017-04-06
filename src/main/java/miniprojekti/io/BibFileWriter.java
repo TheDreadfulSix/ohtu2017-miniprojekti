@@ -34,7 +34,8 @@ public class BibFileWriter {
         setFile();
         encoding = Charset.forName(fileEncoding);
     }
-
+    
+   
     /**
      * Writes the bib file from formatted output
      * @param output String written to file

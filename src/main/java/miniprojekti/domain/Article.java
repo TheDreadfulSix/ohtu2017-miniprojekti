@@ -110,4 +110,13 @@ public class Article {
         return Stream.concat(optionalFields.stream(), requiredFields.stream())
                .collect(Collectors.toSet());
     }
+    
+    public String toString() {
+        String s = "source: Article\n";
+        for(FieldName fn : fields.keySet()){
+            s += fn.name().toLowerCase() + ": " + fields.get(fn).getValue() + "\n";
+        }
+        s += "\n\n";
+        return s;
+    }
 }
