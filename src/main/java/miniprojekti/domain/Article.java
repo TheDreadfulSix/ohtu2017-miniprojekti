@@ -79,6 +79,10 @@ public class Article {
     public Field getField(FieldName name) {
         return fields.getOrDefault(name, null);
     }
+
+    public String getCitationKey() {
+        return citationKey;
+    }
     
     public Map<FieldName, Field> getFieldMap() {
         return fields;
