@@ -25,6 +25,7 @@ public class BibFileWriter {
 
     public BibFileWriter(String fileName, String fileEncoding) {
         name = fileName;
+        path = ".\\";
         file = Paths.get(".\\" + name + ".bib");
         encoding = Charset.forName(fileEncoding);
     }
