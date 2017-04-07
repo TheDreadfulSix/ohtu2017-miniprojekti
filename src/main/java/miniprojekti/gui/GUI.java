@@ -62,11 +62,10 @@ public class GUI {
     
     private static TableView<ObservableMap> generateTable(List<Article> list){
         TableView<ObservableMap> table = new TableView();
-        
         ObservableList<ObservableMap> rowMaps = FXCollections.observableArrayList();
         
         for(Article article : list){
-            rowMaps.add(article.getFieldMap());
+            rowMaps.add(FXCollections.observableMap(article.getFieldMap()));
         }
         
         table.setItems(rowMaps);

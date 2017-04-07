@@ -7,8 +7,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableMap;
 
 /**
  * Contains reference information of an article.
@@ -31,7 +29,7 @@ public class Article {
     
     private String citationKey;
     
-    private ObservableMap<FieldName, Field> fields = FXCollections.observableHashMap();
+    private Map<FieldName, Field> fields = new HashMap();
     
     /**
      * Initialization with a collection of fields instead of a map, calls
@@ -55,7 +53,7 @@ public class Article {
      * @throws IllegalArgumentException on missing required fields
      * @throws IllegalArgumentException on invalid optional fields
      */
-    public Article(String citationKey, ObservableMap<FieldName, Field> fields) throws IllegalArgumentException {
+    public Article(String citationKey, Map<FieldName, Field> fields) throws IllegalArgumentException {
         if (!fields.keySet().containsAll(requiredFields)) {
             throw new IllegalArgumentException("Required fields are missing");
         }
@@ -86,7 +84,7 @@ public class Article {
         return citationKey;
     }
     
-    public ObservableMap<FieldName, Field> getFieldMap() {
+    public Map<FieldName, Field> getFieldMap() {
         return fields;
     }
     
@@ -98,8 +96,8 @@ public class Article {
         return optionalFields;
     }
     
-    private static ObservableMap<FieldName, Field> fieldMap(Collection<Field> fields) {
-        ObservableMap<FieldName, Field> fieldMap = FXCollections.observableHashMap();
+    private static Map<FieldName, Field> fieldMap(Collection<Field> fields) {
+        Map<FieldName, Field> fieldMap = new HashMap();
         
         for (Field field: fields) {
             fieldMap.put(field.getName(), field);
