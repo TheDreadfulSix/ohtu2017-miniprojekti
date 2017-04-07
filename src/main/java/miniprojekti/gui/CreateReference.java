@@ -82,6 +82,13 @@ public class CreateReference {
         required.getStyleClass().add("header");
         GridPane.setConstraints(required, 0, y++);
         
+        Label citkey = new Label("Citation key");
+        citkey.getStyleClass().add("header");
+        GridPane.setConstraints(citkey, 0, y);
+        
+        TextField citation = new TextField();
+        GridPane.setConstraints(citation, 1, y++);
+        
         for(FieldName fn: Article.getRequiredFields()){
             Label label = new Label(fn.name());
             TextField text = new TextField();
@@ -110,9 +117,9 @@ public class CreateReference {
         
         Button create = new Button("Create");
         GridPane.setConstraints(create, 1, y);
-        create.setOnAction(e -> validateInput(setSource, input));
+        create.setOnAction(e -> validateInput(setSource, input, citation));
         
-        layout.getChildren().addAll(source,setSource,close,create,optional,required);
+        layout.getChildren().addAll(source,setSource,close,create,optional,required,citkey,citation);
         layout.setVgap(8);
         layout.setHgap(10);
         layout.setPadding(new Insets(10,10,10,10));
@@ -134,7 +141,7 @@ public class CreateReference {
         }
     }
     
-    private static void validateInput(ChoiceBox source, HashMap<FieldName, TextField> input) {
+    private static void validateInput(ChoiceBox source, HashMap<FieldName, TextField> input, TextField cit) {
         HashMap<FieldName, Field> fields = new HashMap<>();
         for(FieldName fn : input.keySet()){
             if(!input.get(fn).getText().isEmpty()) {
@@ -149,7 +156,7 @@ public class CreateReference {
                 return;
             }
         }
-        Article article = new Article("",fields);
+        Article article = new Article(cit.getText(),fields);
         App.getLogic().add(article);
         App.getGUI().setScene();
         window.close();
