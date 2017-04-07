@@ -27,4 +27,9 @@ public class Field {
     public FieldName getName() {
         return name;
     }
+    
+    @Override
+    public String toString(){
+        return value;
+    }
 }
