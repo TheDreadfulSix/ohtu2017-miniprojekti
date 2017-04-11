@@ -26,6 +26,7 @@ dependencies {
     compile 'com.google.guava:guava:20.0'
     testCompile 'junit:junit:4.12'
     compile files("src/main/resources") 
+    compile 'com.h2database:h2:1.4.194'
 }
 
 jar {
