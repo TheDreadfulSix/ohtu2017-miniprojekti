@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 import org.junit.rules.ExpectedException;
 
 
-public class ArticleTest {
+public class ReferenceTest {
     Article article;
     Set<Field> fields;
     String citationKey;
