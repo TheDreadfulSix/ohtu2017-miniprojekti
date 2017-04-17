@@ -3,6 +3,8 @@ package miniprojekti.domain;
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.Map;
+import java.util.Set;
+import static miniprojekti.domain.Reference.requiredFields;
 
 /**
  * Contains reference information of an article.
@@ -39,5 +41,15 @@ public class Article extends Reference {
         super(citationKey, fields);
     }
     
-
+    public static Set<FieldName> getRequiredFields() {
+        return requiredFields;
+    }
+    
+    public static Set<FieldName> getOptionalFields() {
+        return optionalFields;
+    }
+    
+    public static Set<FieldName> getAlternativeFields() {
+        return alternativeFields;
+    }
 }
