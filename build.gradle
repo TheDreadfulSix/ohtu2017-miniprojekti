@@ -47,3 +47,8 @@ jacocoTestReport {
 }
 // Define the main class for the application
 mainClassName = 'miniprojekti.main.Main'
+
+// Show console output during tests
+//test {
+//  testLogging.showStandardStreams = true
+//}

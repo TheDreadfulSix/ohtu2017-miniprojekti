@@ -29,7 +29,7 @@ public class Article extends Reference {
      * Calls {@link #Reference(java.lang.String, java.util.Collection)}.
      */
     public Article(String citationKey, Collection<Field> fields) {
-        this(citationKey, createFieldMap(fields));
+        super(citationKey, fields);
     }
     
     /**

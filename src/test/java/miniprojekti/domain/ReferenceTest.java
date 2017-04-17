@@ -14,12 +14,13 @@ import org.junit.rules.ExpectedException;
 
 public class ReferenceTest {
     Article article;
+    Book book;
     Set<Field> fields;
     String citationKey;
     
     @Before
     public void setUp() {
-        citationKey = "RRR03";
+        citationKey = "testkey";
         fields = new HashSet<>();
         
         fields.add(new Field(FieldName.AUTHOR, "Anthony Robins and Janet Rountree and Nathan Rountree"));
@@ -58,6 +59,7 @@ public class ReferenceTest {
         // Invalid field
         fields.add(new Field(FieldName.EDITION, "5"));
         
+        System.out.println("HELLLOOOO");
         expected.expect(IllegalArgumentException.class);
         expected.expectMessage("Invalid optional fields");
         
@@ -67,5 +69,32 @@ public class ReferenceTest {
     @Test
     public void initializationWorksWithValidFields() {
         article = new Article(citationKey, fields);
+    }
+    
+    @Test
+    public void initializationFailsWithMissingAlternativeFields() {
+        fields = new HashSet<>();
+        
+        //fields.add(new Field(FieldName.TITLE, "Clean Code: A Handbook of Agile Software Craftsmanship"));
+        fields.add(new Field(FieldName.AUTHOR, "Martin Robert"));
+        fields.add(new Field(FieldName.YEAR, "2008"));
+        fields.add(new Field(FieldName.PUBLISHER, "Prentice Hall"));
+        
+        expected.expect(IllegalArgumentException.class);
+        expected.expectMessage("Required fields are missing");
+        
+        book = new Book(citationKey, fields);
+    }
+    
+    @Test
+    public void initializationWorksWithValidAlternativeFields() {
+        fields = new HashSet<>();
+        
+        fields.add(new Field(FieldName.TITLE, "Clean Code: A Handbook of Agile Software Craftsmanship"));
+        fields.add(new Field(FieldName.AUTHOR, "Martin Robert"));
+        fields.add(new Field(FieldName.YEAR, "2008"));
+        fields.add(new Field(FieldName.PUBLISHER, "Prentice Hall"));
+        
+        book = new Book(citationKey, fields);
     }
 }

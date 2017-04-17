@@ -2,6 +2,7 @@ package miniprojekti.domain;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -13,7 +14,7 @@ public abstract class Reference {
     
     protected static Set<FieldName> requiredFields;
     protected static Set<FieldName> optionalFields;
-    protected static Set<FieldName> alternativeFields;
+    protected static Set<FieldName> alternativeFields = EnumSet.noneOf(FieldName.class);
     
     protected Map<FieldName, Field> fields;
     
@@ -45,7 +46,9 @@ public abstract class Reference {
      * @throws IllegalArgumentException on missing alternative fields
      */
     public Reference(String citationKey, Map<FieldName, Field> fields) throws IllegalArgumentException {
-        if (!fields.keySet().containsAll(requiredFields)) {
+        System.out.println(fields.keySet());
+        
+        if (!fields.keySet().containsAll(getRequiredFields())) {
             throw new IllegalArgumentException("Required fields are missing");
         }
         
@@ -54,9 +57,15 @@ public abstract class Reference {
         }
         
         // TODO: Use retain all to make alternative fields exclusive
-        if (getAlternativeFields() != null && 
-            Collections.disjoint(fields.keySet(), getAlternativeFields())) {
-            throw new IllegalArgumentException("Required fields are missing");
+
+        if (!getAlternativeFields().isEmpty()) {
+            
+            EnumSet<FieldName> alternative = EnumSet.copyOf(getAlternativeFields());
+            alternative.retainAll(fields.keySet());
+            
+            if (alternative.isEmpty()) {
+                throw new IllegalArgumentException("Required fields are missing");
+            }
         }
         
         this.citationKey = citationKey;
@@ -98,8 +107,11 @@ public abstract class Reference {
     }
 
     protected Set<FieldName> getAllFieldNames() {
-        return Stream.concat(getOptionalFields().stream(), getRequiredFields().stream())
-               .collect(Collectors.toSet());
+        EnumSet<FieldName> all = EnumSet.copyOf(getRequiredFields());
+        all.addAll(getOptionalFields());
+        all.addAll(getAlternativeFields());
+        
+        return all;
     }
 
     protected static Map<FieldName, Field> createFieldMap(Collection<Field> fields) {
