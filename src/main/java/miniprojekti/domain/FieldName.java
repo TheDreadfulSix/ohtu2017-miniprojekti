@@ -13,5 +13,12 @@ public enum FieldName {
     NUMBER,
     PAGES,
     VOLUME,
-    EDITION;
+    EDITION,
+    EDITOR,
+    PUBLISHER,
+    SERIES,
+    ADDRESS,
+    KEY, // "Not to be confused with the citation key": https://nwalsh.com/tex/texhelp/bibtx-37.html
+    BOOKTITLE,
+    ORGANIZATION;
 }

@@ -1,6 +1,7 @@
 package miniprojekti.domain;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -12,6 +13,7 @@ public abstract class Reference {
     
     protected static Set<FieldName> requiredFields;
     protected static Set<FieldName> optionalFields;
+    protected static Set<FieldName> alternativeFields;
     
     protected Map<FieldName, Field> fields;
     
@@ -40,6 +42,7 @@ public abstract class Reference {
      * 
      * @throws IllegalArgumentException on missing required fields
      * @throws IllegalArgumentException on invalid optional fields
+     * @throws IllegalArgumentException on missing alternative fields
      */
     public Reference(String citationKey, Map<FieldName, Field> fields) throws IllegalArgumentException {
         if (!fields.keySet().containsAll(requiredFields)) {
@@ -48,6 +51,12 @@ public abstract class Reference {
         
         if (!this.getAllFieldNames().containsAll(fields.keySet())) {
             throw new IllegalArgumentException("Invalid optional fields");
+        }
+        
+        // TODO: Use retain all to make alternative fields exclusive
+        if (getAlternativeFields() != null && 
+            Collections.disjoint(fields.keySet(), getAlternativeFields())) {
+            throw new IllegalArgumentException("Required fields are missing");
         }
         
         this.citationKey = citationKey;
@@ -82,6 +91,10 @@ public abstract class Reference {
     
     public static Set<FieldName> getOptionalFields() {
         return optionalFields;
+    }
+    
+    public static Set<FieldName> getAlternativeFields() {
+        return alternativeFields;
     }
 
     protected Set<FieldName> getAllFieldNames() {
