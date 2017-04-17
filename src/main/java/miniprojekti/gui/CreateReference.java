@@ -14,6 +14,7 @@ import java.util.HashMap;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableMap;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -142,7 +143,7 @@ public class CreateReference {
     }
     
     private static void validateInput(ChoiceBox source, HashMap<FieldName, TextField> input, TextField cit) {
-        HashMap<FieldName, Field> fields = new HashMap<>();
+        ObservableMap<FieldName, Field> fields = FXCollections.observableHashMap();
         for(FieldName fn : input.keySet()){
             if(!input.get(fn).getText().isEmpty()) {
                 fields.put(fn, new Field(fn,input.get(fn).getText()));

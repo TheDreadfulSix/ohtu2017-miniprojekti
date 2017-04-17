@@ -23,6 +23,10 @@ public class BibFileWriter {
     private Path file;
     private final Charset encoding;
 
+    public BibFileWriter(String fileEncoding) {
+        encoding = Charset.forName(fileEncoding);
+    }
+
     public BibFileWriter(String fileName, String fileEncoding) {
         name = fileName;
         path = ".\\";
@@ -30,6 +34,12 @@ public class BibFileWriter {
         encoding = Charset.forName(fileEncoding);
     }
 
+    /**
+     *
+     * @param fileName name of the output file
+     * @param path path to the output file
+     * @param fileEncoding encoding used in the file
+     */
     public BibFileWriter(String fileName, String path, String fileEncoding) {
         name = fileName;
         setFile();

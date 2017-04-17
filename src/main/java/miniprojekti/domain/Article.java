@@ -7,6 +7,7 @@ import java.util.Map;
 /**
  * Contains reference information of an article.
  */
+
 public class Article extends Reference {
     static {
         requiredFields = EnumSet.of(
@@ -38,4 +39,5 @@ public class Article extends Reference {
         super(citationKey, fields);
     }
     
+
 }
