@@ -1,0 +1,97 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package miniprojekti.domain;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ * Class for inserting and retrieving references to/from the database.
+ */
+public class ReferenceDAO extends BaseDAO {
+
+    /**
+     * Inserts the reference to the database.
+     */
+    public void insertReference(Reference ref) {
+        try {
+            String sql = formatInsertQuery(ref);
+            initializeQuery(sql);
+            implementQuery();
+     //       results.next();
+ //       } catch (SQLException ex) {
+//            Logger.getLogger(ReferenceDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            close();
+        }
+    }
+
+    public Collection<Reference> getReferences() {
+        List<Reference> references = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM references";
+            initializeQuery(sql);
+            implementQuery();
+            while (results.next()) {
+                references.add(returnReference());
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ReferenceDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            close();
+        }
+        return references;
+    }
+
+    private String formatInsertQuery(Reference ref) {
+        Map<FieldName, Field> fieldMap = ref.getFieldMap();
+        StringBuilder sql = new StringBuilder("INSERT INTO references(");
+        StringBuilder sqlFields = new StringBuilder();
+        StringBuilder sqlValues = new StringBuilder();
+        List<String> sqlValueList = new ArrayList<>();
+        fieldMap.values().stream().forEach((f) -> {
+            sqlFields.append(f.getName().toString() + ", ");
+            sqlValues.append("'" + f.getValue() + "', ");
+        });
+        // add class and citationkey as the last field-value pairs
+        sqlFields.append("class, citationKey");
+        sqlValues.append("'" + ref.getClass().getSimpleName() + "', '" + ref.getCitationKey() + "'");
+        sql.append(sqlFields + ") VALUES(" + sqlValues + ")");
+        return sql.toString();
+    }
+
+    private Reference returnReference() {
+        Object reference = null;
+        Collection<Field> fields = new ArrayList<>();
+        try {
+            ResultSetMetaData metaData = results.getMetaData();
+            for (int i = 1; i <= metaData.getColumnCount(); i++) {
+                String columnName = metaData.getColumnName(i);
+                // class and citationKey are not reference fields at the moment
+                // and thus they are handled separately
+                if (!columnName.equals("class") && !columnName.equals("citationKey")) {
+                    fields.add(new Field(FieldName.valueOf(columnName), results.getString(columnName)));
+                }
+            }
+            String citationKey = results.getString("citationKey");
+            String className = results.getString("class");
+            Class cl = Class.forName(className);
+            Constructor con = cl.getConstructor(String.class, Collection.class);
+            reference = con.newInstance(citationKey, fields);
+        } catch (SQLException | ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+            Logger.getLogger(ReferenceDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return (Reference) reference;
+    }
+}
