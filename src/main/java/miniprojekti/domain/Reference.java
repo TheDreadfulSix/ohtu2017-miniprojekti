@@ -58,9 +58,9 @@ public abstract class Reference {
         
         // TODO: Use retain all to make alternative fields exclusive
 
-        if (!getAlternativeFields().isEmpty()) {
+        if (!this.getAlternativeFields().isEmpty()) {
             
-            EnumSet<FieldName> alternative = EnumSet.copyOf(getAlternativeFields());
+            EnumSet<FieldName> alternative = EnumSet.copyOf(this.getAlternativeFields());
             alternative.retainAll(fields.keySet());
             
             if (alternative.isEmpty()) {

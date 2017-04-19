@@ -4,26 +4,26 @@
 */
 package miniprojekti.logic;
 
-import miniprojekti.domain.Article;
 import java.util.ArrayList;
 import java.util.List;
+import miniprojekti.domain.Reference;
 
 /**
  *
  * @author Joonas
  */
 public class Logic {
-    private List<Article> list;
+    private List<Reference> list;
     
     public Logic(){
         list = new ArrayList<>();
     }
     
-    public void add(Article article){
-        list.add(article);
+    public void add(Reference reference){
+        list.add(reference);
     }
     
-    public List<Article> getList(){
+    public List<Reference> getList(){
         return list;
     }
 }

@@ -13,14 +13,15 @@ import org.junit.rules.ExpectedException;
 
 import java.io.File;
 import java.util.*;
+import miniprojekti.domain.Reference;
 
 import static org.junit.Assert.*;
 
 
 public class BibFileWriterTest {
 
-    private Article article;
-    private Collection<Article> articles;
+    private Reference reference;
+    private Collection<Reference> references;
     private Set<Field> fields;
     private BibReferenceFormatter formatter;
     private FormattedStringBufferBuilder bufferBuilder;
@@ -30,7 +31,7 @@ public class BibFileWriterTest {
     String output;
 
     @Before
-    public void setUp() {
+    public void setUp() { //Creates new Reference objects -> in these tests as Articles.
         fields = new HashSet<>();
         fields.add(new Field(FieldName.AUTHOR, "Anthony Robins and Janet Rountree and Nathan Rountree"));
         fields.add(new Field(FieldName.JOURNAL, "Computer Science Education"));
@@ -38,14 +39,14 @@ public class BibFileWriterTest {
         fields.add(new Field(FieldName.YEAR, "20003"));
         fields.add(new Field(FieldName.VOLUME, "13"));
         fields.add(new Field(FieldName.PAGES, "137-172"));
-        article = new Article("Robins+Rountrees", fields);
-        articles = new ArrayList<>();
+        reference = new Article("Robins+Rountrees", fields);
+        references = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
-            articles.add(article);
+            references.add(reference);
         }
         formatter = new BibReferenceFormatter();
         bufferBuilder = new FormattedStringBufferBuilder(formatter);
-        output = bufferBuilder.formatReferences(articles).toString();
+        output = bufferBuilder.formatReferences(references).toString();
         writer.setPath(testFolderPath);
     }
 

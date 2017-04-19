@@ -1,6 +1,6 @@
 package miniprojekti.io;
 
-import miniprojekti.domain.Article;
+import miniprojekti.domain.Reference;
 
 import java.util.Collection;
 
@@ -18,11 +18,11 @@ public class FormattedStringBufferBuilder {
     /**
      * Method goes through the references, formats them with given Formatter and appends to Formatter's StringBuilder
      *
-     * @param articles Collection of articles to append to StringBuffer
+     * @param references Collection of articles to append to StringBuffer
      * @return
      */
-    public StringBuilder formatReferences(Collection<Article> articles) {
-        articles.forEach((article) -> formatter.formatReference(article));
+    public StringBuilder formatReferences(Collection<Reference> references) {
+        references.forEach((reference) -> formatter.formatReference(reference));
         return formatter.getStringBuffer();
     }
 

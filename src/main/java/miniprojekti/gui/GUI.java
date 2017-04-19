@@ -5,7 +5,7 @@
  */
 package miniprojekti.gui;
 
-import miniprojekti.domain.Article;
+import miniprojekti.domain.Reference;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -39,7 +39,7 @@ public class GUI {
     public void setScene() {
         VBox layout = new VBox();
         VBox box = new VBox();
-        List<Article> list = App.getLogic().getList();
+        List<Reference> list = App.getLogic().getList();
 //        for(Article a : list){
 //            box.getChildren().add(new Label(a.toString()));
 //        }
@@ -60,11 +60,11 @@ public class GUI {
         return this.scene;
     }
     
-    private static TableView<ObservableMap> generateTable(List<Article> list){
+    private static TableView<ObservableMap> generateTable(List<Reference> list){
         TableView<ObservableMap> table = new TableView();
         ObservableList<ObservableMap> rowMaps = FXCollections.observableArrayList();
         
-        for(Article article : list){
+        for(Reference article : list){
             rowMaps.add(FXCollections.observableMap(article.getFieldMap()));
         }
         

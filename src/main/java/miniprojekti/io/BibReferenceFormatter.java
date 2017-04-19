@@ -1,5 +1,5 @@
 package miniprojekti.io;
-import miniprojekti.domain.Article;
+import miniprojekti.domain.Reference;
 import miniprojekti.domain.Field;
 import miniprojekti.domain.FieldName;
 
@@ -22,9 +22,9 @@ public class BibReferenceFormatter {
      *
      * @return StringBuffer bib formatted reference
      */
-    public void formatReference(Article art) {
-        output.append("@article{" +  art.getCitationKey() + ",\n");
-        art.getFieldMap().values().forEach((f) -> output.append(formatField(f)));
+    public void formatReference(Reference ref) {
+        output.append("@" + ref.getClass().getSimpleName().toLowerCase() + "{" +  ref.getCitationKey() + ",\n");
+        ref.getFieldMap().values().forEach((f) -> output.append(formatField(f)));
         closeReference();
     }
 
