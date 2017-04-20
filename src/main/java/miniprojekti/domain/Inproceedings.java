@@ -49,7 +49,7 @@ public class Inproceedings extends Reference {
     public void setFields() {
         requiredFields = EnumSet.of(
             FieldName.AUTHOR, 
-            FieldName.BOOOKTITLE, 
+            FieldName.BOOKTITLE, 
             FieldName.TITLE, 
             FieldName.YEAR
         );
