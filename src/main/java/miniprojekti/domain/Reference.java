@@ -50,6 +50,17 @@ public abstract class Reference {
         if (!this.getAllFieldNames().containsAll(fields.keySet())) {
             throw new IllegalArgumentException("Invalid optional fields");
         }
+        boolean alternativeFieldCheck = true;
+        for (FieldName alternativeField : this.getAlternativeFields()) {
+            alternativeFieldCheck = false;
+            if (fields.keySet().contains(alternativeField)) {
+                alternativeFieldCheck = true;
+                break;
+            }
+        }
+        if (!alternativeFieldCheck) {
+            throw new IllegalArgumentException("Required fields are missing");
+        }
         
         this.citationKey = citationKey;
         this.fields = fields;
