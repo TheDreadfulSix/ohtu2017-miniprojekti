@@ -9,8 +9,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.naming.Context;
-import javax.naming.InitialContext;
 import org.h2.jdbcx.JdbcDataSource;
 import javax.naming.NamingException;
 
@@ -24,7 +22,8 @@ public class DBManager {
 
     public DBManager() throws NamingException {
         ds = new JdbcDataSource();
-        ds.setURL("jdbc:h2:~/ohtu2017-miniprojekti/data/references;IFEXISTS=TRUE");
+        ds.setURL("jdbc:h2:~/data/references;" +
+                "INIT=RUNSCRIPT FROM 'classpath:create.sql'");
         ds.setUser("sa");
         ds.setPassword("");
     }

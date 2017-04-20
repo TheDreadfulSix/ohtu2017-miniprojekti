@@ -5,6 +5,8 @@
  */
 package miniprojekti.domain;
 
+import org.h2.util.StringUtils;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.ResultSetMetaData;
@@ -29,14 +31,15 @@ public class ReferenceDAO extends BaseDAO {
             String sql = formatInsertQuery(ref);
             initializeQuery(sql);
             implementQuery();
-     //       results.next();
- //       } catch (SQLException ex) {
-//            Logger.getLogger(ReferenceDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             close();
         }
     }
 
+    /**
+     * Retrieves all the references in the database
+     * @return Collection of references
+     */
     public Collection<Reference> getReferences() {
         List<Reference> references = new ArrayList<>();
         try {
@@ -44,7 +47,8 @@ public class ReferenceDAO extends BaseDAO {
             initializeQuery(sql);
             implementQuery();
             while (results.next()) {
-                references.add(returnReference());
+                Reference ref = returnReference();
+                references.add(ref);
             }
         } catch (SQLException ex) {
             Logger.getLogger(ReferenceDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -78,14 +82,16 @@ public class ReferenceDAO extends BaseDAO {
             ResultSetMetaData metaData = results.getMetaData();
             for (int i = 1; i <= metaData.getColumnCount(); i++) {
                 String columnName = metaData.getColumnName(i);
-                // class and citationKey are not reference fields at the moment
-                // and thus they are handled separately
-                if (!columnName.equals("class") && !columnName.equals("citationKey")) {
+                // Class and citationKey are not reference fields at the moment
+                // and thus they are handled separately. We'll also want to skip nulls.
+                if (!columnName.equalsIgnoreCase("class") && !columnName.equalsIgnoreCase("citationKey") &&
+                results.getString(columnName) != null) {
                     fields.add(new Field(FieldName.valueOf(columnName), results.getString(columnName)));
                 }
             }
             String citationKey = results.getString("citationKey");
             String className = results.getString("class");
+            className = "miniprojekti.domain." + className.substring(0,1).toUpperCase() + className.substring(1).toLowerCase();
             Class cl = Class.forName(className);
             Constructor con = cl.getConstructor(String.class, Collection.class);
             reference = con.newInstance(citationKey, fields);
