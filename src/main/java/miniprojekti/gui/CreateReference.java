@@ -31,6 +31,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import miniprojekti.domain.Book;
 import miniprojekti.domain.Inproceedings;
 import miniprojekti.domain.Reference;
 import miniprojekti.main.App;
@@ -79,7 +80,7 @@ public class CreateReference {
                     case 0: setScene(new Article(),0);
                         System.out.println("Article"); 
                         break;
-                    case 1: setScene(new Article(),0);
+                    case 1: setScene(new Book(),1);
                         break;
                     case 2: setScene(new Article(),0);
                         break;
@@ -105,6 +106,15 @@ public class CreateReference {
         GridPane.setConstraints(citation, 1, y++);
         
         for(FieldName fn: ref.getRequiredFields()){
+            Label label = new Label(fn.name());
+            TextField text = new TextField();
+            GridPane.setConstraints(label, 0, y);
+            GridPane.setConstraints(text, 1, y++);
+            layout.getChildren().addAll(label,text);
+            input.put(fn, text);
+        }
+        
+        for(FieldName fn: ref.getAlternativeFields()){
             Label label = new Label(fn.name());
             TextField text = new TextField();
             GridPane.setConstraints(label, 0, y);
