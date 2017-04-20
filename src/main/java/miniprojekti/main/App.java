@@ -27,7 +27,7 @@ public class App {
 
     public static IO getIO() {
         if (App.io == null) {
-            io = new IO(new BibFileWriter("US-ASCII"), new FormattedStringBufferBuilder(new BibReferenceFormatter()));
+            io = new IO(new BibFileWriter("UTF-8"), new FormattedStringBufferBuilder(new BibReferenceFormatter()));
         }
         return io;
     }

@@ -23,12 +23,16 @@ public class IO {
     }
 
     /**
-     * Write bib file for the given references
-     * @param ref Collection of references
-     * @param filename A filename given by the user.
+     * Write a bib file, using the fileWriter, for the given references.
+     *
+     * @param articles Collection of references
+     * @param filename A filename, given by the user.
+     * @param path A path for the file, provided by user.
      */
-    public void writeBibFile(String filename, Collection<Reference> ref) {
+    public void writeBibFile(String filename, String path, Collection<Reference> references) {
         fileWriter.setName(filename);
-        fileWriter.writeFile(bufferBuilder.formatReferences(ref).toString());
+        fileWriter.setPath(path);
+        fileWriter.writeFile(bufferBuilder.formatReferences(references).toString());
+
     }
 }

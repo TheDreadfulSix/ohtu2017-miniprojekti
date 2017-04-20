@@ -40,7 +40,7 @@ public class GenerateBibFile {
 
         layout.getChildren().add(setLayout());
         layout.setPadding(new Insets(10, 10, 10, 10));
-        Scene scene = new Scene(layout, 400, 100);
+        Scene scene = new Scene(layout, 400, 200);
         scene.getStylesheets().add("style.css");
         window.setResizable(true);
         window.setScene(scene);
@@ -56,10 +56,15 @@ public class GenerateBibFile {
         int y = 1;
         GridPane layout = new GridPane();
 
-        Label label = new Label("File name");
-        TextField text = new TextField();
-        GridPane.setConstraints(label, 0, y);
-        GridPane.setConstraints(text, 1, y++);
+        Label filename = new Label("File name");
+        TextField file = new TextField();
+        GridPane.setConstraints(filename, 0, y);
+        GridPane.setConstraints(file, 1, y++);
+
+        Label path = new Label("Where do you want to save? \n (If left empty, the path is set \n to the project root directory.)");
+        TextField pathname = new TextField();
+        GridPane.setConstraints(path, 0, y);
+        GridPane.setConstraints(pathname, 1, y++);
 
         Button close = new Button("Close");
         GridPane.setConstraints(close, 0, y);
@@ -67,9 +72,9 @@ public class GenerateBibFile {
 
         Button generate = new Button("Generate");
         GridPane.setConstraints(generate, 1, y);
-        generate.setOnAction(e -> generate(text.getText()));
+        generate.setOnAction(e -> generate(file.getText(), pathname.getText()));
 
-        layout.getChildren().addAll(label, text, close, generate);
+        layout.getChildren().addAll(filename, file, path, pathname, close, generate);
         layout.setVgap(8);
         layout.setHgap(10);
         layout.setPadding(new Insets(10, 10, 10, 10));
@@ -81,8 +86,20 @@ public class GenerateBibFile {
      * currently in Logic's list. Checks if the list is empty first.
      *
      * @param filename The filename that the user has given for the .bib.
+     * @param path The path to save to.
      */
-    public static void generate(String filename) {
+    public static void generate(String filename, String path) {
+        
+        if (filename.isEmpty()) {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("How about a filename for your .bib file?");
+
+            alert.showAndWait();
+            return;
+        }
+
         if (App.getLogic().getList().size() == 0) {
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Error");
@@ -92,7 +109,19 @@ public class GenerateBibFile {
             alert.showAndWait();
             return;
         }
-        App.getIO().writeBibFile(filename, App.getLogic().getList());
+        if (path.isEmpty()) {
+            path = System.getProperty("user.dir");
+            //TO DO check if path is valid. In which class?         
+//        } else if () {
+//            Alert alert = new Alert(AlertType.INFORMATION);
+//            alert.setTitle("Error");
+//            alert.setHeaderText(null);
+//            alert.setContentText("The path provided is invalid.");
+//
+//            alert.showAndWait();
+//            return;
+        }
+        App.getIO().writeBibFile(filename, path, App.getLogic().getList());
         App.getGUI().setScene();
         window.close();
     }

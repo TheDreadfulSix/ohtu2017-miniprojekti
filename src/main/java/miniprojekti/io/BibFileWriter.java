@@ -48,13 +48,13 @@ public class BibFileWriter {
     
    
     /**
-     * Writes the bib file from formatted output
+     * Writes the bib file from formatted output.
      * @param output String written to file
      */
     public void writeFile(String output) {
         try {
             // If file with the same name already exists, append timestamp to filename
-            if (file.toFile().exists()) {
+            if (checkFile()) {
                 setName(name + getCurrentTime());
             }
             BufferedWriter writer = Files.newBufferedWriter(file, encoding);
@@ -63,6 +63,10 @@ public class BibFileWriter {
         } catch (IOException e) {
             System.err.format("IOEXception: %s%n", e);
         }
+    }
+//this may or may or be used for checking the path name as well..
+    private boolean checkFile() {
+        return file.toFile().exists();
     }
 
     public void setName(String n) {
