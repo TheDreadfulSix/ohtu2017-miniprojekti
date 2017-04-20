@@ -32,6 +32,7 @@ public class Book extends Reference {
     public Book(String citationKey, Map<FieldName, Field> fields) throws IllegalArgumentException {
         super();
         this.setFields();
+        this.setReference(citationKey, fields);
     }
     
     public Set<FieldName> getRequiredFields() {

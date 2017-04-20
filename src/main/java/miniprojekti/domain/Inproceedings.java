@@ -36,6 +36,7 @@ public class Inproceedings extends Reference {
     public Inproceedings(String citationKey, Map<FieldName, Field> fields) throws IllegalArgumentException {
         super();
         this.setFields();
+        this.setReference(citationKey, fields);
     }
   
     public Set<FieldName> getRequiredFields() {
@@ -44,6 +45,10 @@ public class Inproceedings extends Reference {
     
     public Set<FieldName> getOptionalFields() {
         return optionalFields;
+    }
+    
+    public Set<FieldName> getAlternativeFields() {
+        return EnumSet.noneOf(FieldName.class);
     }
 
     public void setFields() {

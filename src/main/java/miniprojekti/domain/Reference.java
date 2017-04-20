@@ -81,8 +81,11 @@ public abstract class Reference {
     
     public abstract Set<FieldName> getOptionalFields();
     
+    public abstract Set<FieldName> getAlternativeFields();
+    
     protected Set<FieldName> getAllFieldNames() {
-        return Stream.concat(getOptionalFields().stream(), getRequiredFields().stream())
+        
+        return Stream.concat(Stream.concat(getOptionalFields().stream(), getRequiredFields().stream()), getAlternativeFields().stream())
                .collect(Collectors.toSet());
     }
 

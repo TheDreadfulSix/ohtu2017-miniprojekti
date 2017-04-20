@@ -31,6 +31,7 @@ public class Article extends Reference {
     public Article(String citationKey, Map<FieldName, Field> fields) throws IllegalArgumentException {
         super();
         this.setFields();
+        this.setReference(citationKey, fields);
     }
     
     public Set<FieldName> getRequiredFields() {
@@ -45,6 +46,10 @@ public class Article extends Reference {
             setFields();
         }
         return this.optionalFields;
+    }
+    
+    public Set<FieldName> getAlternativeFields() {
+        return EnumSet.noneOf(FieldName.class);
     }
     
     public void setFields() {
