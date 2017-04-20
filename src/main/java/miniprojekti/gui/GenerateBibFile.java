@@ -121,7 +121,7 @@ public class GenerateBibFile {
 //            alert.showAndWait();
 //            return;
         }
-        App.getIO().writeBibFile(filename, path, App.getLogic().getList());
+        App.getIO().writeBibFile(filename, path, App.getLogic().getAllReferences());
         App.getGUI().setScene();
         window.close();
     }
