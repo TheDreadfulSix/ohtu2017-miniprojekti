@@ -4,9 +4,9 @@
 */
 package miniprojekti.logic;
 
+import miniprojekti.domain.Reference;
 import java.util.ArrayList;
 import java.util.List;
-import miniprojekti.domain.Reference;
 
 /**
  *
@@ -19,8 +19,8 @@ public class Logic {
         list = new ArrayList<>();
     }
     
-    public void add(Reference reference){
-        list.add(reference);
+    public void add(Reference ref){
+        list.add(ref);
     }
     
     public List<Reference> getList(){

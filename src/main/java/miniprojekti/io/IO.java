@@ -24,11 +24,11 @@ public class IO {
 
     /**
      * Write bib file for the given references
-     * @param articles Collection of references
+     * @param ref Collection of references
      * @param filename A filename given by the user.
      */
-    public void writeBibFile(String filename, Collection<Reference> references) {
+    public void writeBibFile(String filename, Collection<Reference> ref) {
         fileWriter.setName(filename);
-        fileWriter.writeFile(bufferBuilder.formatReferences(references).toString());
+        fileWriter.writeFile(bufferBuilder.formatReferences(ref).toString());
     }
 }

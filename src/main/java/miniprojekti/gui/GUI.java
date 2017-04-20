@@ -64,8 +64,8 @@ public class GUI {
         TableView<ObservableMap> table = new TableView();
         ObservableList<ObservableMap> rowMaps = FXCollections.observableArrayList();
         
-        for(Reference article : list){
-            rowMaps.add(FXCollections.observableMap(article.getFieldMap()));
+        for(Reference ref : list){
+            rowMaps.add(FXCollections.observableMap(ref.getFieldMap()));
         }
         
         table.setItems(rowMaps);

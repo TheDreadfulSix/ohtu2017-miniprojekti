@@ -4,21 +4,27 @@ package miniprojekti.domain;
  * Possible fieldnames as enum type. 
  */
 public enum FieldName {
+    ADDRESS,
+    ANNOTE,
     AUTHOR,
+    BOOKTITLE,
+    CHAPTER,
+    CROSSREF,
+    EDITION,
+    EDITOR,
+    HOWPUBLISHED,
+    INSTITUTION,
     JOURNAL,
-    TITLE,
-    YEAR,
     MONTH,
     NOTE,
     NUMBER,
+    ORGANIZATION,
     PAGES,
-    VOLUME,
-    EDITION,
-    EDITOR,
     PUBLISHER,
+    SCHOOL,
     SERIES,
-    ADDRESS,
-    KEY, // "Not to be confused with the citation key": https://nwalsh.com/tex/texhelp/bibtx-37.html
-    BOOKTITLE,
-    ORGANIZATION;
+    TITLE,
+    TYPE,
+    VOLUME,
+    YEAR;
 }

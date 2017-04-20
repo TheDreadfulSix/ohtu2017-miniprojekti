@@ -13,10 +13,11 @@ import static org.junit.Assert.*;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import miniprojekti.domain.Reference;
 
 
 public class BibReferenceFormatterTest {
-    private Article article;
+    private Reference reference;
     private Set<Field> fields;
     private BibReferenceFormatter formatter;
     
@@ -29,7 +30,7 @@ public class BibReferenceFormatterTest {
         fields.add(new Field(FieldName.YEAR, "20003"));
         fields.add(new Field(FieldName.VOLUME, "13"));
         fields.add(new Field(FieldName.PAGES, "137-172"));
-        article = new Article("Robins+Rountrees", fields);
+        reference = new Article("Robins+Rountrees", fields);
         formatter = new BibReferenceFormatter();
     }
     
@@ -47,7 +48,7 @@ public class BibReferenceFormatterTest {
                 "  YEAR = {20003},\n" +
                 "  AUTHOR = {Anthony Robins and Janet Rountree and Nathan Rountree},\n" +
                 "}\n";
-        formatter.formatReference(article);
+        formatter.formatReference(reference);
         String output = formatter.getStringBuffer().toString();
         assertEquals(expectedOutput, output);
     }

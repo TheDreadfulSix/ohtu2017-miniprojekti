@@ -1,8 +1,6 @@
 package miniprojekti.domain;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -12,11 +10,14 @@ import java.util.stream.Stream;
 public abstract class Reference {
     protected String citationKey;
     
-    protected static Set<FieldName> requiredFields;
-    protected static Set<FieldName> optionalFields;
-    protected static Set<FieldName> alternativeFields = EnumSet.noneOf(FieldName.class);
+    //Set<FieldName> requiredFields;
+    //Set<FieldName> optionalFields;
     
     protected Map<FieldName, Field> fields;
+    
+    public Reference(){
+        this.setFields();
+    }
     
     /**
      * Initialization with a collection of fields instead of a map, calls
@@ -28,9 +29,6 @@ public abstract class Reference {
      * 
      * @see #Article(java.lang.String, java.util.Map)
      */
-    public Reference(String citationKey, Collection<Field> fields) {
-        this(citationKey, createFieldMap(fields));
-    }
     
     /**
      * Initializes the reference with given citation key and fields.
@@ -43,29 +41,14 @@ public abstract class Reference {
      * 
      * @throws IllegalArgumentException on missing required fields
      * @throws IllegalArgumentException on invalid optional fields
-     * @throws IllegalArgumentException on missing alternative fields
      */
-    public Reference(String citationKey, Map<FieldName, Field> fields) throws IllegalArgumentException {
-        System.out.println(fields.keySet());
-        
+    public void setReference(String citationKey, Map<FieldName, Field> fields) throws IllegalArgumentException {
         if (!fields.keySet().containsAll(getRequiredFields())) {
             throw new IllegalArgumentException("Required fields are missing");
         }
         
         if (!this.getAllFieldNames().containsAll(fields.keySet())) {
             throw new IllegalArgumentException("Invalid optional fields");
-        }
-        
-        // TODO: Use retain all to make alternative fields exclusive
-
-        if (!this.getAlternativeFields().isEmpty()) {
-            
-            EnumSet<FieldName> alternative = EnumSet.copyOf(this.getAlternativeFields());
-            alternative.retainAll(fields.keySet());
-            
-            if (alternative.isEmpty()) {
-                throw new IllegalArgumentException("Required fields are missing");
-            }
         }
         
         this.citationKey = citationKey;
@@ -93,25 +76,14 @@ public abstract class Reference {
     public Map<FieldName, Field> getFieldMap() {
         return fields;
     }
+       
+    public abstract Set<FieldName> getRequiredFields();
     
-    public static Set<FieldName> getRequiredFields() {
-        return requiredFields;
-    }
+    public abstract Set<FieldName> getOptionalFields();
     
-    public static Set<FieldName> getOptionalFields() {
-        return optionalFields;
-    }
-    
-    public static Set<FieldName> getAlternativeFields() {
-        return alternativeFields;
-    }
-
     protected Set<FieldName> getAllFieldNames() {
-        EnumSet<FieldName> all = EnumSet.copyOf(getRequiredFields());
-        all.addAll(getOptionalFields());
-        all.addAll(getAlternativeFields());
-        
-        return all;
+        return Stream.concat(getOptionalFields().stream(), getRequiredFields().stream())
+               .collect(Collectors.toSet());
     }
 
     protected static Map<FieldName, Field> createFieldMap(Collection<Field> fields) {
@@ -124,13 +96,6 @@ public abstract class Reference {
         return fieldMap;
     }
     
-    @Override
-    public String toString() {
-        String s = "source: Article\ncitation key: " + citationKey + "\n";
-        for(FieldName fn : fields.keySet()){
-            s += fn.name().toLowerCase() + ": " + fields.get(fn).getValue() + "\n";
-        }
-        s += "\n\n";
-        return s;
-    }
+    public abstract void setFields();
+ 
 }

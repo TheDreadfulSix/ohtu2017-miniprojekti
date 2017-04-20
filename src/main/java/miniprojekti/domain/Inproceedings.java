@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package miniprojekti.domain;
 
 import java.util.Collection;
@@ -6,34 +11,33 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Contains reference information of a book.
+ *
+ * @author Joonas
  */
-
-public class Book extends Reference {
+public class Inproceedings extends Reference {
     public Set<FieldName> requiredFields;
     public Set<FieldName> optionalFields;
-    public Set<FieldName> alternativeFields;
     
-    public Book() {
+    public Inproceedings(){
         super();
         this.setFields();
     }
     
-    /**
+     /**
      * Calls {@link #Reference(java.lang.String, java.util.Collection)}.
      */
-    public Book(String citationKey, Collection<Field> fields) {
+    public Inproceedings(String citationKey, Collection<Field> fields) {
         this(citationKey, createFieldMap(fields));
     }
     
     /**
      * Calls {@link #Reference(java.lang.String, java.util.Map)}.
      */
-    public Book(String citationKey, Map<FieldName, Field> fields) throws IllegalArgumentException {
+    public Inproceedings(String citationKey, Map<FieldName, Field> fields) throws IllegalArgumentException {
         super();
         this.setFields();
     }
-    
+  
     public Set<FieldName> getRequiredFields() {
         return requiredFields;
     }
@@ -41,30 +45,25 @@ public class Book extends Reference {
     public Set<FieldName> getOptionalFields() {
         return optionalFields;
     }
-    
-    public Set<FieldName> getAlternativeFields() {
-        return alternativeFields;
-    }
-    
+
     public void setFields() {
         requiredFields = EnumSet.of(
+            FieldName.AUTHOR, 
+            FieldName.BOOOKTITLE, 
             FieldName.TITLE, 
-            FieldName.YEAR,
-            FieldName.PUBLISHER
+            FieldName.YEAR
         );
         optionalFields = EnumSet.of(
+            FieldName.ADDRESS, 
+            FieldName.EDITOR, 
             FieldName.MONTH, 
-            FieldName.NOTE, 
-            FieldName.ADDRESS,
-            FieldName.VOLUME,
-            FieldName.EDITION,
-            FieldName.SERIES
-        );
-
-        alternativeFields = EnumSet.of(
-            FieldName.AUTHOR, 
-            FieldName.EDITOR
+            FieldName.NOTE,
+            FieldName.NUMBER,
+            FieldName.ORGANIZATION,
+            FieldName.PAGES,
+            FieldName.PUBLISHER,
+            FieldName.SERIES,
+            FieldName.VOLUME
         );
     }
 }
-

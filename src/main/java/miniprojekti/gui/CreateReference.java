@@ -5,12 +5,16 @@
  */
 package miniprojekti.gui;
 
+import java.util.Arrays;
+import java.util.Collections;
 import miniprojekti.domain.Article;
 import miniprojekti.domain.Field;
 import miniprojekti.domain.FieldName;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -27,6 +31,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import miniprojekti.domain.Inproceedings;
+import miniprojekti.domain.Reference;
 import miniprojekti.main.App;
 
 /**
@@ -40,44 +46,52 @@ public class CreateReference {
     public static void display(){
         window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("New maze");
+        window.setTitle("New Reference");
 
-        VBox layout = new VBox();
-
-        layout.getChildren().add(setLayout());
-        layout.setPadding(new Insets(10,10,10,10));
-        Scene scene = new Scene(layout,400,500);
-        scene.getStylesheets().add("style.css");
-        window.setResizable(true);
-        window.setScene(scene);
-        window.show();
+        setScene(new Article(),0);
     }
     
     /**
      * Asettaa ikkunan ulkoasun.
      * @return Ikkunan ulkoasu.
      */
-    private static GridPane setLayout() {
+    private static void setScene(Reference ref, int selected) {
         int y = 1;
         GridPane layout = new GridPane();
+        layout.setPadding(new Insets(10,10,10,10));
         HashMap<FieldName,TextField> input = new HashMap<>();
+
         Label source = new Label("Source:");
-       
         GridPane.setConstraints(source, 0, y);
         
         ChoiceBox setSource = new ChoiceBox(FXCollections.observableArrayList("article",
             "book","booklet","inbook","incollection","inproceedings","manual","thesis",
             "misc","proceedings","tech report","unpublished"));
+        setSource.getSelectionModel().select(selected);
         GridPane.setConstraints(setSource, 1, y++);
         
-        //This part of the code is needed when other reference types are added!
-//        setSource.getSelectionModel().selectedIndexProperty().addListener(new 
-//        ChangeListener<Number>() {
-//            @Override
-//            public void changed(ObservableValue ov, Number value, Number new_value) {
-//                
-//            }
-//        });
+        setSource.getSelectionModel().selectedIndexProperty().addListener(new 
+        ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue ov, Number value, Number new_value) {
+                System.out.println(new_value.intValue());
+                switch(new_value.intValue()){
+                    case 0: setScene(new Article(),0);
+                        System.out.println("Article"); 
+                        break;
+                    case 1: setScene(new Article(),0);
+                        break;
+                    case 2: setScene(new Article(),0);
+                        break;
+                    case 3: setScene(new Article(),0);
+                        break;
+                    case 4: setScene(new Article(),0);
+                        break;
+                    case 5: setScene(new Inproceedings(),5);
+                        break;
+                }
+            }
+        });
         
         Label required = new Label("Required fields");
         required.getStyleClass().add("header");
@@ -90,7 +104,7 @@ public class CreateReference {
         TextField citation = new TextField();
         GridPane.setConstraints(citation, 1, y++);
         
-        for(FieldName fn: Article.getRequiredFields()){
+        for(FieldName fn: ref.getRequiredFields()){
             Label label = new Label(fn.name());
             TextField text = new TextField();
             GridPane.setConstraints(label, 0, y);
@@ -103,7 +117,7 @@ public class CreateReference {
         optional.getStyleClass().add("header");
         GridPane.setConstraints(optional, 0, y++);
         
-        for(FieldName fn: Article.getOptionalFields()){
+        for(FieldName fn: ref.getOptionalFields()){
             Label label = new Label(fn.name());
             TextField text = new TextField();
             GridPane.setConstraints(label, 0, y);
@@ -118,13 +132,18 @@ public class CreateReference {
         
         Button create = new Button("Create");
         GridPane.setConstraints(create, 1, y);
-        create.setOnAction(e -> validateInput(setSource, input, citation));
+        create.setOnAction(e -> validateInput(setSource, input, citation, ref));
         
         layout.getChildren().addAll(source,setSource,close,create,optional,required,citkey,citation);
         layout.setVgap(8);
         layout.setHgap(10);
         layout.setPadding(new Insets(10,10,10,10));
-        return layout;
+        
+        Scene scene = new Scene(layout,400, y * 35);
+        scene.getStylesheets().add("style.css");
+        window.setResizable(false);
+        window.setScene(scene);
+        window.show();
     }
     
     /**
@@ -142,12 +161,12 @@ public class CreateReference {
         }
     }
     
-    private static void validateInput(ChoiceBox source, HashMap<FieldName, TextField> input, TextField cit) {
+    private static void validateInput(ChoiceBox source, HashMap<FieldName, TextField> input, TextField cit, Reference ref) {
         ObservableMap<FieldName, Field> fields = FXCollections.observableHashMap();
         for(FieldName fn : input.keySet()){
             if(!input.get(fn).getText().isEmpty()) {
                 fields.put(fn, new Field(fn,input.get(fn).getText()));
-            }else if(Article.getRequiredFields().contains(fn)){
+            }else if(ref.getRequiredFields().contains(fn)){
                 Alert alert = new Alert(AlertType.INFORMATION);
                 alert.setTitle("Error");
                 alert.setHeaderText(null);
@@ -157,8 +176,8 @@ public class CreateReference {
                 return;
             }
         }
-        Article article = new Article(cit.getText(),fields);
-        App.getLogic().add(article);
+        ref.setReference(cit.getText(),fields);
+        App.getLogic().add(ref);
         App.getGUI().setScene();
         window.close();
     }
