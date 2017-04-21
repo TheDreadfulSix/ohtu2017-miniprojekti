@@ -32,6 +32,10 @@ public class BibFileWriterTest {
 
     @Before
     public void setUp() { //Creates new Reference objects -> in these tests as Articles.
+        File dirBuilder = new File(testFolderPath);
+        if (!dirBuilder.exists() || !dirBuilder.isDirectory()) { //Checks that paths folders exists. If not -> creates them..
+            dirBuilder.mkdirs();
+        }
         fields = new HashSet<>();
         fields.add(new Field(FieldName.AUTHOR, "Anthony Robins and Janet Rountree and Nathan Rountree"));
         fields.add(new Field(FieldName.JOURNAL, "Computer Science Education"));
