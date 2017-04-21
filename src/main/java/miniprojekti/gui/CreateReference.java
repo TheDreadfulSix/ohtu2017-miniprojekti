@@ -210,7 +210,7 @@ public class CreateReference {
             int help = 0; //might wanna get rid of this, if any better ideas. switch would prob work too.
             for (FieldName fn : ref.getAlternativeFields()) {
                 if (fields.containsKey(fn)) {
-                    help = 1;
+                    help++;
                 }
             }
             if (help == 0) { //uh, so, yea, using variable to check if there was atleast one required alternative field filled.
