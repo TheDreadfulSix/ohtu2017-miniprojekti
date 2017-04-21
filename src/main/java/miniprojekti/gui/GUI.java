@@ -73,6 +73,9 @@ public class GUI {
         TableColumn authorColumn = new TableColumn("Author");
         authorColumn.setCellValueFactory(new ObservableMapValueFactory<Field>(FieldName.AUTHOR));
         
+        //TableColumn editorColumn = new TableColumn("Editor");
+        //authorColumn.setCellValueFactory(new ObservableMapValueFactory<Field>(FieldName.EDITOR));
+        
         TableColumn editionColumn = new TableColumn("Edition");
         editionColumn.setCellValueFactory(new ObservableMapValueFactory<Field>(FieldName.EDITION));
         

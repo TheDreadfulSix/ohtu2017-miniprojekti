@@ -11,6 +11,7 @@ import miniprojekti.domain.Article;
 import miniprojekti.domain.Field;
 import miniprojekti.domain.FieldName;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -90,6 +91,18 @@ public class CreateReference {
                         break;
                     case 5: setScene(new Inproceedings(),5);
                         break;
+                    case 6: setScene(new Article(),0);
+                        break;
+                    case 7: setScene(new Article(),0);
+                        break;
+                    case 8: setScene(new Article(),0);
+                        break;
+                    case 9: setScene(new Article(),0);
+                        break;
+                    case 10: setScene(new Article(),0);
+                        break;
+                    case 11: setScene(new Article(),0);
+                        break;
                 }
             }
         });
@@ -113,6 +126,13 @@ public class CreateReference {
             layout.getChildren().addAll(label,text);
             input.put(fn, text);
         }
+        
+        Label alternative = new Label("Alternative fields");
+        if (ref.getAlternativeFields().isEmpty()) {
+            alternative.setText("No Alternative fields");
+        }
+        alternative.getStyleClass().add("header");
+        GridPane.setConstraints(alternative, 0, y++);
         
         for(FieldName fn: ref.getAlternativeFields()){
             Label label = new Label(fn.name());
@@ -144,7 +164,7 @@ public class CreateReference {
         GridPane.setConstraints(create, 1, y);
         create.setOnAction(e -> validateInput(setSource, input, citation, ref));
         
-        layout.getChildren().addAll(source,setSource,close,create,optional,required,citkey,citation);
+        layout.getChildren().addAll(source,setSource,close,create,optional,alternative,required,citkey,citation);
         layout.setVgap(8);
         layout.setHgap(10);
         layout.setPadding(new Insets(10,10,10,10));
@@ -184,6 +204,30 @@ public class CreateReference {
 
                 alert.showAndWait();
                 return;
+            }
+        }
+        if (!ref.getAlternativeFields().isEmpty()) { //damn nesting, but hey, it works! :P (feel free to improve)
+            int help = 0; //might wanna get rid of this, if any better ideas. switch would prob work too.
+            for (FieldName fn : ref.getAlternativeFields()) {
+                if (fields.containsKey(fn)) {
+                    help = 1;
+                }
+            }
+            if (help == 0) { //uh, so, yea, using variable to check if there was atleast one required alternative field filled.
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Required alternative field is empty!");
+                
+                alert.showAndWait();
+                return;
+            } else if (help>1) {
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Only one of the alternative fields is allowed to be filled"); //ahaha this english.
+                
+                alert.showAndWait();
             }
         }
         ref.setReference(cit.getText(),fields);
