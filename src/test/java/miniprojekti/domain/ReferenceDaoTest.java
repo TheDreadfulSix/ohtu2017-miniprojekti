@@ -5,34 +5,41 @@
  */
 package miniprojekti.domain;
 
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.Ignore;
 
 import static org.junit.Assert.assertEquals;
 
 /**
  * Here we test insert, delete and retrieve methods to a test database. Test database is initialized with the following data:
  *
- *
+ *TO DO: Add description of the data here
  *
  *
  *
  */
 public class ReferenceDaoTest {
 
-    private Article article1;
-    private Article article2;
+    private Article article;
     private Set<Field> fields;
-    ReferenceDAO rDAO;
+    private static ReferenceDAO referenceDAO;
 
     @Before
     public void setUp() {
+        referenceDAO = new ReferenceDAO();
+        referenceDAO.useTestDatabase();
+    }
+
+    @Test
+    public void insertingReferenceWithUniqueCitationKeyIsSuccesful() {
         fields = new HashSet<>();
         fields.add(new Field(FieldName.AUTHOR, "Anthony Robins and Janet Rountree and Nathan Rountree"));
         fields.add(new Field(FieldName.JOURNAL, "Computer Science Education"));
@@ -40,17 +47,13 @@ public class ReferenceDaoTest {
         fields.add(new Field(FieldName.YEAR, "20003"));
         fields.add(new Field(FieldName.VOLUME, "13"));
         fields.add(new Field(FieldName.PAGES, "137-172"));
-        article1 = new Article("Testi1", fields);
-        article2 = new Article("Testi2", fields);
-        rDAO = new ReferenceDAO();
+        article = new Article("Testi", fields);
+        referenceDAO.insertReference(article);
     }
 
-    @Ignore
     @Test
-    public void addAndGetTwoReferences() {
-        rDAO.insertReference(article1);
-        rDAO.insertReference(article2);
-        Collection<Reference> references = rDAO.getReferences();
-        assertEquals(2, references.size());
+    public void getReferencesReturnsAllTHerFourReferencesInTheDatabase() {
+        List<Reference> references = referenceDAO.getReferences();
+        assertEquals(4, references.size());
     }
 }

@@ -47,41 +47,26 @@ public class DBManager {
     }
 
     /**
-     * If test database connection exists, return it. Otherwise create it.
+     * Create new database connection. We'll want to create every time so that the test database is flushed and initialized
+     * every time new connection to it is called.
      *
      * @return Connection to the database
      *
      * @throws java.sql.SQLException
      */
     public static Connection getTestConnection() throws SQLException {
-        if (manager == null) {
             try {
                 manager = new DBManager();
                 initializeTestDatabase();
             } catch (Exception ex) {
                 Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, "Problem creating H2 database connection", ex);
             }
-        }
         return ds.getConnection();
     }
 
-    /**
-     * Closes the database connection. This is method is only used for tests.
-     *
-     * @throws java.sql.SQLException
-     */
-    public static void closeConnection() throws SQLException {
-        try {
-            ds.getConnection().close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     private static void initializeTestDatabase() {
-        ds = new JdbcDataSource();
-        ds.setURL("jdbc:h2:~/data/test;" +
-                "INIT=RUNSCRIPT FROM 'classpath:create.sql'");
+        ds.setURL("jdbc:h2:./data/test;" +
+                "INIT=RUNSCRIPT FROM 'classpath:create.sql'\\;RUNSCRIPT FROM 'classpath:initializeTest.sql'");
         ds.setUser("sa");
         ds.setPassword("");
     }

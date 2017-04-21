@@ -16,7 +16,8 @@ public class DBManagerTest {
     @Test
     public void getConnectionConnectsToDatabaseWithoutExceptions() {
         try {
-            Connection connection = DBManager.getConnection();
+            DBManager.getConnection();
+            DBManager.getConnection().close();
         } catch (SQLException e) {
             e.printStackTrace();
             fail();
@@ -26,7 +27,8 @@ public class DBManagerTest {
     @Test
     public void getTestConnectionConnectsToTestDatabaseWithoutExceptions() {
         try {
-            Connection connection = DBManager.getTestConnection();
+            DBManager.getTestConnection();
+            DBManager.getConnection().close();
         } catch (SQLException e) {
             e.printStackTrace();
             fail();

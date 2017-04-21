@@ -26,9 +26,9 @@ public class ReferenceDAO extends BaseDAO {
     /**
      * Inserts the reference to the database.
      */
-    public void insertReference(Reference ref) {
+    public void insertReference(Reference reference) {
         try {
-            String sql = formatInsertQuery(ref);
+            String sql = formatInsertQuery(reference);
             initializeQuery(sql);
             implementQuery();
         } finally {
