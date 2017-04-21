@@ -19,12 +19,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Here we test insert, delete and retrieve methods to a test database. Test database is initialized with the following data:
- *
- *TO DO: Add description of the data here
- *
- *
- *
+ * Here we test insert, delete and retrieve methods to a test database.
  */
 public class ReferenceDaoTest {
 
