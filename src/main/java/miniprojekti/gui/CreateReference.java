@@ -228,6 +228,7 @@ public class CreateReference {
                 alert.setContentText("Only one of the alternative fields is allowed to be filled"); //ahaha this english.
                 
                 alert.showAndWait();
+                return;
             }
         }
         ref.setReference(cit.getText(),fields);
