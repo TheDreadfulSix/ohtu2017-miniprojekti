@@ -40,7 +40,7 @@ public class GenerateBibFile {
 
         layout.getChildren().add(setLayout());
         layout.setPadding(new Insets(10, 10, 10, 10));
-        Scene scene = new Scene(layout, 400, 200);
+        Scene scene = new Scene(layout, 450, 200);
         scene.getStylesheets().add("style.css");
         window.setResizable(true);
         window.setScene(scene);
