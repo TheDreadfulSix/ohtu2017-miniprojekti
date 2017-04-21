@@ -6,6 +6,7 @@ import miniprojekti.domain.FieldName;
 import miniprojekti.io.BibFileWriter;
 import miniprojekti.io.BibReferenceFormatter;
 import miniprojekti.io.FormattedStringBufferBuilder;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -54,7 +55,8 @@ public class BibFileWriterTest {
         writer.setPath(testFolderPath);
     }
 
-    private void deleteAllTheFilesInTheTstDirectory() {
+    @After
+    public void deleteAllTheFilesInTheTestDirectory() {
         Arrays.stream(new File(testFolderPath).listFiles()).forEach(File::delete);
     }
 
@@ -65,7 +67,6 @@ public class BibFileWriterTest {
     public void BibFileWriterWritesFile() {
         writer.writeFile(output);
         assertTrue(excpectedFile.exists());
-        deleteAllTheFilesInTheTstDirectory();
     }
 
     @Test
@@ -75,6 +76,5 @@ public class BibFileWriterTest {
         int numberOfFiles = new File(testFolderPath).listFiles().length;
         int expectedNumberOfFiles = 2;
         assertEquals(expectedNumberOfFiles, numberOfFiles);
-        deleteAllTheFilesInTheTstDirectory();
     }
 }
