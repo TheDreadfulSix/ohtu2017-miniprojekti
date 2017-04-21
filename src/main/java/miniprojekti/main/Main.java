@@ -34,6 +34,7 @@ public class Main extends Application{
     }
     
     public static void setScene(Scene newScene){
+        window.show();
         window.setScene(newScene);
     }
 }

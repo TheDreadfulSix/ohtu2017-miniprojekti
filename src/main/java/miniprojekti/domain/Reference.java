@@ -111,5 +111,16 @@ public abstract class Reference {
     }
     
     public abstract void setFields();
+    
+    @Override
+    public String toString() {
+        String all = "";
+        all += this.getClass().getSimpleName().toUpperCase() + "                    Citation Key: " + this.citationKey;
+        for (FieldName fld : this.fields.keySet()) {
+            all += "\n          " + fld.toString() + ": " + this.fields.get(fld).value;
+        }
+        all += "\n";
+        return all;
+    }
  
 }
