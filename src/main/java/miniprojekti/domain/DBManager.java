@@ -22,7 +22,7 @@ public class DBManager {
 
     public DBManager() throws NamingException {
         ds = new JdbcDataSource();
-        ds.setURL("jdbc:h2:./data/references;" +
+        ds.setURL("jdbc:h2:~/referencedatabase/references;" +
                 "INIT=RUNSCRIPT FROM 'classpath:create.sql'");
         ds.setUser("sa");
         ds.setPassword("");
@@ -65,7 +65,7 @@ public class DBManager {
     }
 
     private static void initializeTestDatabase() {
-        ds.setURL("jdbc:h2:./data/test;" +
+        ds.setURL("jdbc:h2:~/referencedatabase/data/test;" +
                 "INIT=RUNSCRIPT FROM 'classpath:create.sql'\\;RUNSCRIPT FROM 'classpath:initializeTest.sql'");
         ds.setUser("sa");
         ds.setPassword("");
