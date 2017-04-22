@@ -23,7 +23,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class ReferenceDaoTest {
 
-    private Article article;
+    private Reference reference;
     private Set<Field> fields;
     private static ReferenceDAO referenceDAO;
 
@@ -42,13 +42,26 @@ public class ReferenceDaoTest {
         fields.add(new Field(FieldName.YEAR, "20003"));
         fields.add(new Field(FieldName.VOLUME, "13"));
         fields.add(new Field(FieldName.PAGES, "137-172"));
-        article = new Article("Testi", fields);
-        referenceDAO.insertReference(article);
+        reference = new Article("Testi", fields);
+        referenceDAO.insertReference(reference);
     }
 
     @Test
     public void getReferencesReturnsAllTHerFourReferencesInTheDatabase() {
         List<Reference> references = referenceDAO.getReferences();
         assertEquals(4, references.size());
+    }
+
+    @Test
+    public void deletingReferenceFromTheDatabaseIsSuccesful() {
+        fields = new HashSet<>();
+        fields.add(new Field(FieldName.AUTHOR, "Matti Meikäläinen"));
+        fields.add(new Field(FieldName.JOURNAL, "Tärkeä artikkeli"));
+        fields.add(new Field(FieldName.TITLE, "Suurien ajatusten lehti"));
+        fields.add(new Field(FieldName.YEAR, "2017"));
+        fields.add(new Field(FieldName.VOLUME, "99"));
+        fields.add(new Field(FieldName.PAGES, "137-172"));
+        reference = new Article("testiArtikkeli1", fields);
+        referenceDAO.deleteReference(reference);
     }
 }

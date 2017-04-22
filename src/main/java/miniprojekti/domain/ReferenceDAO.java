@@ -37,7 +37,21 @@ public class ReferenceDAO extends BaseDAO {
     }
 
     /**
+     * Delete reference.
+     */
+    public void deleteReference(Reference reference) {
+        try {
+            String sql = "DELETE FROM references WHERE citationKey = '" + reference.getCitationKey() + "'";
+            initializeQuery(sql);
+            implementQuery();
+        } finally {
+            close();
+        }
+    }
+
+    /**
      * Retrieves all the references in the database
+     *
      * @return Collection of references
      */
     public List<Reference> getReferences() {
@@ -83,13 +97,13 @@ public class ReferenceDAO extends BaseDAO {
                 String columnName = metaData.getColumnName(i);
                 // Class and citationKey are not field and thus they are handled separately. We'll also want to skip nulls.
                 if (!columnName.equalsIgnoreCase("class") && !columnName.equalsIgnoreCase("citationKey") &&
-                results.getString(columnName) != null) {
+                        results.getString(columnName) != null) {
                     fields.add(new Field(FieldName.valueOf(columnName), results.getString(columnName)));
                 }
             }
             String citationKey = results.getString("citationKey");
             String className = results.getString("class");
-            className = "miniprojekti.domain." + className.substring(0,1).toUpperCase() + className.substring(1).toLowerCase();
+            className = "miniprojekti.domain." + className.substring(0, 1).toUpperCase() + className.substring(1).toLowerCase();
             Class cl = Class.forName(className);
             Constructor con = cl.getConstructor(String.class, Collection.class);
             reference = con.newInstance(citationKey, fields);
