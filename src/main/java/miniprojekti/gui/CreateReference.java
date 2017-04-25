@@ -164,7 +164,10 @@ public class CreateReference {
 
         Button create = new Button("Create");
         GridPane.setConstraints(create, 1, y);
-        create.setOnAction(e -> validateInput(setSource, input, citation, ref));
+        create.setOnAction(e -> {
+            validateInput(setSource, input, citation, ref);
+            App.getGUI().setScene();
+        });
 
         layout.getChildren().addAll(source, setSource, close, create, optional, alternative, required, citkey, citation);
         layout.setVgap(8);
@@ -202,7 +205,7 @@ public class CreateReference {
                 //awesome ugly and way too long if thingy
                 if (fn.equals(FieldName.YEAR) || fn.equals(FieldName.CHAPTER) || fn.equals(FieldName.NUMBER) || fn.equals(FieldName.VOLUME)) {
                     if (!isInt(input.get(fn))) {
-                        alertG.alert("Error", "The fields in red hould be in numerical format.");
+                        alertG.alert("Error", "The fields in red should be in numerical format.");
                         return;
                     }
                 }
@@ -212,8 +215,8 @@ public class CreateReference {
                 return;
             }
         }
-        if (!ref.getAlternativeFields().isEmpty()) { //damn nesting, but hey, it works! :P (feel free to improve)
-            int help = 0; //might wanna get rid of this, if any better ideas. switch would prob work too.
+        if (!ref.getAlternativeFields().isEmpty()) { 
+            int help = 0;
             for (FieldName fn : ref.getAlternativeFields()) {
                 if (fields.containsKey(fn)) {
                     help++;
