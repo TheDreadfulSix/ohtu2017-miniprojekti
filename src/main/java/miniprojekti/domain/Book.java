@@ -10,13 +10,9 @@ import java.util.Set;
  */
 
 public class Book extends Reference {
-    public Set<FieldName> requiredFields;
-    public Set<FieldName> optionalFields;
-    public Set<FieldName> alternativeFields;
     
     public Book() {
         super();
-        this.setFields();
     }
     
     /**
@@ -30,23 +26,9 @@ public class Book extends Reference {
      * Calls {@link #Reference(java.lang.String, java.util.Map)}.
      */
     public Book(String citationKey, Map<FieldName, Field> fields) throws IllegalArgumentException {
-        super();
-        this.setFields();
         this.setReference(citationKey, fields);
     }
-    
-    public Set<FieldName> getRequiredFields() {
-        return requiredFields;
-    }
-    
-    public Set<FieldName> getOptionalFields() {
-        return optionalFields;
-    }
-    
-    public Set<FieldName> getAlternativeFields() {
-        return alternativeFields;
-    }
-    
+     
     public void setFields() {
         requiredFields = EnumSet.of(
             FieldName.TITLE, 

@@ -75,8 +75,8 @@ public class ReferenceTest {
     public void initializationFailsWithMissingAlternativeFields() {
         fields = new HashSet<>();
         
-        //fields.add(new Field(FieldName.TITLE, "Clean Code: A Handbook of Agile Software Craftsmanship"));
-        fields.add(new Field(FieldName.AUTHOR, "Martin Robert"));
+        fields.add(new Field(FieldName.TITLE, "Clean Code: A Handbook of Agile Software Craftsmanship"));
+        //fields.add(new Field(FieldName.AUTHOR, "Martin Robert"));
         fields.add(new Field(FieldName.YEAR, "2008"));
         fields.add(new Field(FieldName.PUBLISHER, "Prentice Hall"));
         
@@ -84,6 +84,19 @@ public class ReferenceTest {
         expected.expectMessage("Required fields are missing");
         
         book = new Book(citationKey, fields);
+    }
+    
+    @Test
+    public void getFieldReturnsAProperField() {
+        Article art = new Article("maaan", fields);
+        Field vol = art.getField(FieldName.VOLUME);
+        assertEquals(vol.getValue(), "13");
+    }
+    
+    @Test
+    public void fieldToStringWorks() {
+        Field yr = new Field(FieldName.YEAR, "20003");
+        assertEquals(yr.toString(), "20003");
     }
     
     @Test
@@ -96,5 +109,9 @@ public class ReferenceTest {
         fields.add(new Field(FieldName.PUBLISHER, "Prentice Hall"));
         
         book = new Book(citationKey, fields);
+    }
+    
+    @Test
+    public void bookWithNoAlternativeFieldsThrows() {
     }
 }

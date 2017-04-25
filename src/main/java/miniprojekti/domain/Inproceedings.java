@@ -15,8 +15,6 @@ import java.util.Set;
  * @author Joonas
  */
 public class Inproceedings extends Reference {
-    public Set<FieldName> requiredFields;
-    public Set<FieldName> optionalFields;
     
     public Inproceedings(){
         super();
@@ -38,18 +36,6 @@ public class Inproceedings extends Reference {
         this.setFields();
         this.setReference(citationKey, fields);
     }
-  
-    public Set<FieldName> getRequiredFields() {
-        return requiredFields;
-    }
-    
-    public Set<FieldName> getOptionalFields() {
-        return optionalFields;
-    }
-    
-    public Set<FieldName> getAlternativeFields() {
-        return EnumSet.noneOf(FieldName.class);
-    }
 
     public void setFields() {
         requiredFields = EnumSet.of(
@@ -70,5 +56,6 @@ public class Inproceedings extends Reference {
             FieldName.SERIES,
             FieldName.VOLUME
         );
+        alternativeFields = EnumSet.noneOf(FieldName.class);
     }
 }

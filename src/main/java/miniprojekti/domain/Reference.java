@@ -15,6 +15,10 @@ public abstract class Reference {
     
     protected Map<FieldName, Field> fields;
     
+    protected Set<FieldName> requiredFields;
+    protected Set<FieldName> optionalFields;
+    protected Set<FieldName> alternativeFields;
+    
     public Reference(){
         this.setFields();
     }
@@ -43,6 +47,7 @@ public abstract class Reference {
      * @throws IllegalArgumentException on invalid optional fields
      */
     public void setReference(String citationKey, Map<FieldName, Field> fields) throws IllegalArgumentException {
+        this.setFields();
         if (!fields.keySet().containsAll(getRequiredFields())) {
             throw new IllegalArgumentException("Required fields are missing");
         }
@@ -88,11 +93,17 @@ public abstract class Reference {
         return fields;
     }
        
-    public abstract Set<FieldName> getRequiredFields();
+    public Set<FieldName> getRequiredFields() {
+        return requiredFields;
+    }
     
-    public abstract Set<FieldName> getOptionalFields();
+    public Set<FieldName> getOptionalFields() {
+        return optionalFields;
+    }
     
-    public abstract Set<FieldName> getAlternativeFields();
+    public Set<FieldName> getAlternativeFields() {
+        return alternativeFields;
+    }
     
     protected Set<FieldName> getAllFieldNames() {
         
