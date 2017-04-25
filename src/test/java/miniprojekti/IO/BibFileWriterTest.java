@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
 import miniprojekti.domain.Reference;
 
@@ -77,4 +78,6 @@ public class BibFileWriterTest {
         int expectedNumberOfFiles = 2;
         assertEquals(expectedNumberOfFiles, numberOfFiles);
     }
+    
+    
 }
