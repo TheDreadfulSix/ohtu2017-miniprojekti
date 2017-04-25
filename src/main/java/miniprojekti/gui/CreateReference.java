@@ -54,8 +54,8 @@ public class CreateReference {
     }
     
     /**
-     * Asettaa ikkunan ulkoasun.
-     * @return Ikkunan ulkoasu.
+     * Sets the window's layout.
+     * 
      */
     private static void setScene(Reference ref, int selected) {
         int y = 1;
@@ -177,9 +177,9 @@ public class CreateReference {
     }
     
     /**
-     * Palauttaa totuusarvon siitä, onko annettu syöte kokonaisluku.
-     * @param input Käyttäjän syöte.
-     * @return Totuusarvo siitä, onko syöte kokonaisluku.
+     * A method for checking if the input by the user is an integer.
+     * @param input User's input
+     * @return true if is integer, false else.
      */
     private static boolean isInt(TextField input) {
         try{
@@ -190,7 +190,9 @@ public class CreateReference {
             return false;
         }
     }
-    
+    /**
+    *This method checks if the fields are filled right.
+    */
     private static void validateInput(ChoiceBox source, HashMap<FieldName, TextField> input, TextField cit, Reference ref) {
         ObservableMap<FieldName, Field> fields = FXCollections.observableHashMap();
         for(FieldName fn : input.keySet()){
