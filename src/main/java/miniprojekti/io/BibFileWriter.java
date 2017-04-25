@@ -58,12 +58,7 @@ public class BibFileWriter {
                 setName(name + getCurrentTime());
             }
 
-            output = output.replaceAll("ö", "{\\\\\"o}");
-            output = output.replaceAll("ä", "{\\\\\"a}");
-            output = output.replaceAll("å", "{\\\\aa}");
-            output = output.replaceAll("Ö", "{\\\\\"O}");
-            output = output.replaceAll("Ä", "{\\\\\"A}");
-            output = output.replaceAll("Å", "{\\\\AA}");
+            output = fixScandicCharacters(output);
             
             BufferedWriter writer = Files.newBufferedWriter(file, encoding);
             writer.write(output, 0, output.length());
@@ -73,6 +68,16 @@ public class BibFileWriter {
         }
     }
 //this may or may or be used for checking the path name as well..
+
+    private String fixScandicCharacters(String output) {
+        output = output.replaceAll("ö", "{\\\\\"o}");
+        output = output.replaceAll("ä", "{\\\\\"a}");
+        output = output.replaceAll("å", "{\\\\aa}");
+        output = output.replaceAll("Ö", "{\\\\\"O}");
+        output = output.replaceAll("Ä", "{\\\\\"A}");
+        output = output.replaceAll("Å", "{\\\\AA}");
+        return output;
+    }
 
     private boolean checkFile() {
         return file.toFile().exists();
