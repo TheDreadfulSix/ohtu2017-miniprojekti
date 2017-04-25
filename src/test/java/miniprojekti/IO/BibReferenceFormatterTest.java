@@ -37,19 +37,20 @@ public class BibReferenceFormatterTest {
     @Rule
     public ExpectedException expected = ExpectedException.none();
 
-    @Ignore
+    
     @Test
     public void formatFieldFormatsFieldCorrectly() {
-        String expectedOutput = "@article{Robins+Rountrees,\n" +
-                "  PAGES = {137-172},\n" +
-                "  VOLUME = {13},\n" +
-                "  TITLE = {Learning and teaching programming: A review and discussion},\n" +
-                "  JOURNAL = {Computer Science Education},\n" +
-                "  YEAR = {20003},\n" +
-                "  AUTHOR = {Anthony Robins and Janet Rountree and Nathan Rountree},\n" +
-                "}\n";
+        
+        
+        
         formatter.formatReference(reference);
         String output = formatter.getStringBuffer().toString();
-        assertEquals(expectedOutput, output);
+        assertTrue(output.contains("@article{Robins+Rountrees,"));
+        assertTrue(output.contains(" PAGES = {137-172}"));
+        assertTrue(output.contains("  VOLUME = {13},"));
+        assertTrue(output.contains("  TITLE = {Learning and teaching programming: A review and discussion},"));
+        assertTrue(output.contains("  JOURNAL = {Computer Science Education},"));
+        assertTrue(output.contains("  YEAR = {20003},"));
+        assertTrue(output.contains("  AUTHOR = {Anthony Robins and Janet Rountree and Nathan Rountree},"));
     }
 }

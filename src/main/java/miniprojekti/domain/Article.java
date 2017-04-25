@@ -10,12 +10,9 @@ import java.util.Set;
  */
 
 public class Article extends Reference {
-    public Set<FieldName> requiredFields;
-    public Set<FieldName> optionalFields;
     
     public Article(){
         super();
-        this.setFields();
     }
     
     /**
@@ -29,27 +26,7 @@ public class Article extends Reference {
      * Calls {@link #Reference(java.lang.String, java.util.Map)}.
      */
     public Article(String citationKey, Map<FieldName, Field> fields) throws IllegalArgumentException {
-        super();
-        this.setFields();
         this.setReference(citationKey, fields);
-    }
-    
-    public Set<FieldName> getRequiredFields() {
-        if (requiredFields == null) {
-            setFields();
-        }
-        return this.requiredFields;
-    }
-    
-    public Set<FieldName> getOptionalFields() {
-        if (optionalFields == null) {
-            setFields();
-        }
-        return this.optionalFields;
-    }
-    
-    public Set<FieldName> getAlternativeFields() {
-        return EnumSet.noneOf(FieldName.class);
     }
     
     public void setFields() {
@@ -66,6 +43,7 @@ public class Article extends Reference {
                 FieldName.PAGES,
                 FieldName.VOLUME
             );
+        alternativeFields = EnumSet.noneOf(FieldName.class);
     }
     
 }

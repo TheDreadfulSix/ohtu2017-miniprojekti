@@ -12,9 +12,12 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import java.util.*;
+import miniprojekti.domain.Book;
+import miniprojekti.domain.Inproceedings;
 import miniprojekti.domain.Reference;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 
 public class FormattedStringBufferBuilderTest {
@@ -36,9 +39,21 @@ public class FormattedStringBufferBuilderTest {
         fields.add(new Field(FieldName.PAGES, "137-172"));
         reference = new Article("Robins+Rountrees", fields);
         references = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            references.add(reference);
-        }
+        references.add(reference);
+        fields.clear();
+        fields.add(new Field(FieldName.EDITOR, "Manu"));
+        fields.add(new Field(FieldName.TITLE, "How to Java"));
+        fields.add(new Field(FieldName.YEAR, "20005"));
+        fields.add(new Field(FieldName.PUBLISHER, "Pena"));
+        reference = new Book("PeMa", fields);
+        references.add(reference);
+        fields.clear();
+        fields.add(new Field(FieldName.YEAR, "20004"));
+        fields.add(new Field(FieldName.AUTHOR, "Penaelmi"));
+        fields.add(new Field(FieldName.BOOKTITLE, "How to Java"));
+        fields.add(new Field(FieldName.TITLE, "Manselmi"));
+        reference = new Inproceedings("Penselmi", fields);
+        references.add(reference);
         formatter = new BibReferenceFormatter();
         bufferBuilder = new FormattedStringBufferBuilder(formatter);
     }
@@ -46,35 +61,28 @@ public class FormattedStringBufferBuilderTest {
     @Rule
     public ExpectedException expected = ExpectedException.none();
 
-    @Ignore
+    
     @Test
     public void formatReferencesBuildsValidStringBuffer() {
-        String expectedOutput =
-                "@article{Robins+Rountrees,\n" +
-                        "  PAGES = {137-172},\n" +
-                        "  VOLUME = {13},\n" +
-                        "  TITLE = {Learning and teaching programming: A review and discussion},\n" +
-                        "  JOURNAL = {Computer Science Education},\n" +
-                        "  YEAR = {20003},\n" +
-                        "  AUTHOR = {Anthony Robins and Janet Rountree and Nathan Rountree},\n" +
-                "}\n" +
-                "@article{Robins+Rountrees,\n" +
-                        "  PAGES = {137-172},\n" +
-                        "  VOLUME = {13},\n" +
-                        "  TITLE = {Learning and teaching programming: A review and discussion},\n" +
-                        "  JOURNAL = {Computer Science Education},\n" +
-                        "  YEAR = {20003},\n" +
-                        "  AUTHOR = {Anthony Robins and Janet Rountree and Nathan Rountree},\n" +
-                "}\n" +
-                "@article{Robins+Rountrees,\n" +
-                        "  PAGES = {137-172},\n" +
-                        "  VOLUME = {13},\n" +
-                        "  TITLE = {Learning and teaching programming: A review and discussion},\n" +
-                        "  JOURNAL = {Computer Science Education},\n" +
-                        "  YEAR = {20003},\n" +
-                        "  AUTHOR = {Anthony Robins and Janet Rountree and Nathan Rountree},\n" +
-                "}\n";
+        
         String output = bufferBuilder.formatReferences(references).toString();
-        assertEquals(expectedOutput, output);
+        assertTrue(output.contains("@article{Robins+Rountrees,"));
+        assertTrue(output.contains("  PAGES = {137-172}"));
+        assertTrue(output.contains("  VOLUME = {13},"));
+        assertTrue(output.contains("  TITLE = {Learning and teaching programming: A review and discussion},"));
+        assertTrue(output.contains("  JOURNAL = {Computer Science Education},"));
+        assertTrue(output.contains("  YEAR = {20003},"));
+        assertTrue(output.contains("  AUTHOR = {Anthony Robins and Janet Rountree and Nathan Rountree},"));
+        assertTrue(output.contains("@book{PeMa,"));
+        assertTrue(output.contains("  EDITOR = {Manu},"));
+        assertTrue(output.contains("  YEAR = {20005},"));
+        assertTrue(output.contains("  PUBLISHER = {Pena},"));
+        assertTrue(output.contains("  TITLE = {How to Java},"));
+        assertTrue(output.contains("@inproceedings{Penselmi,"));
+        assertTrue(output.contains("  BOOKTITLE = {How to Java},"));
+        assertTrue(output.contains("  TITLE = {Manselmi},"));
+        assertTrue(output.contains("  AUTHOR = {Penaelmi},"));
+        assertTrue(output.contains("  YEAR = {20004},"));
+        
     }
 }
