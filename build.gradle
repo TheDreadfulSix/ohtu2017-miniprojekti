@@ -49,6 +49,6 @@ jacocoTestReport {
 mainClassName = 'miniprojekti.main.Main'
 
 // Show console output during tests
-//test {
-//  testLogging.showStandardStreams = true
-//}
+test {
+  testLogging.showStandardStreams = true
+}

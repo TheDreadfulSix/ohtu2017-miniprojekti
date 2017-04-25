@@ -46,11 +46,11 @@ public class BibReferenceFormatterTest {
         formatter.formatReference(reference);
         String output = formatter.getStringBuffer().toString();
         assertTrue(output.contains("@article{Robins+Rountrees,"));
-        assertTrue(output.contains(" PAGES = {137-172}"));
-        assertTrue(output.contains("  VOLUME = {13},"));
-        assertTrue(output.contains("  TITLE = {Learning and teaching programming: A review and discussion},"));
-        assertTrue(output.contains("  JOURNAL = {Computer Science Education},"));
-        assertTrue(output.contains("  YEAR = {20003},"));
-        assertTrue(output.contains("  AUTHOR = {Anthony Robins and Janet Rountree and Nathan Rountree},"));
+        assertTrue(output.contains("  PAGES = {137-172}"));
+        assertTrue(output.contains("  VOLUME = {13}"));
+        assertTrue(output.contains("  TITLE = {Learning and teaching programming: A review and discussion}"));
+        assertTrue(output.contains("  JOURNAL = {Computer Science Education}"));
+        assertTrue(output.contains("  YEAR = {20003}"));
+        assertTrue(output.contains("  AUTHOR = {Anthony Robins and Janet Rountree and Nathan Rountree}"));
     }
 }

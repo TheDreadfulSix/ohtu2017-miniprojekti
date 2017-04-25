@@ -68,21 +68,21 @@ public class FormattedStringBufferBuilderTest {
         String output = bufferBuilder.formatReferences(references).toString();
         assertTrue(output.contains("@article{Robins+Rountrees,"));
         assertTrue(output.contains("  PAGES = {137-172}"));
-        assertTrue(output.contains("  VOLUME = {13},"));
-        assertTrue(output.contains("  TITLE = {Learning and teaching programming: A review and discussion},"));
-        assertTrue(output.contains("  JOURNAL = {Computer Science Education},"));
-        assertTrue(output.contains("  YEAR = {20003},"));
-        assertTrue(output.contains("  AUTHOR = {Anthony Robins and Janet Rountree and Nathan Rountree},"));
+        assertTrue(output.contains("  VOLUME = {13}"));
+        assertTrue(output.contains("  TITLE = {Learning and teaching programming: A review and discussion}"));
+        assertTrue(output.contains("  JOURNAL = {Computer Science Education}"));
+        assertTrue(output.contains("  YEAR = {20003}"));
+        assertTrue(output.contains("  AUTHOR = {Anthony Robins and Janet Rountree and Nathan Rountree}"));
         assertTrue(output.contains("@book{PeMa,"));
-        assertTrue(output.contains("  EDITOR = {Manu},"));
-        assertTrue(output.contains("  YEAR = {20005},"));
-        assertTrue(output.contains("  PUBLISHER = {Pena},"));
-        assertTrue(output.contains("  TITLE = {How to Java},"));
+        assertTrue(output.contains("  EDITOR = {Manu}"));
+        assertTrue(output.contains("  YEAR = {20005}"));
+        assertTrue(output.contains("  PUBLISHER = {Pena}"));
+        assertTrue(output.contains("  TITLE = {How to Java}"));
         assertTrue(output.contains("@inproceedings{Penselmi,"));
-        assertTrue(output.contains("  BOOKTITLE = {How to Java},"));
-        assertTrue(output.contains("  TITLE = {Manselmi},"));
-        assertTrue(output.contains("  AUTHOR = {Penaelmi},"));
-        assertTrue(output.contains("  YEAR = {20004},"));
+        assertTrue(output.contains("  BOOKTITLE = {How to Java}"));
+        assertTrue(output.contains("  TITLE = {Manselmi}"));
+        assertTrue(output.contains("  AUTHOR = {Penaelmi}"));
+        assertTrue(output.contains("  YEAR = {20004}"));
         
     }
 }
