@@ -83,7 +83,7 @@ public class GUI {
                     //TODO delete ref.
                 });
                 
-                deleteButton.setOnAction((ActionEvent event) -> {
+                editButton.setOnAction((ActionEvent event) -> {
                     //TODO edit ref.
                 });
                 

@@ -1,11 +1,16 @@
 package miniprojekti.gui;
 
+import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import javafx.collections.FXCollections;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -16,8 +21,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javax.swing.JFileChooser;
 import miniprojekti.domain.Article;
 import miniprojekti.domain.FieldName;
 import miniprojekti.io.IO;
@@ -42,7 +50,7 @@ public class GenerateBibFile {
 
         VBox layout = new VBox();
 
-        layout.getChildren().add(setLayout());
+        layout.getChildren().add(setLayout(window));
         layout.setPadding(new Insets(10, 10, 10, 10));
         Scene scene = new Scene(layout, 450, 200);
         scene.getStylesheets().add("style.css");
@@ -56,7 +64,7 @@ public class GenerateBibFile {
      *
      * @return returns the layout for the window
      */
-    private static GridPane setLayout() {
+    private static GridPane setLayout(Stage stage) {
         int y = 1;
         GridPane layout = new GridPane();
 
@@ -64,12 +72,27 @@ public class GenerateBibFile {
         TextField file = new TextField();
         GridPane.setConstraints(filename, 0, y);
         GridPane.setConstraints(file, 1, y++);
-
+        
         Label path = new Label("Where do you want to save? \n (If left empty, the path is set \n to the project root directory.)");
         TextField pathname = new TextField();
         GridPane.setConstraints(path, 0, y);
         GridPane.setConstraints(pathname, 1, y++);
-
+        
+        //Possible way to do: ask for name in the textfield, and then path with directoryChooser.
+        /*Label pathname = new Label("Application folder");
+        Button pathButton = new Button("Choose save folder");
+            pathButton.setOnAction(e -> {
+                DirectoryChooser dirChooser = new DirectoryChooser();
+                dirChooser.setTitle("Choose path for the references");
+                File file1 = dirChooser.showDialog(stage);
+            if (file1 != null) {
+                
+            }
+        });
+        
+        GridPane.setConstraints(pathButton, 0, y);
+        GridPane.setConstraints(pathname, 1, y++);*/
+        
         Button close = new Button("Close");
         GridPane.setConstraints(close, 0, y);
         close.setOnAction(e -> window.close());

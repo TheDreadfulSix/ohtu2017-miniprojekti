@@ -227,6 +227,12 @@ public class CreateReference {
                 return;
             }
         }
+        for (Reference reference : App.getLogic().getList()) {
+            if (reference.getCitationKey().equals(cit.getText())) {
+                alertG.alert("Error", "Reference with selected citation key already exists.");
+                return;
+            }
+        }
         ref.setReference(cit.getText(), fields);
         App.getLogic().add(ref);
         alertG.alert("Confirmation", "Reference has been saved.");
