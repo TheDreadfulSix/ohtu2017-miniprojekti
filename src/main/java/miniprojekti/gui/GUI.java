@@ -83,6 +83,7 @@ public class GUI {
                     if(alertG.alertWithChoice("Confirm deletion", "Are you sure?")) {
                         //DELETE
                         App.getLogic().delete(ref);
+                        setScene();
                     }
                     //DONT DELETE
                 });

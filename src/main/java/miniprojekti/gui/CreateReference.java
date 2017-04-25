@@ -164,7 +164,10 @@ public class CreateReference {
 
         Button create = new Button("Create");
         GridPane.setConstraints(create, 1, y);
-        create.setOnAction(e -> validateInput(setSource, input, citation, ref));
+        create.setOnAction(e -> {
+            validateInput(setSource, input, citation, ref);
+            App.getGUI().setScene();
+        });
 
         layout.getChildren().addAll(source, setSource, close, create, optional, alternative, required, citkey, citation);
         layout.setVgap(8);
