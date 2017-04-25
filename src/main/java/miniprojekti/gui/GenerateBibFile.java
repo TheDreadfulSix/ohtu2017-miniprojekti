@@ -2,35 +2,29 @@ package miniprojekti.gui;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import miniprojekti.domain.Article;
-import miniprojekti.domain.FieldName;
-import miniprojekti.io.IO;
 import miniprojekti.main.App;
 
 /**
  * This class for generating a .bib file of the references added by the user.
+ *
+ * NOTE! Stuff is static because if not; total destruction.
  *
  * @author Viliina
  */
 public class GenerateBibFile {
 
     private static Stage window;
+    private static AlertGenerator alertG;
 
     /**
      * Displays the window for choosing filename and generating .bib file.
@@ -93,23 +87,23 @@ public class GenerateBibFile {
      * @param path The path to save to.
      */
     public static void generate(String filename, String path) {
-
+        alertG = new AlertGenerator();
         if (filename.isEmpty()) {
-            filenameMissingError();
+            alertG.alert("Error", "Please enter a filename");
             return;
         }
 
         if (App.getLogic().getList().size() == 0) {
-            referencesMissingError();
+            alertG.alert("Error", "You must provide some references first");
             return;
         }
         if (path.isEmpty()) {
             path = System.getProperty("user.dir");
             path += "/";
-        } else if (path.charAt(path.length()-1) != '/') {
+        } else if (path.charAt(path.length() - 1) != '/') {
             path += "/";
             if (pathInvalid(path, filename)) {
-                invalidPathError();
+                alertG.alert("Error", "The path is invalid");
                 return;
             }
         }
@@ -118,36 +112,9 @@ public class GenerateBibFile {
         window.close();
     }
 
-    private static void invalidPathError() {
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Error");
-        alert.setHeaderText(null);
-        alert.setContentText("The path provided is invalid.");
-        alert.showAndWait();
-        return;
-    }
-
-    private static void filenameMissingError() {
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Error");
-        alert.setHeaderText(null);
-        alert.setContentText("How about a filename for your .bib file?");
-        alert.showAndWait();
-        return;
-    }
-
-    private static void referencesMissingError() {
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Error");
-        alert.setHeaderText(null);
-        alert.setContentText("You must provide some references first.");
-        alert.showAndWait();
-        return;
-    }
-
     private static boolean pathInvalid(String path, String filename) {
 
-        if(Files.exists(Paths.get(path+filename))) {
+        if (Files.exists(Paths.get(path + filename))) {
             return false;
         }
 
