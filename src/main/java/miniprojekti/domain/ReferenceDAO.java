@@ -26,9 +26,22 @@ public class ReferenceDAO extends BaseDAO {
     /**
      * Inserts the reference to the database.
      */
-    public void insertReference(Reference ref) {
+    public void insertReference(Reference reference) {
         try {
-            String sql = formatInsertQuery(ref);
+            String sql = formatInsertQuery(reference);
+            initializeQuery(sql);
+            implementQuery();
+        } finally {
+            close();
+        }
+    }
+
+    /**
+     * Delete reference.
+     */
+    public void deleteReference(Reference reference) {
+        try {
+            String sql = "DELETE FROM references WHERE citationKey = '" + reference.getCitationKey() + "'";
             initializeQuery(sql);
             implementQuery();
         } finally {
@@ -38,9 +51,10 @@ public class ReferenceDAO extends BaseDAO {
 
     /**
      * Retrieves all the references in the database
+     *
      * @return Collection of references
      */
-    public Collection<Reference> getReferences() {
+    public List<Reference> getReferences() {
         List<Reference> references = new ArrayList<>();
         try {
             String sql = "SELECT * FROM references";
@@ -58,19 +72,18 @@ public class ReferenceDAO extends BaseDAO {
         return references;
     }
 
-    private String formatInsertQuery(Reference ref) {
-        Map<FieldName, Field> fieldMap = ref.getFieldMap();
+    private String formatInsertQuery(Reference reference) {
+        Map<FieldName, Field> fieldMap = reference.getFieldMap();
         StringBuilder sql = new StringBuilder("INSERT INTO references(");
         StringBuilder sqlFields = new StringBuilder();
         StringBuilder sqlValues = new StringBuilder();
-        List<String> sqlValueList = new ArrayList<>();
-        fieldMap.values().stream().forEach((f) -> {
-            sqlFields.append(f.getName().toString() + ", ");
-            sqlValues.append("'" + f.getValue() + "', ");
+        fieldMap.values().stream().forEach((field) -> {
+            sqlFields.append(field.getName().toString() + ", ");
+            sqlValues.append("'" + field.getValue() + "', ");
         });
-        // add class and citationkey as the last field-value pairs
+        // add class and citationKey as the last field-value pairs
         sqlFields.append("class, citationKey");
-        sqlValues.append("'" + ref.getClass().getSimpleName() + "', '" + ref.getCitationKey() + "'");
+        sqlValues.append("'" + reference.getClass().getSimpleName() + "', '" + reference.getCitationKey() + "'");
         sql.append(sqlFields + ") VALUES(" + sqlValues + ")");
         return sql.toString();
     }
@@ -82,16 +95,15 @@ public class ReferenceDAO extends BaseDAO {
             ResultSetMetaData metaData = results.getMetaData();
             for (int i = 1; i <= metaData.getColumnCount(); i++) {
                 String columnName = metaData.getColumnName(i);
-                // Class and citationKey are not reference fields at the moment
-                // and thus they are handled separately. We'll also want to skip nulls.
+                // Class and citationKey are not field and thus they are handled separately. We'll also want to skip nulls.
                 if (!columnName.equalsIgnoreCase("class") && !columnName.equalsIgnoreCase("citationKey") &&
-                results.getString(columnName) != null) {
+                        results.getString(columnName) != null) {
                     fields.add(new Field(FieldName.valueOf(columnName), results.getString(columnName)));
                 }
             }
             String citationKey = results.getString("citationKey");
             String className = results.getString("class");
-            className = "miniprojekti.domain." + className.substring(0,1).toUpperCase() + className.substring(1).toLowerCase();
+            className = "miniprojekti.domain." + className.substring(0, 1).toUpperCase() + className.substring(1).toLowerCase();
             Class cl = Class.forName(className);
             Constructor con = cl.getConstructor(String.class, Collection.class);
             reference = con.newInstance(citationKey, fields);

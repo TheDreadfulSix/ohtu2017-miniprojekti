@@ -1,5 +1,9 @@
 package miniprojekti.gui;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
@@ -89,41 +93,66 @@ public class GenerateBibFile {
      * @param path The path to save to.
      */
     public static void generate(String filename, String path) {
-        
-        if (filename.isEmpty()) {
-            Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("How about a filename for your .bib file?");
 
-            alert.showAndWait();
+        if (filename.isEmpty()) {
+            filenameMissingError();
             return;
         }
 
         if (App.getLogic().getList().size() == 0) {
-            Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("You must provide some references first.");
-
-            alert.showAndWait();
+            referencesMissingError();
             return;
         }
         if (path.isEmpty()) {
             path = System.getProperty("user.dir");
-            //TO DO check if path is valid. In which class?         
-//        } else if () {
-//            Alert alert = new Alert(AlertType.INFORMATION);
-//            alert.setTitle("Error");
-//            alert.setHeaderText(null);
-//            alert.setContentText("The path provided is invalid.");
-//
-//            alert.showAndWait();
-//            return;
+            path += "/";
+        } else if (path.charAt(path.length()-1) != '/') {
+            path += "/";
+            if (pathInvalid(path, filename)) {
+                invalidPathError();
+                return;
+            }
         }
         App.getIO().writeBibFile(filename, path, App.getLogic().getAllReferences());
         App.getGUI().setScene();
         window.close();
+    }
+
+    private static void invalidPathError() {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText("The path provided is invalid.");
+        alert.showAndWait();
+        return;
+    }
+
+    private static void filenameMissingError() {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText("How about a filename for your .bib file?");
+        alert.showAndWait();
+        return;
+    }
+
+    private static void referencesMissingError() {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText("You must provide some references first.");
+        alert.showAndWait();
+        return;
+    }
+
+    private static boolean pathInvalid(String path, String filename) {
+
+        if(Files.exists(Paths.get(path+filename))) {
+            return false;
+        }
+
+        return true;
+
     }
 
 }

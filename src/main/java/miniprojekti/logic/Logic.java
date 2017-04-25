@@ -29,8 +29,17 @@ public class Logic {
         referenceDAO.insertReference(ref);
     }
     
-    public List<Reference> getList(){
-        return list;
+    public void delete(Reference ref) {
+        list.remove(ref);
+        referenceDAO.deleteReference(ref);
+    }
+    
+    public void edit(Reference ref) {
+        //TODO editing reference.
+    }
+    
+    public List<Reference> getList(){ //Does nothing else than calls other method, might wanna remove/refactor.
+        return (List<Reference>) this.getAllReferences();
     }
 
     public Collection<Reference> getAllReferences() {

@@ -11,3 +11,12 @@
     -fx-font-size: large;
 }
 
+.outterGrid {
+    -fx-background-color: #000000, #ECECEC ;
+    -fx-background-insets: 0, 1 1 0 0 ;
+}
+.innerCell {
+    -fx-background-color: #000000, #ECECEC ;
+    -fx-background-insets: 0, 0 0 1 1 ;
+}
+

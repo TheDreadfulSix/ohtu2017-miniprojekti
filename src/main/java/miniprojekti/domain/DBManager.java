@@ -22,16 +22,16 @@ public class DBManager {
 
     public DBManager() throws NamingException {
         ds = new JdbcDataSource();
-        ds.setURL("jdbc:h2:~/data/references;" +
+        ds.setURL("jdbc:h2:~/referencedatabase/references;" +
                 "INIT=RUNSCRIPT FROM 'classpath:create.sql'");
         ds.setUser("sa");
         ds.setPassword("");
     }
 
     /**
-     * If db connection exists, return it. Otherwise create it.
+     * If database connection exists, return it. Otherwise create it.
      * 
-     * @return Connection to the db
+     * @return Connection to the database
      * 
      * @throws java.sql.SQLException
      */
@@ -44,5 +44,30 @@ public class DBManager {
             }
         }
         return ds.getConnection();
+    }
+
+    /**
+     * Create new database connection. We'll want to create every time so that the test database is flushed and initialized
+     * every time new connection to it is called.
+     *
+     * @return Connection to the database
+     *
+     * @throws java.sql.SQLException
+     */
+    public static Connection getTestConnection() throws SQLException {
+            try {
+                manager = new DBManager();
+                initializeTestDatabase();
+            } catch (Exception ex) {
+                Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, "Problem creating H2 database connection", ex);
+            }
+        return ds.getConnection();
+    }
+
+    private static void initializeTestDatabase() {
+        ds.setURL("jdbc:h2:~/referencedatabase/data/test;" +
+                "INIT=RUNSCRIPT FROM 'classpath:create.sql'\\;RUNSCRIPT FROM 'classpath:initializeTest.sql'");
+        ds.setUser("sa");
+        ds.setPassword("");
     }
 }

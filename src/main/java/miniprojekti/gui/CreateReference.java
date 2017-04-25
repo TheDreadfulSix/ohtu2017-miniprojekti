@@ -5,17 +5,10 @@
  */
 package miniprojekti.gui;
 
-import java.util.Arrays;
-import java.util.Collections;
 import miniprojekti.domain.Article;
 import miniprojekti.domain.Field;
 import miniprojekti.domain.FieldName;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -29,7 +22,6 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import miniprojekti.domain.Book;
@@ -168,6 +160,7 @@ public class CreateReference {
         layout.setVgap(8);
         layout.setHgap(10);
         layout.setPadding(new Insets(10,10,10,10));
+        citation.focusedProperty();
         
         Scene scene = new Scene(layout,400, y * 35);
         scene.getStylesheets().add("style.css");
