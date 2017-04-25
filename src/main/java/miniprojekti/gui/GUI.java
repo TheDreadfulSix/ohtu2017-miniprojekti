@@ -43,13 +43,16 @@ import miniprojekti.main.App;
  * @author Joonas
  */
 public class GUI {
+
     private Scene scene;
     private GridPane pane;
-    
+    private AlertGenerator alertG;
+
     public GUI() {
         setScene();
+        alertG = new AlertGenerator();
     }
-    
+
     /**
      * Asettaa ikkunaan uuden näkymän.
      */
@@ -61,18 +64,19 @@ public class GUI {
         layout.getChildren().addAll(Menus.setMenuBar(), sp);
         scene = new Scene(layout, 1240, 720);
         scene.getStylesheets().add("style.css");
-        
+
         App.setScene(scene);
     }
-    
+
     /**
-     * Palauttaa tämänhetkisen näkymän. 
+     * Palauttaa tämänhetkisen näkymän.
+     *
      * @return Näkymä.
      */
     public Scene getScene() {
         return this.scene;
     }
-    
+
     public GridPane createPane() {
         pane = new GridPane();
         pane.setHgap(3);
@@ -83,32 +87,35 @@ public class GUI {
         col2.setPercentWidth(10);
         ColumnConstraints col3 = new ColumnConstraints();
         col3.setPercentWidth(10);
-        pane.getColumnConstraints().addAll(col1,col2,col3);
-        
+        pane.getColumnConstraints().addAll(col1, col2, col3);
+
         List<Reference> list = App.getLogic().getList();
         int lineCounter = 0;
         for (Reference ref : list) {
             lineCounter++;
-            if(lineCounter > 0){
+            if (lineCounter > 0) {
                 Text referenceText = new Text(ref.toString());
                 Button deleteButton = new Button("Delete");
                 //Button editButton = new Button("Edit");
-                
+
                 deleteButton.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
-                        //TODO delete ref.
+                        if (alertG.alertWithChoice("Confirm deletion", "Are you sure?")) {
+                            //DELETE
+                        } else {
+                            //DONT DELETE
+                        }
                     }
                 });
-                
+
                 /*Button editButton = new Button("Edit");
-                deleteButton.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        //TODO edit ref.
-                    }
-                });*/
-                
+                 deleteButton.setOnAction(new EventHandler<ActionEvent>() {
+                 @Override
+                 public void handle(ActionEvent event) {
+                 //TODO edit ref.
+                 }
+                 });*/
                 pane.add(referenceText, 0, lineCounter);
                 //pane.add(editButton, 1, lineCounter);
                 pane.add(deleteButton, 2, lineCounter); // (item, column, row)
@@ -117,61 +124,60 @@ public class GUI {
         return pane;
     }
     /*private static TableView<ObservableMap> generateTable(List<Reference> list){
-        TableView<HashMap> table = new TableView();
-        table.setPrefSize(1100, 680);
-        table.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY); 
-        //ObservableList<ObservableMap> rowMaps = FXCollections.observableArrayList();
+     TableView<HashMap> table = new TableView();
+     table.setPrefSize(1100, 680);
+     table.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY); 
+     //ObservableList<ObservableMap> rowMaps = FXCollections.observableArrayList();
         
-        TableColumn referenceColumn = new TableColumn("Reference");
-        referenceColumn.prefWidthProperty().bind(table.widthProperty().multiply(0.8));
-        referenceColumn.setCellValueFactory(new ObservableMapValueFactory<Field>(FieldName.AUTHOR));
+     TableColumn referenceColumn = new TableColumn("Reference");
+     referenceColumn.prefWidthProperty().bind(table.widthProperty().multiply(0.8));
+     referenceColumn.setCellValueFactory(new ObservableMapValueFactory<Field>(FieldName.AUTHOR));
         
-        /*TableColumn editColumn = new TableColumn("Edit");
-        editColumn.prefWidthProperty().bind(table.widthProperty().multiply(0.1));
-        authorColumn.setCellValueFactory(new ObservableMapValueFactory<Field>(FieldName.EDIT));
+     /*TableColumn editColumn = new TableColumn("Edit");
+     editColumn.prefWidthProperty().bind(table.widthProperty().multiply(0.1));
+     authorColumn.setCellValueFactory(new ObservableMapValueFactory<Field>(FieldName.EDIT));
         
-        TableColumn deleteColumn = new TableColumn("Delete");
-        deleteColumn.prefWidthProperty().bind(table.widthProperty().multiply(0.1));
-        deleteColumn.setCellValueFactory(new ObservableMapValueFactory<Field>(FieldName.EDITION));
+     TableColumn deleteColumn = new TableColumn("Delete");
+     deleteColumn.prefWidthProperty().bind(table.widthProperty().multiply(0.1));
+     deleteColumn.setCellValueFactory(new ObservableMapValueFactory<Field>(FieldName.EDITION));
         
-        table.getColumns().addAll(referenceColumn,deleteColumn); 
+     table.getColumns().addAll(referenceColumn,deleteColumn); 
         
-        HashMap<String, O>
-        for(Reference ref : list){
+     HashMap<String, O>
+     for(Reference ref : list){
             
-        }
+     }
         
-        table.setItems(rowMaps);
+     table.setItems(rowMaps);
         
         
         
-        TableColumn journalColumn = new TableColumn("Journal");
-        journalColumn.setCellValueFactory(new ObservableMapValueFactory<Field>(FieldName.JOURNAL));
+     TableColumn journalColumn = new TableColumn("Journal");
+     journalColumn.setCellValueFactory(new ObservableMapValueFactory<Field>(FieldName.JOURNAL));
         
-        TableColumn monthColumn = new TableColumn("Month");
-        monthColumn.setCellValueFactory(new ObservableMapValueFactory<Field>(FieldName.MONTH));
+     TableColumn monthColumn = new TableColumn("Month");
+     monthColumn.setCellValueFactory(new ObservableMapValueFactory<Field>(FieldName.MONTH));
         
-        TableColumn noteColumn = new TableColumn("Note");
-        noteColumn.setCellValueFactory(new ObservableMapValueFactory<Field>(FieldName.NOTE));
+     TableColumn noteColumn = new TableColumn("Note");
+     noteColumn.setCellValueFactory(new ObservableMapValueFactory<Field>(FieldName.NOTE));
         
-        TableColumn numberColumn = new TableColumn("Number");
-        numberColumn.setCellValueFactory(new ObservableMapValueFactory<Field>(FieldName.NUMBER));
+     TableColumn numberColumn = new TableColumn("Number");
+     numberColumn.setCellValueFactory(new ObservableMapValueFactory<Field>(FieldName.NUMBER));
         
-        TableColumn pagesColumn = new TableColumn("Pages");
-        pagesColumn.setCellValueFactory(new ObservableMapValueFactory<Field>(FieldName.PAGES));
+     TableColumn pagesColumn = new TableColumn("Pages");
+     pagesColumn.setCellValueFactory(new ObservableMapValueFactory<Field>(FieldName.PAGES));
         
-        TableColumn titleColumn = new TableColumn("Title");
-        titleColumn.setCellValueFactory(new ObservableMapValueFactory<Field>(FieldName.TITLE));
+     TableColumn titleColumn = new TableColumn("Title");
+     titleColumn.setCellValueFactory(new ObservableMapValueFactory<Field>(FieldName.TITLE));
         
-        TableColumn volumeColumn = new TableColumn("Volume");
-        volumeColumn.setCellValueFactory(new ObservableMapValueFactory<Field>(FieldName.VOLUME));
+     TableColumn volumeColumn = new TableColumn("Volume");
+     volumeColumn.setCellValueFactory(new ObservableMapValueFactory<Field>(FieldName.VOLUME));
         
-        TableColumn yearColumn = new TableColumn("Year");
-        yearColumn.setCellValueFactory(new ObservableMapValueFactory<Field>(FieldName.YEAR));
+     TableColumn yearColumn = new TableColumn("Year");
+     yearColumn.setCellValueFactory(new ObservableMapValueFactory<Field>(FieldName.YEAR));
         
             
-        return table;
-    }*/
-    
-    
+     return table;
+     }*/
+
 }

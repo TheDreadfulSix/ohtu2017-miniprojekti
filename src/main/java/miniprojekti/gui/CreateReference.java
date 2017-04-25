@@ -210,18 +210,19 @@ public class CreateReference {
 
     private static void validateInput(ChoiceBox source, HashMap<FieldName, TextField> input, TextField cit, Reference ref) {
         ObservableMap<FieldName, Field> fields = FXCollections.observableHashMap();
+        AlertGenerator alertG = new AlertGenerator();
         for (FieldName fn : input.keySet()) {
             if (!input.get(fn).getText().isEmpty()) {
                 //awesome ugly and way too long if thingy
                 if (fn.equals(FieldName.YEAR) || fn.equals(FieldName.CHAPTER) || fn.equals(FieldName.NUMBER) || fn.equals(FieldName.VOLUME)) {
                     if (!isInt(input.get(fn))) {
-                        alert("Error", "The fields in red hould be in numerical format.");
+                        alertG.alert("Error", "The fields in red hould be in numerical format.");
                         return;
                     }
                 }
                 fields.put(fn, new Field(fn, input.get(fn).getText()));
             } else if (ref.getRequiredFields().contains(fn)) {
-                alert("Error", "Required fields missing.");
+                alertG.alert("Error", "Required fields missing.");
                 return;
             }
         }
@@ -233,27 +234,18 @@ public class CreateReference {
                 }
             }
             if (help == 0) {
-                alert("Error", "Required alternative field missing.");
+                alertG.alert("Error", "Required alternative field missing.");
                 return;
             } else if (help > 1) {
-                alert("Error", "Too many alternative fields filled.");
+                alertG.alert("Error", "Too many alternative fields filled.");
                 return;
             }
         }
         ref.setReference(cit.getText(), fields);
         App.getLogic().add(ref);
-        alert("Confirmation", "Reference has been saved.");
+        alertG.alert("Confirmation", "Reference has been saved.");
         App.getGUI().setScene();
         window.close();
     }
 
-    private static void alert(String title, String message) {
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-
-        alert.showAndWait();
-
-    }
 }
