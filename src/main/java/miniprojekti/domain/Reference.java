@@ -122,5 +122,15 @@ public abstract class Reference {
     }
     
     public abstract void setFields();
- 
+    
+    @Override
+    public String toString() {
+        String all = "\n\t";
+        all += this.getClass().getSimpleName().toUpperCase() + "\t\t\t\tCitation Key: " + this.citationKey;
+        for (FieldName fld : this.fields.keySet()) {
+            all += "\n\t\t\t" + fld.toString() + ": " + this.fields.get(fld).value;
+        }
+        all += "\n";
+        return all;
+    }
 }
