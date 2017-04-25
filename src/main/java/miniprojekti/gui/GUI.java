@@ -5,18 +5,12 @@
  */
 package miniprojekti.gui;
 
-import java.util.Optional;
 import miniprojekti.domain.Reference;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -29,13 +23,16 @@ import miniprojekti.main.App;
  * @author Joonas
  */
 public class GUI {
+
     private Scene scene;
     private GridPane pane;
-    
+    private AlertGenerator alertG;
+
     public GUI() {
         setScene();
+        alertG = new AlertGenerator();
     }
-    
+
     /**
      * Asettaa ikkunaan uuden näkymän.
      */
@@ -48,26 +45,26 @@ public class GUI {
         layout.getChildren().addAll(Menus.setMenuBar(), sp);
         scene = new Scene(layout, 1240, 720);
         scene.getStylesheets().add("style.css");
-        
-        sp.requestFocus();
+        sp.focusedProperty();
         App.setScene(scene);
     }
-    
+
     /**
-     * Palauttaa tämänhetkisen näkymän. 
+     * Palauttaa tämänhetkisen näkymän.
+     *
      * @return Näkymä.
      */
     public Scene getScene() {
         return this.scene;
     }
-    
+
     public GridPane createPane() {
         pane = new GridPane();
-        
         ObservableList<Reference> oList = FXCollections.observableArrayList(App.getLogic().getList());
         int lineCounter = 0;
         for (Reference ref : oList) {
             lineCounter++;
+
             if(lineCounter > 0){
                 GridPane innerPane = new GridPane();
                 innerPane.setHgap(3);
@@ -101,5 +98,5 @@ public class GUI {
         }
         return pane;
     }
-    
+
 }
