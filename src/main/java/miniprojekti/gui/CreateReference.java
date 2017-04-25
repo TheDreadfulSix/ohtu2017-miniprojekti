@@ -212,9 +212,13 @@ public class CreateReference {
         ObservableMap<FieldName, Field> fields = FXCollections.observableHashMap();
         for (FieldName fn : input.keySet()) {
             if (!input.get(fn).getText().isEmpty()) {
+                if (fn.equals(FieldName.YEAR) && !isInt(input.get(fn))) {
+                    alert("Error", "Year should be in numerical format.");
+                    return;
+                }
                 fields.put(fn, new Field(fn, input.get(fn).getText()));
             } else if (ref.getRequiredFields().contains(fn)) {
-                requiredFieldEmptyError();
+                alert("Error", "Required fields missing.");
                 return;
             }
         }
@@ -226,54 +230,28 @@ public class CreateReference {
                 }
             }
             if (help == 0) {
-                requiredOptionalFieldIsEmptyError();
+                alert("Error", "Required alternative field missing.");
                 return;
             } else if (help > 1) {
-                tooManyFilledFieldsError();
+                alert("Error", "Too many alternative fields filled.");
                 return;
             }
         }
         ref.setReference(cit.getText(), fields);
         App.getLogic().add(ref);
-        savedAlert();
+        alert("Confirmation", "Reference has been saved.");
         App.getGUI().setScene();
         window.close();
     }
 
-    private static void requiredFieldEmptyError() {
+
+    private static void alert(String title, String message) {
         Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Error");
+        alert.setTitle(title);
         alert.setHeaderText(null);
-        alert.setContentText("Required field is empty!");
+        alert.setContentText(message);
 
         alert.showAndWait();
-    }
 
-    private static void requiredOptionalFieldIsEmptyError() {
-        //uh, so, yea, using variable to check if there was atleast one required alternative field filled.
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Error");
-        alert.setHeaderText(null);
-        alert.setContentText("Required alternative field is empty!");
-
-        alert.showAndWait();
-    }
-
-    private static void tooManyFilledFieldsError() {
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Error");
-        alert.setHeaderText(null);
-        alert.setContentText("Only one of the alternative fields is allowed to be filled"); //ahaha this english.
-        alert.showAndWait();
-    }
-
-    private static void savedAlert() {
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Reference saved");
-        alert.setHeaderText(null);
-        alert.setContentText("Your reference information has been saved.");
-
-        alert.showAndWait();     
-        
     }
 }
