@@ -45,10 +45,10 @@ public class BibFileWriter {
         setFile();
         encoding = Charset.forName(fileEncoding);
     }
-    
-   
+
     /**
      * Writes the bib file from formatted output.
+     *
      * @param output String written to file
      */
     public void writeFile(String output) {
@@ -57,6 +57,14 @@ public class BibFileWriter {
             if (checkFile()) {
                 setName(name + getCurrentTime());
             }
+
+            output = output.replaceAll("ö", "{\\\\\"o}");
+            output = output.replaceAll("ä", "{\\\\\"a}");
+            output = output.replaceAll("å", "{\\\\aa}");
+            output = output.replaceAll("Ö", "{\\\\\"O}");
+            output = output.replaceAll("Ä", "{\\\\\"A}");
+            output = output.replaceAll("Å", "{\\\\AA}");
+            
             BufferedWriter writer = Files.newBufferedWriter(file, encoding);
             writer.write(output, 0, output.length());
             writer.close();
@@ -65,6 +73,7 @@ public class BibFileWriter {
         }
     }
 //this may or may or be used for checking the path name as well..
+
     private boolean checkFile() {
         return file.toFile().exists();
     }
@@ -88,4 +97,3 @@ public class BibFileWriter {
     }
 
 }
-
