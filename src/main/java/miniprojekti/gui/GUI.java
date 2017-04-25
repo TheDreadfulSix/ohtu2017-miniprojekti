@@ -80,10 +80,14 @@ public class GUI {
                 Button editButton = new Button("Edit");
                 
                 deleteButton.setOnAction(e -> {
-                    //TODO delete ref.
+                    if(alertG.alertWithChoice("Confirm deletion", "Are you sure?")) {
+                        //DELETE
+                        App.getLogic().delete(ref);
+                    }
+                    //DONT DELETE
                 });
                 
-                deleteButton.setOnAction((ActionEvent event) -> {
+                editButton.setOnAction((ActionEvent event) -> {
                     //TODO edit ref.
                 });
                 
