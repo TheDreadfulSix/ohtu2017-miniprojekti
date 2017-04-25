@@ -212,9 +212,10 @@ public class CreateReference {
         ObservableMap<FieldName, Field> fields = FXCollections.observableHashMap();
         for (FieldName fn : input.keySet()) {
             if (!input.get(fn).getText().isEmpty()) {
+                //awesome ugly and way too long if thingy
                 if (fn.equals(FieldName.YEAR) || fn.equals(FieldName.CHAPTER) || fn.equals(FieldName.NUMBER) || fn.equals(FieldName.VOLUME)) {
                     if (!isInt(input.get(fn))) {
-                        alert("Error", "Year should be in numerical format.");
+                        alert("Error", "The fields in red hould be in numerical format.");
                         return;
                     }
                 }
