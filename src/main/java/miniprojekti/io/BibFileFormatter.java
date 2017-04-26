@@ -1,6 +1,7 @@
 
 package miniprojekti.io;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Map;
@@ -44,7 +45,13 @@ public class BibFileFormatter {
     }
     
     private String formatField(Field field) {
-        return String.format(indent + "%s = {%s}", field.getName(), field.getValue());
+        String value = field.getValue();
+        
+        if (field.getName().equals(FieldName.TITLE) || field.getName().equals(FieldName.BOOKTITLE)) {
+            value = escapeCapitalLetters(value);
+        }
+        
+        return String.format(indent + "%s = {%s}", field.getName(), value);
     }
     
     private String escapeScandicCharacters(String contents) {
@@ -54,5 +61,17 @@ public class BibFileFormatter {
                        .replace("Ä", "\\\"{A}")
                        .replace("å", "\\aa")
                        .replace("Å", "\\AA");
+    }
+    
+    public String escapeCapitalLetters(String contents) {
+        String formatstring = contents.replaceAll("[A-ZÄÖÅ]", "---");
+        
+        for(int i=0; i < contents.length(); i++) {
+            if(Character.isUpperCase(contents.charAt(i))) {
+                formatstring = formatstring.replaceFirst("---", "{" + contents.charAt(i) + "}");
+            }
+        }
+        
+        return formatstring;
     }
 }

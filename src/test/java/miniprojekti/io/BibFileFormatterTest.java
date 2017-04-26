@@ -29,7 +29,7 @@ public class BibFileFormatterTest {
         formatter = new BibFileFormatter();
         references = new ArrayList<>();
         Set<Field> fields = new HashSet<>();
-        fields.add(new Field(FieldName.AUTHOR, "Anthony Robins and Janet Rountree and Nathan Rountree"));
+        fields.add(new Field(FieldName.AUTHOR, "Änthony Robins and Janet Rountree and Nathan Rountree"));
         fields.add(new Field(FieldName.JOURNAL, "Computer Science Education"));
         fields.add(new Field(FieldName.TITLE, "Learning and teaching programming: A review and discussion"));
         fields.add(new Field(FieldName.YEAR, "20003"));
@@ -55,10 +55,10 @@ public class BibFileFormatterTest {
         String contents = formatter.generateContents(references);
         
         String expected = "@Article{Robins+Rountrees,\n" +
-                          "  AUTHOR = {Anthony Robins and Janet Rountree and Nathan Rountree},\n"+
+                          "  AUTHOR = {\\\"{A}nthony Robins and Janet Rountree and Nathan Rountree},\n"+
                           "  JOURNAL = {Computer Science Education},\n"+
                           "  PAGES = {137-172},\n"+
-                          "  TITLE = {Learning and teaching programming: A review and discussion},\n"+
+                          "  TITLE = {{L}earning and teaching programming: {A} review and discussion},\n"+
                           "  VOLUME = {13},\n"+
                           "  YEAR = {20003}\n"+
                           "}\n\n"+
@@ -66,14 +66,14 @@ public class BibFileFormatterTest {
                           "@Book{PeMa,\n"+
                           "  EDITOR = {Manu},\n"+
                           "  PUBLISHER = {Pena},\n"+
-                          "  TITLE = {How to Java},\n"+
+                          "  TITLE = {{H}ow to {J}ava},\n"+
                           "  YEAR = {20005}\n"+
                           "}\n\n"+
 
                           "@Inproceedings{Penselmi,\n"+
                           "  AUTHOR = {Penaelmi},\n"+
-                          "  BOOKTITLE = {How to Java},\n"+
-                          "  TITLE = {Manselmi},\n"+
+                          "  BOOKTITLE = {{H}ow to {J}ava},\n"+
+                          "  TITLE = {{M}anselmi},\n"+
                           "  YEAR = {20004}\n"+
                           "}\n";
         
