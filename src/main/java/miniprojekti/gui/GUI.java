@@ -45,7 +45,7 @@ public class GUI {
         layout.getChildren().addAll(Menus.setMenuBar(), sp);
         scene = new Scene(layout, 1240, 720);
         scene.getStylesheets().add("style.css");
-        sp.focusedProperty();
+        sp.requestFocus();
         App.setScene(scene);
     }
 
@@ -69,10 +69,13 @@ public class GUI {
                 innerPane.setHgap(3);
                 ColumnConstraints col1 = new ColumnConstraints();
                 col1.setPercentWidth(90);
+                col1.fillWidthProperty();
                 ColumnConstraints col2 = new ColumnConstraints();
                 col2.setPercentWidth(5);
+                col2.fillWidthProperty();
                 ColumnConstraints col3 = new ColumnConstraints();
                 col3.setPercentWidth(5);
+                col3.fillWidthProperty();
                 innerPane.getColumnConstraints().addAll(col1,col2,col3);
                 Text referenceText = new Text(ref.toString());
                 Button deleteButton = new Button("Delete");
