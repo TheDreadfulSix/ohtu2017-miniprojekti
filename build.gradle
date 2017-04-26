@@ -26,6 +26,7 @@ repositories {
 dependencies {
     compile 'com.google.guava:guava:20.0'
     testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-core:2.7.21'
     compile files("src/main/resources") 
     compile 'com.h2database:h2:1.4.194'
 }
@@ -49,6 +50,6 @@ jacocoTestReport {
 mainClassName = 'miniprojekti.main.Main'
 
 // Show console output during tests
-//test {
-//  testLogging.showStandardStreams = true
-//}
+test {
+  testLogging.showStandardStreams = true
+}

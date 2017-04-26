@@ -2,10 +2,6 @@ package miniprojekti.main;
 
 import javafx.scene.Scene;
 import miniprojekti.gui.GUI;
-import miniprojekti.io.BibFileWriter;
-import miniprojekti.io.BibReferenceFormatter;
-import miniprojekti.io.FormattedStringBufferBuilder;
-import miniprojekti.io.IO;
 import miniprojekti.logic.Logic;
 
 /**
@@ -15,7 +11,6 @@ import miniprojekti.logic.Logic;
 public class App {
 
     private static GUI gui;
-    private static IO io;
     private static Logic logic;
 
     public static GUI getGUI() {
@@ -23,13 +18,6 @@ public class App {
             gui = new GUI();
         }
         return gui;
-    }
-
-    public static IO getIO() {
-        if (App.io == null) {
-            io = new IO(new BibFileWriter("UTF-8"), new FormattedStringBufferBuilder(new BibReferenceFormatter()));
-        }
-        return io;
     }
 
     public static Logic getLogic() {
@@ -41,10 +29,6 @@ public class App {
 
     public static void setGUI(GUI newGui) {
         gui = newGui;
-    }
-
-    public static void setIO(IO newIo) {
-        io = newIo;
     }
 
     public static void setLogic(Logic newLogic) {

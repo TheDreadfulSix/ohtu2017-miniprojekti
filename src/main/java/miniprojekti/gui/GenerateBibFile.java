@@ -16,6 +16,8 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import miniprojekti.io.BibFileFormatter;
+import miniprojekti.io.BibFileGenerator;
 import miniprojekti.main.App;
 
 /**
@@ -29,6 +31,8 @@ public class GenerateBibFile {
 
     private static Stage window;
     private static AlertGenerator alertG;
+    private static BibFileFormatter formatter = new BibFileFormatter();
+    private static BibFileGenerator generator= new BibFileGenerator(formatter);
 
     /**
      * Displays the window for choosing filename and generating .bib file.
@@ -68,7 +72,7 @@ public class GenerateBibFile {
         GridPane.setConstraints(path, 0, y);
         GridPane.setConstraints(pathname, 1, y++);
         
-        //Possible way to do: ask for name in the textfield, and then path with directoryChooser.
+        //Possible way to do: ask for name in the textfield, and then path with directoryChoosere.
         /*Label pathname = new Label("Application folder");
         Button pathButton = new Button("Choose save folder");
             pathButton.setOnAction(e -> {
@@ -126,19 +130,17 @@ public class GenerateBibFile {
                 return;
             }
         }
-        App.getIO().writeBibFile(filename, path, App.getLogic().getAllReferences());
+        
+        generator.createFile(path, filename, App.getLogic().getAllReferences());
         App.getGUI().setScene();
         window.close();
     }
 
     private static boolean pathInvalid(String path, String filename) {
-
         if (Files.exists(Paths.get(path + filename))) {
             return false;
         }
-
         return true;
-
     }
 
 }

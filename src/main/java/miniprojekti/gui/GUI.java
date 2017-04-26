@@ -34,7 +34,7 @@ public class GUI {
     }
 
     /**
-     * Asettaa ikkunaan uuden näkymän.
+     * Sets a new scene.
      */
     public void setScene() {
         VBox layout = new VBox();
@@ -50,9 +50,8 @@ public class GUI {
     }
 
     /**
-     * Palauttaa tämänhetkisen näkymän.
-     *
-     * @return Näkymä.
+     * Returns the current scene.
+     * @return scene.
      */
     public Scene getScene() {
         return this.scene;
