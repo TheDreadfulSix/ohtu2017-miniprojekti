@@ -89,7 +89,7 @@ public class GUI {
                 });
                 
                 editButton.setOnAction((ActionEvent event) -> {
-                    //TODO edit ref.
+                    //TODO edit ref. Not part of Sprint 3.
                 });
                 
                 innerPane.add(referenceText, 0, 0);
