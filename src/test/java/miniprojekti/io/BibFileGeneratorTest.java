@@ -53,11 +53,12 @@ public class BibFileGeneratorTest {
                             "  VOLUME = {13},\n"+
                             "  YEAR = {20003}\n"+
                             "}";
-    
+    String path = "src" + File.separator + "test" + File.separator +"resources" + File.separator;
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
         formatter = mock(BibFileFormatter.class);
         generator = Mockito.spy(new BibFileGenerator(formatter));
+        Files.createParentDirs(new File(path + "file"));
         
         
         references = new ArrayList<>();
@@ -96,7 +97,7 @@ public class BibFileGeneratorTest {
     public void fileHasCorrectContent() throws IOException{
         when(formatter.generateContents(references)).thenReturn(expectedContent);
         
-        generator.createFile("src/test/resources/", "testi.bib", references);
+        generator.createFile(path, "testi.bib", references);
         File expectedFile = new File("src/test/resources/testi.bib");
         
         String content = Files.toString(expectedFile, Charsets.UTF_8);
