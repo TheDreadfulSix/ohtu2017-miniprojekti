@@ -18,9 +18,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import miniprojekti.domain.Article;
-import miniprojekti.domain.FieldName;
-import miniprojekti.io.IO;
+import miniprojekti.io.BibFileFormatter;
+import miniprojekti.io.BibFileGenerator;
 import miniprojekti.main.App;
 
 /**
@@ -31,6 +30,8 @@ import miniprojekti.main.App;
 public class GenerateBibFile {
 
     private static Stage window;
+    private static BibFileFormatter formatter = new BibFileFormatter();
+    private static BibFileGenerator generator= new BibFileGenerator(formatter);
 
     /**
      * Displays the window for choosing filename and generating .bib file.
@@ -113,7 +114,8 @@ public class GenerateBibFile {
                 return;
             }
         }
-        App.getIO().writeBibFile(filename, path, App.getLogic().getAllReferences());
+        
+        generator.createFile(path, filename, App.getLogic().getAllReferences());
         App.getGUI().setScene();
         window.close();
     }
