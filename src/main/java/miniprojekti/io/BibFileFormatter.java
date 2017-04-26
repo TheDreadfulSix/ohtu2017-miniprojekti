@@ -1,9 +1,6 @@
-
 package miniprojekti.io;
 
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -12,19 +9,40 @@ import miniprojekti.domain.Field;
 import miniprojekti.domain.FieldName;
 import miniprojekti.domain.Reference;
 
+/**
+ * Generates in .bib file contents from reference objects.
+ */
 public class BibFileFormatter {
     private String indent;
-    private String end;
+    private String end = "\n}\n";
     
+    /**
+     * Initializes the formatter with default indentation(2).
+     */
     public BibFileFormatter() {
-        this("  ", "\n}\n");
+        this("  ");
     }
     
-    public BibFileFormatter(String indent, String end) {
+    /**
+     * Initializes the formatter with given indentation.
+     * 
+     * @param   indent
+     */
+    public BibFileFormatter(String indent) {
         this.indent = indent;
-        this.end = end;
     }
     
+    /**
+     * Generates the a .bib files contents from a given reference collection.
+     * Scandic characters are escaped and abbreviations in titles are
+     * preserved.
+     * 
+     * @param   references
+     * 
+     * @return .bib file contents as a string
+     * 
+     * @see miniprojekti.domain.Reference
+     */
     public String generateContents(Collection<Reference> references) {
         String contents = references.stream().map(
                 ref -> formatReference(ref)
@@ -63,7 +81,7 @@ public class BibFileFormatter {
                        .replace("Å", "\\AA");
     }
     
-    public String escapeCapitalLetters(String contents) {
+    private String escapeCapitalLetters(String contents) {
         String formatstring = contents.replaceAll("[A-ZÄÖÅ]", "---");
         
         for(int i=0; i < contents.length(); i++) {

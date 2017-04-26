@@ -1,18 +1,11 @@
+package miniprojekti.io;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-import miniprojekti.domain.Article;
-import miniprojekti.domain.Book;
-import miniprojekti.domain.Field;
-import miniprojekti.domain.FieldName;
-import miniprojekti.domain.Inproceedings;
-import miniprojekti.domain.Reference;
-import miniprojekti.io.BibFileFormatter;
-import org.junit.After;
-import org.junit.AfterClass;
+import miniprojekti.domain.*;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
