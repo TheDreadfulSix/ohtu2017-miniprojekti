@@ -51,7 +51,7 @@ public class BibFileFormatter {
         return contents.replace("ö", "\\\"{o}")
                        .replace("Ö", "\\\"{O}")
                        .replace("ä", "\\\"{a}")
-                       .replace("A", "\\\"{A}")
+                       .replace("Ä", "\\\"{A}")
                        .replace("å", "\\aa")
                        .replace("Å", "\\AA");
     }
