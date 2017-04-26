@@ -92,8 +92,8 @@ public class BibFileGeneratorTest {
         when(generator.generateTimestamp()).thenReturn("(2012-12-12-12:21:02)");
 
         
-        generator.createFile("src/test/resources/", "testi.bib", references);
-        generator.createFile("src/test/resources/", "testi.bib", references);
+        generator.createFile(path, "testi.bib", references);
+        generator.createFile(path, "testi.bib", references);
         File expectedFile = new File(path + "testi(2012-12-12-12:21:02).bib");
         assertTrue(expectedFile.isFile());
     }
