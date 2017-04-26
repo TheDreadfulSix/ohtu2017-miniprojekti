@@ -25,9 +25,11 @@ public class BibFileFormatter {
     }
     
     public String generateContents(Collection<Reference> references) {
-        return references.stream().map(
+        String contents = references.stream().map(
                 ref -> formatReference(ref)
         ).collect(Collectors.joining("\n"));
+
+        return escapeScandicCharacters(contents);
     }
     
     private String formatReference(Reference ref) {
@@ -43,5 +45,14 @@ public class BibFileFormatter {
     
     private String formatField(Field field) {
         return String.format(indent + "%s = {%s}", field.getName(), field.getValue());
+    }
+    
+    private String escapeScandicCharacters(String contents) {
+        return contents.replace("ö", "\\\"{o}")
+                       .replace("Ö", "\\\"{O}")
+                       .replace("ä", "\\\"{a}")
+                       .replace("A", "\\\"{A}")
+                       .replace("å", "\\aa")
+                       .replace("Å", "\\AA");
     }
 }

@@ -88,8 +88,8 @@ public class BibFileGeneratorTest {
     public void fileIsGeneratedWithValidInput() {
         when(formatter.generateContents(references)).thenReturn("");
         
-        assertTrue(generator.createFile("src/test/resources/", "testi", references));
-        File expectedFile = new File("src/test/resources/testi.bib");
+        assertTrue(generator.createFile(path, "testi", references));
+        File expectedFile = new File(path + "testi.bib");
         assertTrue(expectedFile.isFile());
     }
     
@@ -98,7 +98,7 @@ public class BibFileGeneratorTest {
         when(formatter.generateContents(references)).thenReturn(expectedContent);
         
         generator.createFile(path, "testi.bib", references);
-        File expectedFile = new File("src/test/resources/testi.bib");
+        File expectedFile = new File(path + "testi.bib");
         
         String content = Files.toString(expectedFile, Charsets.UTF_8);
         
@@ -113,13 +113,13 @@ public class BibFileGeneratorTest {
         
         generator.createFile("src/test/resources/", "testi.bib", references);
         generator.createFile("src/test/resources/", "testi.bib", references);
-        File expectedFile = new File("src/test/resources/testi(2012-12-12-12:21:02).bib");
+        File expectedFile = new File(path + "testi(2012-12-12-12:21:02).bib");
         assertTrue(expectedFile.isFile());
     }
     
     @After
     public void cleanFiles() {
-        Arrays.stream(new File("src/test/resources/").listFiles(
+        Arrays.stream(new File(path).listFiles(
                 (File file) -> file.getName().endsWith(".bib"))
         ).forEach(File::delete);
     }
