@@ -44,14 +44,9 @@ public class CreateReference {
     }
 
     /**
-<<<<<<< HEAD
-     * Asettaa ikkunan ulkoasun.
-     *
-     * @return Ikkunan ulkoasu.
-=======
      * Sets the window's layout.
-     * 
->>>>>>> master
+     *
+     * @return window's layout.
      */
     private static void setScene(Reference ref, int selected) {
         int y = 1;

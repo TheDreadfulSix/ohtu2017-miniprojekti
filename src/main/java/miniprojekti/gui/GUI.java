@@ -42,7 +42,7 @@ public class GUI {
         sp.setFitToWidth(true);
         sp.setFitToHeight(true);
         
-        layout.getChildren().addAll(Menus.setMenuBar(), sp);
+        layout.getChildren().addAll(Menus.setMenuBar(), Filter.createFilterBar(), sp);
         scene = new Scene(layout, 1240, 720);
         scene.getStylesheets().add("style.css");
         sp.requestFocus();
@@ -63,7 +63,7 @@ public class GUI {
         int lineCounter = 0;
         for (Reference ref : oList) {
             lineCounter++;
-
+            
             if(lineCounter > 0){
                 GridPane innerPane = new GridPane();
                 innerPane.setHgap(3);
@@ -77,6 +77,7 @@ public class GUI {
                 col3.setPercentWidth(5);
                 col3.fillWidthProperty();
                 innerPane.getColumnConstraints().addAll(col1,col2,col3);
+                
                 Text referenceText = new Text(ref.toString());
                 Button deleteButton = new Button("Delete");
                 Button editButton = new Button("Edit");
