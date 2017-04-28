@@ -96,8 +96,8 @@ public class ReferenceDAO extends BaseDAO {
             for (int i = 1; i <= metaData.getColumnCount(); i++) {
                 String columnName = metaData.getColumnName(i);
                 // Class and citationKey are not field and thus they are handled separately. We'll also want to skip nulls.
-                if (!columnName.equalsIgnoreCase("class") && !columnName.equalsIgnoreCase("citationKey") &&
-                        results.getString(columnName) != null) {
+                if (!columnName.equalsIgnoreCase("class") && !columnName.equalsIgnoreCase("citationKey")
+                        && results.getString(columnName) != null) {
                     fields.add(new Field(FieldName.valueOf(columnName), results.getString(columnName)));
                 }
             }
@@ -111,5 +111,28 @@ public class ReferenceDAO extends BaseDAO {
             Logger.getLogger(ReferenceDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return (Reference) reference;
+    }
+
+    public List<Reference> getFilteredReferences(String word) {
+        //first word to lowercase, then the first letter capitalized,
+        // this ONLY works for the Class column, because it is the only one with the values
+        //capitalized.
+        word.toLowerCase();
+        String capitalized = word.substring(0, 1).toUpperCase() + word.substring(1);
+        List<Reference> references = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM references WHERE Class LIKE '%" + capitalized + "%'";
+            initializeQuery(sql);
+            implementQuery();
+            while (results.next()) {
+                Reference ref = returnReference();
+                references.add(ref);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ReferenceDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            close();
+        }
+        return references;
     }
 }
