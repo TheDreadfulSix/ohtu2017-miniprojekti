@@ -44,6 +44,7 @@ public class BibFileGenerator {
      * timestamp is added to the end of the filename. It is also not necessary
      * to provide the filename with a .bib extension.
      * 
+     * @param   path
      * @param   name
      * @param   references
      * 

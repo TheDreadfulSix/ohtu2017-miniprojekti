@@ -65,7 +65,7 @@ public class BibFileFormatterTest {
 
                           "@Inproceedings{Penselmi,\n"+
                           "  AUTHOR = {Penaelmi},\n"+
-                          "  BOOKTITLE = {{H}ow to {J}ava},\n"+
+                          "  BOOKTITLE = {How to Java},\n"+
                           "  TITLE = {{M}anselmi},\n"+
                           "  YEAR = {20004}\n"+
                           "}\n";
