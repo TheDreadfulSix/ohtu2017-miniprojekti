@@ -10,7 +10,7 @@ import miniprojekti.domain.FieldName;
 import miniprojekti.domain.Reference;
 
 /**
- * Generates in .bib file contents from reference objects.
+ * Generates .bib file contents from reference objects.
  */
 public class BibFileFormatter {
     private String indent;
@@ -65,7 +65,7 @@ public class BibFileFormatter {
     private String formatField(Field field) {
         String value = field.getValue();
         
-        if (field.getName().equals(FieldName.TITLE) || field.getName().equals(FieldName.BOOKTITLE)) {
+        if (field.getName().equals(FieldName.TITLE)) {
             value = escapeCapitalLetters(value);
         }
         
