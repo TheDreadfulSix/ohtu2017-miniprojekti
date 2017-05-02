@@ -25,18 +25,6 @@ public class BibFileGenerator {
     public BibFileGenerator(BibFileFormatter formatter) {
         this.formatter = formatter;
     }
-    /**
-     * Creates .bib file of given name to working directory from provided
-     * references.
-     * 
-     * @param   name
-     * @param   references
-     * 
-     * @see miniprojekti.domain.Reference
-     */
-    public void createFile(String name, Collection<Reference> references) {
-        createFile("", name, references);
-    }
     
     /**
      * Creates .bib file of given name to given path from provided references.

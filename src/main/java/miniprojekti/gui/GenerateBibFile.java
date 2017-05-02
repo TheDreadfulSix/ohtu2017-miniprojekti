@@ -121,7 +121,7 @@ public class GenerateBibFile {
             return;
         }
         if (path.isEmpty()) {
-            generator.createFile(filename, App.getLogic().getAllReferences());
+            generator.createFile("", filename, App.getLogic().getAllReferences());
         } else if (!path.endsWith(File.separator)) {
             path += File.separator;
             

@@ -1,12 +1,12 @@
 package miniprojekti.domain;
 
-import org.junit.After;
 import org.junit.Test;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
+
 import static junit.framework.TestCase.fail;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests if DBManager establishes H2 database connections succesfully.
@@ -23,6 +23,17 @@ public class DBManagerTest {
             fail();
         }
     }
+    
+    //Test for Exception. Needs some sort of powerMockito or something else.
+    /*@Test
+    public void getConnectionConnectsToDatabaseWithException() {
+        try {
+            DBManager.getConnection();
+            DBManager.getConnection().close();
+        } catch (SQLException e) {
+            assertTrue(true);
+        }
+    }*/
 
     @Test
     public void getTestConnectionConnectsToTestDatabaseWithoutExceptions() {
@@ -34,4 +45,14 @@ public class DBManagerTest {
             fail();
         }
     }
+    //Test for Exception. Needs some sort of powerMockito or something else.
+    /*@Test
+    public void getConnectionConnectsToTestDatabaseWithException() {
+        try {
+            DBManager.getTestConnection();
+            DBManager.getConnection().close();
+        } catch (SQLException e) {
+            assertTrue(true);
+        }
+    }*/
 }

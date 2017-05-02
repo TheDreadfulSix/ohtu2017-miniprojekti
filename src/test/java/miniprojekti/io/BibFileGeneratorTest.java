@@ -98,6 +98,16 @@ public class BibFileGeneratorTest {
         assertTrue(expectedFile.isFile());
     }
     
+    @Test
+    public void writingFileCausesException() {
+        try {
+            generator.createFile("&/%/%/‚{{{{{{/%(%(%(", "testi.bib", references);
+            assertTrue(false);
+        } catch (Exception e) {
+            assertTrue(true);
+        }
+    }
+    
     @After
     public void cleanFiles() {
         Arrays.stream(new File(path).listFiles(

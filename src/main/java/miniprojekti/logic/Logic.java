@@ -54,7 +54,15 @@ public class Logic {
 
     public void filter(String word) {
         //TODO 
-        this.filtered = referenceDAO.getFilteredReferences(word);
+        List<Reference> toFilter = getList();
+        word = word.toLowerCase();
+        List<Reference> filter = new ArrayList();
+        for (Reference toFilter1 : toFilter) {
+            if (toFilter1.toString().toLowerCase().contains(word)) {
+                filter.add(toFilter1);
+            }
+        }
+        this.filtered = filter;
     }
 
     public void emptyFilter() {
