@@ -22,6 +22,7 @@ public abstract class Reference {
     
     public Reference(){
         this.setFields();
+        tags = "";
     }
     
     /**
@@ -73,9 +74,12 @@ public abstract class Reference {
     }
     
     public void setTags(String tagInput) {
-        if (tags == null) tags = "";
-        else tags += ",";
+        if (!tags.isEmpty() && !tagInput.isEmpty()) tags += ",";
         tags += tagInput.replace(' ', ',');
+    }
+    
+    public String getTags() {
+        return tags;
     }
     
     /**

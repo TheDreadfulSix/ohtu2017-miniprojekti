@@ -22,6 +22,11 @@ public class Book extends Reference {
         this(citationKey, createFieldMap(fields));
     }
     
+    public Book(String citationKey, Collection<Field> fields, String tags) {
+        this(citationKey, createFieldMap(fields));
+        this.setTags(tags);
+    }
+    
     /**
      * Calls {@link #Reference(java.lang.String, java.util.Map)}.
      */
