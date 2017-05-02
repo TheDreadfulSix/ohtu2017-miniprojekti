@@ -138,6 +138,12 @@ public abstract class Reference {
             all += "\n\t\t\t" + fld.toString() + ": " + this.fields.get(fld).value;
         }
         all += "\n";
+        if (tags != null && !tags.isEmpty()) {
+            all += "\t\t\tTags: ";
+            String formattedTags = tags.replace(",", ", ");
+            all += formattedTags;
+            all += "\n";
+        } 
         return all;
     }
 }
