@@ -6,13 +6,11 @@
 package miniprojekti.gui;
 
 import miniprojekti.domain.Article;
-import miniprojekti.domain.Field;
 import miniprojekti.domain.FieldName;
 import java.util.HashMap;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableMap;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -126,9 +124,6 @@ public class CreateReference {
         }
 
         Label alternative = new Label("Alternative fields");
-        if (ref.getAlternativeFields().isEmpty()) {
-            alternative.setText("No Alternative fields");
-        }
         alternative.getStyleClass().add("header");
         GridPane.setConstraints(alternative, 0, y++);
 
@@ -143,23 +138,42 @@ public class CreateReference {
         for (FieldName fn : ref.getOptionalFields()) {
             y = createInputFields(fn, y, layout, input);
         }
+        
+        Label tags = new Label("Tags");
+        tags.getStyleClass().add("header");
+        GridPane.setConstraints(tags, 0, y);
+
+        TextField tagwords = new TextField();
+        GridPane.setConstraints(tagwords, 1, y++);
+        
+        Label taginfo = new Label("Tags are keywords separated by whitespace.");
+        taginfo.getStyleClass().add("label");
+        GridPane.setRowIndex(taginfo, y++);
+        GridPane.setColumnSpan(taginfo, 2);
 
         Button close = new Button("Close");
         GridPane.setConstraints(close, 0, y);
         close.setOnAction(e -> window.close());
 
         Button create = new Button("Create");
-        GridPane.setConstraints(create, 1, y);
+        GridPane.setConstraints(create, 1, y++);
         create.setOnAction(e -> {
-            validator.validateInput(input, citation, ref);
-            App.getLogic().add(ref);
-            validator.getAlertGenerator().alert("Confirmation", "Reference has been saved.");
-            App.getGUI().setScene();
-            window.close();
-            App.getGUI().setScene();
+            if (validator.validateInput(input, citation, ref)) {
+                if (validator.checkTagField(tagwords.getText())) {
+                    ref.setTags(tagwords.getText());
+                    App.getLogic().add(ref);
+                    validator.getAlertGenerator().alert("Confirmation", "Reference has been saved.");
+                    App.getGUI().setScene();
+                    window.close();
+                    App.getGUI().setScene();
+                }
+            }
         });
 
-        layout.getChildren().addAll(source, setSource, close, create, optional, alternative, required, citkey, citation);
+        layout.getChildren().addAll(source, setSource, close, create, optional, required, citkey, citation, tags, tagwords, taginfo);
+        if (ref.getAlternativeFields().size() > 0) {
+            layout.getChildren().add(alternative);
+        }
         layout.setVgap(8);
         layout.setHgap(10);
         layout.setPadding(new Insets(10, 10, 10, 10));

@@ -8,7 +8,6 @@ package miniprojekti.domain;
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.Map;
-import java.util.Set;
 
 /**
  *

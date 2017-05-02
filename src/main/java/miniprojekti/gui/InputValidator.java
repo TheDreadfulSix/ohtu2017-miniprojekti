@@ -8,9 +8,7 @@ package miniprojekti.gui;
 import java.util.HashMap;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import miniprojekti.domain.Field;
 import miniprojekti.domain.FieldName;
 import miniprojekti.domain.Reference;
@@ -65,20 +63,35 @@ public class InputValidator {
             }
         }
         if (!ref.getAlternativeFields().isEmpty()) {
-            int help = 0;
-            for (FieldName fn : ref.getAlternativeFields()) {
-                if (fields.containsKey(fn)) {
-                    help++;
-                }
-            }
-            if (help == 0) {
-                alertG.alert("Error", "Required alternative field missing.");
-                return false;
-            } else if (help > 1) {
-                alertG.alert("Error", "Too many alternative fields filled.");
+            if (!checkAlternativeFields(ref, fields)) {
                 return false;
             }
         }
+        if (!checkCitationKey(cit)) {
+            return false;
+        }
+        ref.setReference(cit.getText(), fields);
+        return true;
+    }
+
+    private boolean checkAlternativeFields(Reference ref, ObservableMap<FieldName, Field> fields) {
+        int help = 0;
+        for (FieldName fn : ref.getAlternativeFields()) {
+            if (fields.containsKey(fn)) {
+                help++;
+            }
+        }
+        if (help == 0) {
+            alertG.alert("Error", "Required alternative field missing.");
+            return false;
+        } else if (help > 1) {
+            alertG.alert("Error", "Too many alternative fields filled.");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean checkCitationKey(TextField cit) {
         if (newReference) {
             for (Reference reference : App.getLogic().getList()) {
                 if (reference.getCitationKey().equals(cit.getText())) {
@@ -87,12 +100,19 @@ public class InputValidator {
                 }
             }
         }
-        ref.setReference(cit.getText(), fields);
         return true;
     }
 
     public AlertGenerator getAlertGenerator() {
         return alertG;
+    }
+    
+    public boolean checkTagField(String tagwords) {
+        if (tagwords.matches("^[a-zA-Z0-9 ]*$")) {
+            return true;
+        }
+        alertG.alert("Error", "Tag may only contain letters and numbers. Whitespace separates tags.");
+        return false;
     }
 
 }

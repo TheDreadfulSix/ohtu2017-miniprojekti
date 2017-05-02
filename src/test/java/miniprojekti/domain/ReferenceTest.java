@@ -1,11 +1,6 @@
 package miniprojekti.domain;
 
-import miniprojekti.domain.Article;
-import miniprojekti.domain.Field;
-import miniprojekti.domain.FieldName;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 import org.junit.*;
 import static org.junit.Assert.*;
