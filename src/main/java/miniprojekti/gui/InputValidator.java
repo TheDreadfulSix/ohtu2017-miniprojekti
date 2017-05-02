@@ -24,9 +24,11 @@ import miniprojekti.main.App;
 public class InputValidator {
 
     private AlertGenerator alertG;
+    private boolean newReference;
 
-    public InputValidator() {
+    public InputValidator(boolean newReference) {
         this.alertG = new AlertGenerator();
+        this.newReference = newReference;
     }
 
     /**
@@ -45,7 +47,7 @@ public class InputValidator {
         }
     }
 
-    public void validateInput(HashMap<FieldName, TextField> input, TextField cit, Reference ref) {
+    public boolean validateInput(HashMap<FieldName, TextField> input, TextField cit, Reference ref) {
         ObservableMap<FieldName, Field> fields = FXCollections.observableHashMap();
         for (FieldName fn : input.keySet()) {
             if (!input.get(fn).getText().isEmpty()) {
@@ -53,13 +55,13 @@ public class InputValidator {
                 if (fn.equals(FieldName.YEAR) || fn.equals(FieldName.CHAPTER) || fn.equals(FieldName.NUMBER) || fn.equals(FieldName.VOLUME)) {
                     if (!isInt(input.get(fn))) {
                         alertG.alert("Error", "The fields in red should be in numerical format.");
-                        return;
+                        return false;
                     }
                 }
                 fields.put(fn, new Field(fn, input.get(fn).getText()));
             } else if (ref.getRequiredFields().contains(fn)) {
                 alertG.alert("Error", "Required fields missing.");
-                return;
+                return false;
             }
         }
         if (!ref.getAlternativeFields().isEmpty()) {
@@ -71,19 +73,22 @@ public class InputValidator {
             }
             if (help == 0) {
                 alertG.alert("Error", "Required alternative field missing.");
-                return;
+                return false;
             } else if (help > 1) {
                 alertG.alert("Error", "Too many alternative fields filled.");
-                return;
+                return false;
             }
         }
-        for (Reference reference : App.getLogic().getList()) {
-            if (reference.getCitationKey().equals(cit.getText())) {
-                alertG.alert("Error", "Reference with selected citation key already exists.");
-                return;
+        if (newReference) {
+            for (Reference reference : App.getLogic().getList()) {
+                if (reference.getCitationKey().equals(cit.getText())) {
+                    alertG.alert("Error", "Reference with selected citation key already exists.");
+                    return false;
+                }
             }
         }
         ref.setReference(cit.getText(), fields);
+        return true;
     }
 
     public AlertGenerator getAlertGenerator() {

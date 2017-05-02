@@ -34,7 +34,7 @@ import miniprojekti.main.App;
 public class CreateReference {
 
     private static Stage window;
-    private static InputValidator validator = new InputValidator();
+    private static InputValidator validator = new InputValidator(true);
 
     public static void display() {
         window = new Stage();

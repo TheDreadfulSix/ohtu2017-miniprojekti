@@ -43,7 +43,7 @@ public class EditReference {
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Edit Reference");
         this.ref = ref;
-        this.validator = new InputValidator();
+        this.validator = new InputValidator(false);
 
         setScene(0);
     }
@@ -108,8 +108,9 @@ public class EditReference {
         Button edit = new Button("Edit");
         GridPane.setConstraints(edit, 1, y);
         edit.setOnAction(e -> {
-            validator.validateInput(input, citation, ref);
-            App.getLogic().edit(ref);
+            if(validator.validateInput(input, citation, ref)) {
+                App.getLogic().edit(ref);
+            }
             validator.getAlertGenerator().alert("Confirmation", "Reference has been saved.");
             App.getGUI().setScene();
             window.close();
