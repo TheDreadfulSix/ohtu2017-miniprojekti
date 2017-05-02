@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -42,7 +43,10 @@ public class GUI {
         sp.setFitToWidth(true);
         sp.setFitToHeight(true);
         
-        layout.getChildren().addAll(Menus.setMenuBar(), Filter.createFilterBar(), sp);
+        MenuBar menuBar = new MenuBar();
+        menuBar.getMenus().add(new ActionMenu());
+        
+        layout.getChildren().addAll(menuBar, Filter.createFilterBar(), sp);
         scene = new Scene(layout, 1240, 720);
         scene.getStylesheets().add("style.css");
         sp.requestFocus();
