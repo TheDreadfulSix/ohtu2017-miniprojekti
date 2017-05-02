@@ -5,9 +5,6 @@
  */
 package miniprojekti.gui;
 
-import miniprojekti.domain.Article;
-import miniprojekti.domain.Field;
-import miniprojekti.domain.FieldName;
 import java.util.HashMap;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -22,26 +19,33 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import miniprojekti.domain.Article;
 import miniprojekti.domain.Book;
+import miniprojekti.domain.Field;
+import miniprojekti.domain.FieldName;
 import miniprojekti.domain.Inproceedings;
 import miniprojekti.domain.Reference;
 import miniprojekti.main.App;
 
 /**
+ * A class for creating the window for editing a reference.
  *
- * @author Joonas
+ * @author Viliina
  */
-public class CreateReference {
+public class EditReference {
 
     private static Stage window;
-    private static InputValidator validator = new InputValidator(true);
+    private Reference ref;
+    private InputValidator validator;
 
-    public static void display() {
+    public void display(Reference ref) {
         window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("New Reference");
+        window.setTitle("Edit Reference");
+        this.ref = ref;
+        this.validator = new InputValidator(false);
 
-        setScene(new Article(), 0);
+        setScene(0);
     }
 
     /**
@@ -49,7 +53,7 @@ public class CreateReference {
      *
      * @return window's layout.
      */
-    private static void setScene(Reference ref, int selected) {
+    private void setScene(int selected) {
         int y = 1;
         GridPane layout = new GridPane();
         layout.setPadding(new Insets(10, 10, 10, 10));
@@ -58,57 +62,9 @@ public class CreateReference {
         Label source = new Label("Source:");
         GridPane.setConstraints(source, 0, y);
 
-        ChoiceBox setSource = new ChoiceBox(FXCollections.observableArrayList("article",
-                "book", "booklet", "inbook", "incollection", "inproceedings", "manual", "thesis",
-                "misc", "proceedings", "tech report", "unpublished"));
-        setSource.getSelectionModel().select(selected);
+        TextField setSource = new TextField(ref.getClass().getName());
         GridPane.setConstraints(setSource, 1, y++);
-
-        setSource.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue ov, Number value, Number new_value) {
-                System.out.println(new_value.intValue());
-                switch (new_value.intValue()) {
-                    case 0:
-                        setScene(new Article(), 0);
-                        System.out.println("Article");
-                        break;
-                    case 1:
-                        setScene(new Book(), 1);
-                        break;
-                    case 2:
-                        setScene(new Article(), 0);
-                        break;
-                    case 3:
-                        setScene(new Article(), 0);
-                        break;
-                    case 4:
-                        setScene(new Article(), 0);
-                        break;
-                    case 5:
-                        setScene(new Inproceedings(), 5);
-                        break;
-                    case 6:
-                        setScene(new Article(), 0);
-                        break;
-                    case 7:
-                        setScene(new Article(), 0);
-                        break;
-                    case 8:
-                        setScene(new Article(), 0);
-                        break;
-                    case 9:
-                        setScene(new Article(), 0);
-                        break;
-                    case 10:
-                        setScene(new Article(), 0);
-                        break;
-                    case 11:
-                        setScene(new Article(), 0);
-                        break;
-                }
-            }
-        });
+        setSource.setEditable(false);
 
         Label required = new Label("Required fields");
         required.getStyleClass().add("header");
@@ -118,15 +74,17 @@ public class CreateReference {
         citkey.getStyleClass().add("header");
         GridPane.setConstraints(citkey, 0, y);
 
-        TextField citation = new TextField();
+        TextField citation = new TextField(ref.getCitationKey());
         GridPane.setConstraints(citation, 1, y++);
+        citation.setEditable(false);
+        citation.setDisable(true);
 
         for (FieldName fn : ref.getRequiredFields()) {
             y = createInputFields(fn, y, layout, input);
         }
 
         Label alternative = new Label("Alternative fields");
-        if (ref.getAlternativeFields().isEmpty()) {
+        if (!ref.getAlternativeFields().isEmpty()) {
             alternative.setText("No Alternative fields");
         }
         alternative.getStyleClass().add("header");
@@ -148,18 +106,19 @@ public class CreateReference {
         GridPane.setConstraints(close, 0, y);
         close.setOnAction(e -> window.close());
 
-        Button create = new Button("Create");
-        GridPane.setConstraints(create, 1, y);
-        create.setOnAction(e -> {
-            validator.validateInput(input, citation, ref);
-            App.getLogic().add(ref);
+        Button edit = new Button("Edit");
+        GridPane.setConstraints(edit, 1, y);
+        edit.setOnAction(e -> {
+            if(validator.validateInput(input, citation, ref)) {
+                App.getLogic().edit(ref);
+            }
             validator.getAlertGenerator().alert("Confirmation", "Reference has been saved.");
             App.getGUI().setScene();
             window.close();
             App.getGUI().setScene();
         });
 
-        layout.getChildren().addAll(source, setSource, close, create, optional, alternative, required, citkey, citation);
+        layout.getChildren().addAll(source, setSource, close, edit, optional, alternative, required, citkey, citation);
         layout.setVgap(8);
         layout.setHgap(10);
         layout.setPadding(new Insets(10, 10, 10, 10));
@@ -171,9 +130,12 @@ public class CreateReference {
         window.show();
     }
 
-    private static int createInputFields(FieldName fn, int y, GridPane layout, HashMap<FieldName, TextField> input) {
+    private int createInputFields(FieldName fn, int y, GridPane layout, HashMap<FieldName, TextField> input) {
         Label label = new Label(fn.name());
         TextField text = new TextField();
+        if (ref.getFieldMap().get(fn) != null) {
+            text.setText(ref.getFieldMap().get(fn).getValue());
+        }
         GridPane.setConstraints(label, 0, y);
         GridPane.setConstraints(text, 1, y++);
         layout.getChildren().addAll(label, text);
