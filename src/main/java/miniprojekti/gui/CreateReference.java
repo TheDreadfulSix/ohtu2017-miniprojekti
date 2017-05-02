@@ -144,6 +144,13 @@ public class CreateReference {
             y = createInputFields(fn, y, layout, input);
         }
 
+        Label tags = new Label("Tags");
+        optional.getStyleClass().add("header");
+        GridPane.setConstraints(tags, 0, y++);
+
+        TextField tagwords = new TextField();
+        GridPane.setConstraints(tagwords, 1, y++);
+
         Button close = new Button("Close");
         GridPane.setConstraints(close, 0, y);
         close.setOnAction(e -> window.close());
@@ -151,15 +158,19 @@ public class CreateReference {
         Button create = new Button("Create");
         GridPane.setConstraints(create, 1, y);
         create.setOnAction(e -> {
-            validator.validateInput(input, citation, ref);
-            App.getLogic().add(ref);
-            validator.getAlertGenerator().alert("Confirmation", "Reference has been saved.");
-            App.getGUI().setScene();
-            window.close();
-            App.getGUI().setScene();
+            if (validator.validateInput(input, citation, ref)) {
+                if (validator.checkTagField(tagwords.getText())) {
+                    ref.setTags(tagwords.getText());
+                    App.getLogic().add(ref);
+                    validator.getAlertGenerator().alert("Confirmation", "Reference has been saved.");
+                    App.getGUI().setScene();
+                    window.close();
+                    App.getGUI().setScene();
+                }
+            }
         });
 
-        layout.getChildren().addAll(source, setSource, close, create, optional, alternative, required, citkey, citation);
+        layout.getChildren().addAll(source, setSource, close, create, optional, alternative, required, citkey, citation, tags, tagwords);
         layout.setVgap(8);
         layout.setHgap(10);
         layout.setPadding(new Insets(10, 10, 10, 10));

@@ -101,6 +101,12 @@ public class EditReference {
         for (FieldName fn : ref.getOptionalFields()) {
             y = createInputFields(fn, y, layout, input);
         }
+        Label tags = new Label("Tags");
+        optional.getStyleClass().add("header");
+        GridPane.setConstraints(tags, 0, y++);
+
+        TextField tagwords = new TextField(ref.getTags());
+        GridPane.setConstraints(tagwords, 1, y++);
 
         Button close = new Button("Close");
         GridPane.setConstraints(close, 0, y);
@@ -109,16 +115,19 @@ public class EditReference {
         Button edit = new Button("Edit");
         GridPane.setConstraints(edit, 1, y);
         edit.setOnAction(e -> {
-            if(validator.validateInput(input, citation, ref)) {
-                App.getLogic().edit(ref);
+            if (validator.validateInput(input, citation, ref)) {
+                if (validator.checkTagField(tagwords.getText())) {
+                    ref.setTags(tagwords.getText());
+                    App.getLogic().edit(ref);
+                    validator.getAlertGenerator().alert("Confirmation", "Reference has been saved.");
+                    App.getGUI().setScene();
+                    window.close();
+                    App.getGUI().setScene();
+                }
             }
-            validator.getAlertGenerator().alert("Confirmation", "Reference has been saved.");
-            App.getGUI().setScene();
-            window.close();
-            App.getGUI().setScene();
         });
 
-        layout.getChildren().addAll(source, setSource, close, edit, optional, alternative, required, citkey, citation);
+        layout.getChildren().addAll(source, setSource, close, edit, optional, alternative, required, citkey, citation, tags, tagwords);
         layout.setVgap(8);
         layout.setHgap(10);
         layout.setPadding(new Insets(10, 10, 10, 10));
