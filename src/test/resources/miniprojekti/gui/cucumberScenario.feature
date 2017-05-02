@@ -1,6 +1,4 @@
-<<<<<<< HEAD
 
-=======
 """
 This scenario test does not test the GUI, but the functionality.
 Slightly redundant, but works as test.
@@ -16,4 +14,3 @@ Feature: An user can edit reference
         Given user chooses to edit reference that exists
         When user deletes text from required field
         Then did not edit reference
->>>>>>> master

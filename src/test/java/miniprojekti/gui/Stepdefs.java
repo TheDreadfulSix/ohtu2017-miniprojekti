@@ -1,44 +1,18 @@
 package miniprojekti.gui;
 
-import miniprojekti.main.App;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-<<<<<<< HEAD
-import javafx.application.Application;
-=======
 import java.util.HashSet;
 import java.util.Set;
-import javafx.application.Application;
 import miniprojekti.domain.Article;
-import miniprojekti.domain.Book;
 import miniprojekti.domain.Field;
 import miniprojekti.domain.FieldName;
 import miniprojekti.domain.Reference;
 import miniprojekti.logic.Logic;
->>>>>>> master
-import miniprojekti.main.Main;
 import static org.junit.Assert.*;
 
 public class Stepdefs {
-<<<<<<< HEAD
-
-    @Given("^user $")
-    public void user_has_selected_create_reference() throws Throwable {
-        
-    }
-
-    @When("^user selects \"create .bib file\"$")
-    public void user_selects_create_bib_file() throws Throwable {
-    
-    }
-
-    @Then("^file successfully created$")
-    public void file_successfully_created(int val) throws Throwable {
-        
-    }
-  
-=======
     Reference ref;
     Set<Field> fields;
     String citationKey;
@@ -103,5 +77,4 @@ public class Stepdefs {
         }
         assertTrue(false);
     }
->>>>>>> master
 }
