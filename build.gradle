@@ -49,7 +49,7 @@ jacocoTestReport {
     afterEvaluate {
         classDirectories = files(classDirectories.files.collect {
             fileTree(dir: it,
-                    exclude: ['src/main/java/miniprojekti/gui**'])
+                    exclude: ['**/src/main/java/miniprojekti/gui**'])
 //                              'crackingthecode/part3knowledgebased/**',
 //                              '**/Chapter7ObjectOrientedDesign**',
 //                              '**/Chapter11Testing**',
