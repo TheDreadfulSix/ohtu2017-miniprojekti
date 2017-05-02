@@ -9,6 +9,7 @@ import java.util.stream.Stream;
 
 public abstract class Reference {
     protected String citationKey;
+    protected String tags;
     
     //Set<FieldName> requiredFields;
     //Set<FieldName> optionalFields;
@@ -21,6 +22,7 @@ public abstract class Reference {
     
     public Reference(){
         this.setFields();
+        tags = "";
     }
     
     /**
@@ -69,6 +71,15 @@ public abstract class Reference {
         
         this.citationKey = citationKey;
         this.fields = fields;
+    }
+    
+    public void setTags(String tagInput) {
+        if (!tags.isEmpty() && !tagInput.isEmpty()) tags += ",";
+        tags += tagInput.replace(' ', ',');
+    }
+    
+    public String getTags() {
+        return tags;
     }
     
     /**
@@ -131,6 +142,12 @@ public abstract class Reference {
             all += "\n\t\t\t" + fld.toString() + ": " + this.fields.get(fld).value;
         }
         all += "\n";
+        if (tags != null && !tags.isEmpty()) {
+            all += "\t\t\tTags: ";
+            String formattedTags = tags.replace(",", ", ");
+            all += formattedTags;
+            all += "\n";
+        } 
         return all;
     }
 }

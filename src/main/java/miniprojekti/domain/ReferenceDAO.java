@@ -82,8 +82,8 @@ public class ReferenceDAO extends BaseDAO {
             sqlValues.append("'" + field.getValue() + "', ");
         });
         // add class and citationKey as the last field-value pairs
-        sqlFields.append("class, citationKey");
-        sqlValues.append("'" + reference.getClass().getSimpleName() + "', '" + reference.getCitationKey() + "'");
+        sqlFields.append("class, citationKey, tags");
+        sqlValues.append("'" + reference.getClass().getSimpleName() + "', '" + reference.getCitationKey() + "', '" + reference.getTags() + "'");
         sql.append(sqlFields + ") VALUES(" + sqlValues + ")");
         return sql.toString();
     }
@@ -96,17 +96,20 @@ public class ReferenceDAO extends BaseDAO {
             for (int i = 1; i <= metaData.getColumnCount(); i++) {
                 String columnName = metaData.getColumnName(i);
                 // Class and citationKey are not field and thus they are handled separately. We'll also want to skip nulls.
-                if (!columnName.equalsIgnoreCase("class") && !columnName.equalsIgnoreCase("citationKey")
+                if (!columnName.equalsIgnoreCase("class") && !columnName.equalsIgnoreCase("citationKey") && 
+                        !columnName.equalsIgnoreCase("tags")
                         && results.getString(columnName) != null) {
                     fields.add(new Field(FieldName.valueOf(columnName), results.getString(columnName)));
                 }
             }
             String citationKey = results.getString("citationKey");
             String className = results.getString("class");
+            String tags = results.getString("tags");
             className = "miniprojekti.domain." + className.substring(0, 1).toUpperCase() + className.substring(1).toLowerCase();
             Class cl = Class.forName(className);
-            Constructor con = cl.getConstructor(String.class, Collection.class);
-            reference = con.newInstance(citationKey, fields);
+            Constructor con = cl.getConstructor(String.class, Collection.class, String.class);
+            reference = con.newInstance(citationKey, fields, tags);
+            
         } catch (SQLException | ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
             Logger.getLogger(ReferenceDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
