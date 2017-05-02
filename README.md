@@ -37,7 +37,11 @@ viitteen oikealla puolella. Ohjelma varmistaa poiston kysyen "Are you sure?", jo
 "OK", viite poistuu sekä ohjelman listasta, että tietokannasta, Käyttäjän valitessa "Cancel" mitään poistoa ei tapahdu.
 
 ##### Viitteen muokkaaminen
---to do--
+Näkymässä listattua viitettä voi muokata klikkaamalla viitteen oikeassa laidassa sijaitsevaa "Edit" painiketta. Uusi 
+"Edit reference" -ikkuna avautuu ja valittua viitettä voi muokata muuttamalla haluamiensa kenttien sisältöä tai täyttämällä
+uusia. Joitakin kenttiä ei voi muuttaa ja ne näkyvät harmaina. 
+Tietojen syöttämisen jälkeen "Edit" painiketta painamalla muokkaukset tallentuvat, ellei kenttien täytössä ole puutteita.
+"Edit reference" -ikkunan voi sulkea milloin tahansa klikkaamalla "Close". 
 
 ##### .bib-tiedoston luominen tallennetuista viitteistä
 Valitse yläpalkista ".bib" -> "Generate .bib file", avautuu uusi ikkuna, johon "Filename" kenttään tulee syöttää
