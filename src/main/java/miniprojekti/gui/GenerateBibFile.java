@@ -62,12 +62,12 @@ public class GenerateBibFile {
         int y = 1;
         GridPane layout = new GridPane();
 
-        Label filename = new Label("File name");
+        Label filename = new Label("Filename");
         TextField file = new TextField();
         GridPane.setConstraints(filename, 0, y);
         GridPane.setConstraints(file, 1, y++);
         
-        Label path = new Label("Where do you want to save? \n (If left empty, the path is set \n to the project root directory.)");
+        Label path = new Label("Path \n (If left empty, the path is set \n to the project root directory.)");
         TextField pathname = new TextField();
         GridPane.setConstraints(path, 0, y);
         GridPane.setConstraints(pathname, 1, y++);
