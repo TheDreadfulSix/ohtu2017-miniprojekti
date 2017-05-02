@@ -49,8 +49,8 @@ jacocoTestReport {
     afterEvaluate {
         classDirectories = files(classDirectories.files.collect {
             fileTree(dir: it,
-                    exclude: ['src/main/java/miniprojekti/gui/**'])
-//                              'crackingthecode/part3knowledgebased/**',
+                    exclude: ['src/main/java/miniprojekti/gui',
+                              '**/miniprojekti/gui'])
 //                              '**/Chapter7ObjectOrientedDesign**',
 //                              '**/Chapter11Testing**',
 //                              '**/Chapter12SystemDesignAndMemoryLimits**',
@@ -63,5 +63,10 @@ mainClassName = 'miniprojekti.main.Main'
 
 // Show console output during tests
 test {
-  testLogging.showStandardStreams = true
+    testLogging.showStandardStreams = true
+
+    jacoco{
+        excludes = ['src/main/java/miniprojekti/gui/**']
+        append = false
+    }
 }
