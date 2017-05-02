@@ -45,6 +45,11 @@ public class Logic {
         //now only empties the filter and lists all references.
         App.getLogic().emptyFilter();
     }
+    
+    public void edit(Reference oldRef, Reference newRef) {
+        delete(oldRef);
+        add(newRef);
+    }
 
     public void edit(Reference ref) {
         //TODO editing reference. Not in sprint 3.
