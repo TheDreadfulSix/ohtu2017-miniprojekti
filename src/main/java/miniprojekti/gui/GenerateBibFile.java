@@ -121,8 +121,9 @@ public class GenerateBibFile {
             return;
         }
         if (path.isEmpty()) {
-            path = System.getProperty("user.dir");
-            path += "/";
+//            path = System.getProperty("user.dir");
+//            path += "/";
+            generator.createFile(filename, App.getLogic().getAllReferences());
         } else if (path.charAt(path.length() - 1) != '/') {
             path += "/";
             if (pathInvalid(path, filename)) {
