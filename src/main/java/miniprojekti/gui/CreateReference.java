@@ -126,9 +126,6 @@ public class CreateReference {
         }
 
         Label alternative = new Label("Alternative fields");
-        if (ref.getAlternativeFields().isEmpty()) {
-            alternative.setText("No Alternative fields");
-        }
         alternative.getStyleClass().add("header");
         GridPane.setConstraints(alternative, 0, y++);
 
@@ -144,19 +141,25 @@ public class CreateReference {
             y = createInputFields(fn, y, layout, input);
         }
 
+
         Label tags = new Label("Tags");
-        optional.getStyleClass().add("header");
-        GridPane.setConstraints(tags, 0, y++);
+        tags.getStyleClass().add("header");
+        GridPane.setConstraints(tags, 0, y);
 
         TextField tagwords = new TextField();
         GridPane.setConstraints(tagwords, 1, y++);
+        
+        Label taginfo = new Label("Tags are keywords separated by whitespace.");
+        taginfo.getStyleClass().add("label");
+        GridPane.setRowIndex(taginfo, y++);
+        GridPane.setColumnSpan(taginfo, 2);
 
         Button close = new Button("Close");
         GridPane.setConstraints(close, 0, y);
         close.setOnAction(e -> window.close());
 
         Button create = new Button("Create");
-        GridPane.setConstraints(create, 1, y);
+        GridPane.setConstraints(create, 1, y++);
         create.setOnAction(e -> {
             if (validator.validateInput(input, citation, ref)) {
                 if (validator.checkTagField(tagwords.getText())) {
@@ -170,7 +173,10 @@ public class CreateReference {
             }
         });
 
-        layout.getChildren().addAll(source, setSource, close, create, optional, alternative, required, citkey, citation, tags, tagwords);
+        layout.getChildren().addAll(source, setSource, close, create, optional, required, citkey, citation, tags, tagwords, taginfo);
+        if (ref.getAlternativeFields().size() > 0) {
+            layout.getChildren().add(alternative);
+        }
         layout.setVgap(8);
         layout.setHgap(10);
         layout.setPadding(new Insets(10, 10, 10, 10));
