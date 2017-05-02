@@ -67,6 +67,7 @@ public class EditReference {
         setSource.setEditable(false);
         setSource.setDisable(true);
 
+
         Label required = new Label("Required fields");
         required.getStyleClass().add("header");
         GridPane.setConstraints(required, 0, y++);
