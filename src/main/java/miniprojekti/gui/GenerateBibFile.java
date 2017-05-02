@@ -116,32 +116,24 @@ public class GenerateBibFile {
             return;
         }
 
-        if (App.getLogic().getList().size() == 0) {
+        if (App.getLogic().getList().isEmpty()) {
             alertG.alert("Error", "You must provide some references first");
             return;
         }
         if (path.isEmpty()) {
-//            path = System.getProperty("user.dir");
-//            path += "/";
             generator.createFile(filename, App.getLogic().getAllReferences());
-        } else if (path.charAt(path.length() - 1) != '/') {
-            path += "/";
-            if (pathInvalid(path, filename)) {
+        } else if (!path.endsWith(File.separator)) {
+            path += File.separator;
+            
+            if (!new File(path).isDirectory()) {
                 alertG.alert("Error", "The path is invalid");
                 return;
             }
+            
+            generator.createFile(path, filename, App.getLogic().getAllReferences());
         }
         
-        generator.createFile(path, filename, App.getLogic().getAllReferences());
         App.getGUI().setScene();
         window.close();
     }
-
-    private static boolean pathInvalid(String path, String filename) {
-        if (Files.exists(Paths.get(path + filename))) {
-            return false;
-        }
-        return true;
-    }
-
 }
