@@ -62,8 +62,11 @@ public class EditReference {
         Label source = new Label("Source:");
         GridPane.setConstraints(source, 0, y);
 
-        Label setSource = new Label(ref.getClass().getSimpleName());
+        TextField setSource = new TextField(ref.getClass().getSimpleName());
         GridPane.setConstraints(setSource, 1, y++);
+        setSource.setEditable(false);
+        setSource.setDisable(true);
+
 
         Label required = new Label("Required fields");
         required.getStyleClass().add("header");
@@ -83,9 +86,6 @@ public class EditReference {
         }
 
         Label alternative = new Label("Alternative fields");
-        if (!ref.getAlternativeFields().isEmpty()) {
-            alternative.setText("No Alternative fields");
-        }
         alternative.getStyleClass().add("header");
         GridPane.setConstraints(alternative, 0, y++);
 
@@ -101,23 +101,41 @@ public class EditReference {
             y = createInputFields(fn, y, layout, input);
         }
 
+        Label tags = new Label("Tags");
+        tags.getStyleClass().add("header");
+        GridPane.setConstraints(tags, 0, y);
+
+        TextField tagwords = new TextField(ref.getTags());
+        GridPane.setConstraints(tagwords, 1, y++);
+
+        Label taginfo = new Label("Tags are keywords separated by whitespace.");
+        taginfo.getStyleClass().add("label");
+        GridPane.setRowIndex(taginfo, y++);
+        GridPane.setColumnSpan(taginfo, 2);
+
         Button close = new Button("Close");
         GridPane.setConstraints(close, 0, y);
         close.setOnAction(e -> window.close());
 
         Button edit = new Button("Edit");
-        GridPane.setConstraints(edit, 1, y);
+        GridPane.setConstraints(edit, 1, y++);
         edit.setOnAction(e -> {
-            if(validator.validateInput(input, citation, ref)) {
-                App.getLogic().edit(ref);
+            if (validator.validateInput(input, citation, ref)) {
+                if (validator.checkTagField(tagwords.getText())) {
+                    ref.setTags(tagwords.getText());
+                    App.getLogic().edit(ref);
+                    validator.getAlertGenerator().alert("Confirmation", "Reference has been saved.");
+                    App.getGUI().setScene();
+                    window.close();
+                    App.getGUI().setScene();
+                }
             }
-            validator.getAlertGenerator().alert("Confirmation", "Reference has been saved.");
-            App.getGUI().setScene();
-            window.close();
-            App.getGUI().setScene();
         });
 
-        layout.getChildren().addAll(source, setSource, close, edit, optional, alternative, required, citkey, citation);
+        layout.getChildren().addAll(source, setSource, close, edit, optional, required, citkey, citation, tags, tagwords, taginfo);
+        if (!ref.getAlternativeFields().isEmpty()) {
+            layout.getChildren().add(alternative);
+        }
         layout.setVgap(8);
         layout.setHgap(10);
         layout.setPadding(new Insets(10, 10, 10, 10));
