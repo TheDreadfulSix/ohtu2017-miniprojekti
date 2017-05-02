@@ -26,7 +26,7 @@ public class Menus {
             CreateReference.display();
         });
 
-        MenuItem newBib = new MenuItem("generate .bib file");
+        MenuItem newBib = new MenuItem("Generate .bib file");
 
         newBib.setOnAction(e -> {
             GenerateBibFile.display();
