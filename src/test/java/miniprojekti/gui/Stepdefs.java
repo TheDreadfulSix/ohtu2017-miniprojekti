@@ -3,6 +3,8 @@ package miniprojekti.gui;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import java.io.File;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import miniprojekti.domain.Article;
@@ -10,6 +12,7 @@ import miniprojekti.domain.Field;
 import miniprojekti.domain.FieldName;
 import miniprojekti.domain.Reference;
 import miniprojekti.logic.Logic;
+import org.junit.After;
 import static org.junit.Assert.*;
 
 public class Stepdefs {
@@ -76,5 +79,12 @@ public class Stepdefs {
             assertTrue(true);
         }
         assertTrue(false);
+    }
+    
+    @After
+    public void cleanFiles() {
+        Arrays.stream(new File("~" + File.pathSeparator + "referencedatabase"+ File.pathSeparator +"data").listFiles(
+                (File file) -> file.getName().endsWith(".db"))
+        ).forEach(File::delete);
     }
 }

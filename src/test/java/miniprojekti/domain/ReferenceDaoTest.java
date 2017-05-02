@@ -5,7 +5,9 @@
  */
 package miniprojekti.domain;
 
+import java.io.File;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -63,5 +65,16 @@ public class ReferenceDaoTest {
         fields.add(new Field(FieldName.PAGES, "137-172"));
         reference = new Article("testiArtikkeli1", fields);
         referenceDAO.deleteReference(reference);
+    }
+    
+    @After
+    public void cleanFiles() {
+        try {
+            Arrays.stream(new File("~" + File.pathSeparator + "referencedatabase"+ File.pathSeparator +"data").listFiles(
+                (File file) -> file.getName().endsWith(".db"))
+            ).forEach(File::delete);
+        } catch (Exception e) {
+        }
+        
     }
 }

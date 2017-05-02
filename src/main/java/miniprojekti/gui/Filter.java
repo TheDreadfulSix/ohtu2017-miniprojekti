@@ -46,8 +46,7 @@ public class Filter {
         filterPane.add(filterButton, 3, 0);
         filterButton.setOnAction(e -> {
             if (!filterInput.getText().equals("")) {
-                //Filter with filterInput buttons String. Filtering happens in referenceDAO(when it gets merged).
-                //TODO Make the Map for database here if possible. :D Did not do that. Fix it maybe?
+                //Filter with filterInput buttons String.
                 App.getLogic().filter(filterInput.getText());
                 App.getGUI().setScene();
             } else {
