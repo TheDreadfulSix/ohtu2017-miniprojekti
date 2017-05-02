@@ -62,9 +62,8 @@ public class EditReference {
         Label source = new Label("Source:");
         GridPane.setConstraints(source, 0, y);
 
-        TextField setSource = new TextField(ref.getClass().getName());
+        Label setSource = new Label(ref.getClass().getSimpleName());
         GridPane.setConstraints(setSource, 1, y++);
-        setSource.setEditable(false);
 
         Label required = new Label("Required fields");
         required.getStyleClass().add("header");
