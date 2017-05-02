@@ -77,6 +77,7 @@ public class EditReference {
         TextField citation = new TextField(ref.getCitationKey());
         GridPane.setConstraints(citation, 1, y++);
         citation.setEditable(false);
+        citation.setDisable(true);
 
         for (FieldName fn : ref.getRequiredFields()) {
             y = createInputFields(fn, y, layout, input);
