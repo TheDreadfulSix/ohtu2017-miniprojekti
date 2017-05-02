@@ -46,13 +46,10 @@ public class Logic {
         App.getLogic().emptyFilter();
     }
     
-    public void edit(Reference oldRef, Reference newRef) {
-        delete(oldRef);
-        add(newRef);
-    }
 
     public void edit(Reference ref) {
-        //TODO editing reference. Not in sprint 3.
+        delete(ref);
+        add(ref);
     }
 
     public void filter(String word) {
