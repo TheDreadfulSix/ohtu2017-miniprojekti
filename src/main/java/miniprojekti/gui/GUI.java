@@ -93,9 +93,9 @@ public class GUI {
         
         oList = FXCollections.observableArrayList(App.getLogic().getList());
 
-        Text title = new Text("References");
-        title.setStyle("-fx-fill: linear-gradient(from 0% 0% to 200% 100%, repeat, #55AABB 0%, #AA0000 50%);-fx-font-size:30px;");
-        referenceView.getChildren().add(title);
+//        Text title = new Text("References");
+//        title.setStyle("-fx-fill: linear-gradient(from 0% 0% to 200% 100%, repeat, #55AABB 0%, #AA0000 50%);-fx-font-size:30px;");
+//        referenceView.getChildren().add(title);
         
         for (Reference ref : oList) {
             HBox referenceItem = new HBox();

@@ -21,6 +21,7 @@ public class Logic {
     private List<Reference> list; //this will contain all references, at all times.
     private List<Reference> filtered; //this has only ones that have been through filter.
     private ReferenceDAO referenceDAO;
+    private String filter = "";
 
     public Logic() {
         list = new ArrayList<>();
@@ -52,15 +53,16 @@ public class Logic {
 
     public void filter(String word) {
         //TODO 
-        List<Reference> toFilter = getList();
+        filter = word;
+        List<Reference> toFilter = (List<Reference>)getAllReferences();
         word = word.toLowerCase();
-        List<Reference> filter = new ArrayList();
+        List<Reference> filtered = new ArrayList();
         for (Reference toFilter1 : toFilter) {
             if (toFilter1.toString().toLowerCase().contains(word)) {
-                filter.add(toFilter1);
+                filtered.add(toFilter1);
             }
         }
-        this.filtered = filter;
+        this.filtered = filtered;
     }
 
     public void emptyFilter() {
@@ -68,7 +70,7 @@ public class Logic {
     }
 
     public List<Reference> getList() {
-        if (filtered.isEmpty() || filtered.containsAll(list)) {
+        if (filter.isEmpty() || filtered.containsAll(list)) {
             list = (List<Reference>) this.getAllReferences();
             return list;
         }
