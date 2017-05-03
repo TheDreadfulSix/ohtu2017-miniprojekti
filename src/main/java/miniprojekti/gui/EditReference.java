@@ -107,7 +107,7 @@ public class EditReference {
         GridPane.setConstraints(close, 0, y);
         close.setOnAction(e -> window.close());
 
-        Button edit = new Button("Edit");
+        Button edit = new Button("Save changes");
         GridPane.setConstraints(edit, 1, y++);
         edit.setOnAction(e -> {
             if (validator.validateInput(input, citation, ref)) {

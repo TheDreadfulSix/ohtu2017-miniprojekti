@@ -15,18 +15,18 @@ UML(karkea prototype vaiheen versio):https://yuml.me/42d7b4a0 (edit linkki:http:
 Lataa itsellesi tämän repositorion juurikansiosta löytyvä .jar -loppuinen tiedosto ja avaa se. 
 
 ##### Viitteen lisääminen
-Valitse yläpalkista Reference -> Add, avautuu ikkuna josta voit valita viitteen tyypin "source"-kohdasta.
+Valitsemalla yläpalkista "Actions" -> "Add Reference", avautuu ikkuna josta voi valita viitteen tyypin "Source"-kohdasta.
 Kaikki "Required fields" otsikon alta löytyvät kentät tulee täyttää, "Alternative fields" otsikon alta 
-(jos kenttiä on kyseiselle viitetyypille) TOINEN kenttä tulee täyttää ja "Optional" otsikon alaiset kentät 
+(jos vaihtoehtoisia kenttiä on kyseiselle viitetyypille) TOINEN kenttä tulee täyttää ja "Optional" otsikon alaiset kentät 
 voi täyttää halutessaan. 
-Kentän "Citation key" sisällön tulee olla uniikki ja "Year"-, "Volume"- sekä "Number"-kenttien sisältöjen tulee
-olla numeromuodossa.
-Jos tiedot on täytetty oikein, viite tallentuu painaessasi "Create" -painiketta, muutoin ohjelma ilmoittaa
+Kentän "Citation key" sisällön tulee olla yksilöllinen ja "Year"-, "Volume"- sekä "Number"-kenttien sisältöjen tulee
+olla numeromuodossa. 
+Jos tiedot on täytetty oikein, viite tallentuu klikkaamalla "Create" -painiketta, muutoin ohjelma ilmoittaa
 virhetilanteesta.
 Viitteen luonti-ikkunasta voi poistua milloin tahansa painamalla "Close".
 
 ##### Viitteiden listaaminen
-Kaikki tallentamasi viitteet näkyvät sovelluksen perusnäkymässä listana, josta näkyy viitteen tyyppi (vasemmassa 
+Kaikki tallennetut viitteet näkyvät sovelluksen perusnäkymässä listana, josta näkyy viitteen tyyppi (vasemmassa 
 yläkulmassa) ja luonnin ohessa täytettyjen kenttien nimet ja arvot. 
 
 ##### Viitteen poistaminen
@@ -35,26 +35,25 @@ viitteen oikealla puolella. Ohjelma varmistaa poiston kysyen "Are you sure?", jo
 "OK", viite poistuu sekä ohjelman listasta, että tietokannasta, Käyttäjän valitessa "Cancel" mitään poistoa ei tapahdu.
 
 ##### Viitteen muokkaaminen
-Näkymässä listattua viitettä voi muokata klikkaamalla viitteen oikeassa laidassa sijaitsevaa "Edit" painiketta. Uusi 
-"Edit reference" -ikkuna avautuu ja valittua viitettä voi muokata muuttamalla haluamiensa kenttien sisältöä tai täyttämällä
-uusia. Joitakin kenttiä ei voi muuttaa ja ne näkyvät harmaina. 
+Näkymässä listattua viitettä voi muokata klikkaamalla listassa olevan viitteen oikeassa laidassa sijaitsevaa "Edit" painiketta. 
+Uusi "Edit reference" -ikkuna avautuu ja valittua viitettä voi muokata muuttamalla haluamiensa kenttien sisältöä tai täyttämällä
+uusia. Joidenkin kenttien sisältöä ei voi muuttaa ja ne näkyvät harmaina. 
 Tietojen syöttämisen jälkeen "Edit" painiketta painamalla muokkaukset tallentuvat, ellei kenttien täytössä ole puutteita.
 "Edit reference" -ikkunan voi sulkea milloin tahansa klikkaamalla "Close". 
 
-##### .bib-tiedoston luominen tallennetuista viitteistä
-Valitse yläpalkista ".bib" -> "Generate .bib file", avautuu uusi ikkuna, johon "Filename" kenttään tulee syöttää
-luotavan tiedoston nimi, jos nimi on jo käytössä, Käyttäjän antamaan nimeen lisätään perään TimeStamp, eli tiedoston
-luontiaika (muodossa vuosi-kuukausi-päivä-tunti-minuutti).
+##### BibTeX-tiedoston luominen tallennetuista viitteistä
+Valitse yläpalkista "Actions" -> "Generate BibTeX file", avautuu uusi ikkuna, johon "Filename" kenttään tulee syöttää
+luotavan tiedoston nimi, johon ei tarvitse lisätä .bib -päätettä erikseen. Jos nimi on jo käytössä, Käyttäjän antamaan nimeen 
+lisätään perään TimeStamp, eli tiedoston luontiaika (muodossa vuosi-kuukausi-päivä-tunti-minuutti).
 Kenttään "Path" tulee syöttää tiedostolle polku(sijainti) johon se tallentuu. Jos tämä kenttä jätetään tyhjäksi, tallentuu
-.bib-tiedosto samaan kansioon mistä ohjelma ajettiin(missä .jar-tiedosto sijaitsee).
+BibTeX-tiedosto samaan kansioon mistä ohjelma ajettiin(missä .jar-tiedosto sijaitsee).
 Tiedosto luodaan ja tallennetaan klikkaamalla "Generate".
-.bib-tiedoston luonti-ikkunan voi sulkea milloin tahansa klikkaamalla "Close".
+BibTeX-tiedoston luonti-ikkunan voi sulkea milloin tahansa klikkaamalla "Close".
 
 ##### Viitteiden haku avainsanalla
-Perusnäkymässä on vasemmassa yläkulmassa kenttä "Filter by keyword". Käyttäjän syöttäessä kenttään jonkin sanan ja 
-klikkatessa sitten "Filter", ohjelma etsii viitteitä joissa sana esiintyy jossakin viitteen kentässä ja 
-muuttaa näkymää siten, että listassa ovat vain nämä viitteet.
+Perusnäkymässä on vasemmassa yläkulmassa kenttä "Filter by keyword". Käyttäjän syöttäessä kenttään jonkin sanan
+ja ohjelma näyttää viitteet joissa sana esiintyy jossakin viitteen kentässä.
 Jos avainsanalla ei löydy yhtään viitettä, ohjelma antaa tyhjän näkymän. 
-Jos taas Käyttäjä haluaa takaisin kaikkien viitteiden listaan, voi "Filter by keyword"-kentän jättää tyhjäksi ja klikata
-"Filter"-painiketta, jolloin kaikki viitteet taas näytetään.
+Jos taas Käyttäjä haluaa takaisin kaikkien viitteiden listaan, voi "Filter by keyword"-kentän jättää tyhjäksi,
+jolloin kaikki viitteet taas näytetään.
   
