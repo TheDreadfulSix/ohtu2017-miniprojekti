@@ -34,8 +34,10 @@ import miniprojekti.main.App;
 public class GUI {
 
     private Scene scene;
-    private GridPane pane;
+    private VBox layout;
+    private ScrollPane sp;
     private AlertGenerator alertG;
+    ObservableList<Reference> oList;
 
     public GUI() {
         setScene();
@@ -46,9 +48,11 @@ public class GUI {
      * Sets a new scene.
      */
     public void setScene() {
-        VBox layout = new VBox();
+        layout = new VBox();
         layout.getStyleClass().add("referenceView");
-        ScrollPane sp = new ScrollPane(createVPane());
+        
+        sp = new ScrollPane(createVPane());
+        
         sp.setFitToWidth(true);
         sp.setFitToHeight(true);
         
@@ -62,6 +66,15 @@ public class GUI {
         
         sp.requestFocus();
         App.setScene(scene);
+    }
+    
+    public void refreshReferenceList() {
+        layout.getChildren().remove(sp);
+        sp = new ScrollPane(createVPane());
+        
+        sp.setFitToWidth(true);
+        sp.setFitToHeight(true);
+        layout.getChildren().add(sp);
     }
 
     /**
@@ -78,7 +91,7 @@ public class GUI {
         referenceView.setSpacing(8);
         referenceView.getStyleClass().add("referenceView");
         
-        ObservableList<Reference> oList = FXCollections.observableArrayList(App.getLogic().getList());
+        oList = FXCollections.observableArrayList(App.getLogic().getList());
 
         Text title = new Text("References");
         title.setStyle("-fx-fill: linear-gradient(from 0% 0% to 200% 100%, repeat, #55AABB 0%, #AA0000 50%);-fx-font-size:30px;");
