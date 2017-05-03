@@ -38,7 +38,7 @@ viitteen oikealla puolella. Ohjelma varmistaa poiston kysyen "Are you sure?", jo
 Näkymässä listattua viitettä voi muokata klikkaamalla listassa olevan viitteen oikeassa laidassa sijaitsevaa "Edit" painiketta. 
 Uusi "Edit reference" -ikkuna avautuu ja valittua viitettä voi muokata muuttamalla haluamiensa kenttien sisältöä tai täyttämällä
 uusia. Joidenkin kenttien sisältöä ei voi muuttaa ja ne näkyvät harmaina. 
-Tietojen syöttämisen jälkeen "Edit" painiketta painamalla muokkaukset tallentuvat, ellei kenttien täytössä ole puutteita.
+Tietojen syöttämisen jälkeen "Save changes" painiketta painamalla muokkaukset tallentuvat, ellei kenttien täytössä ole puutteita.
 "Edit reference" -ikkunan voi sulkea milloin tahansa klikkaamalla "Close". 
 
 ##### BibTeX-tiedoston luominen tallennetuista viitteistä
