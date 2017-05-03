@@ -95,7 +95,7 @@ public class EditReference {
         tags.getStyleClass().add("header");
         GridPane.setConstraints(tags, 0, y);
 
-        TextField tagwords = new TextField(ref.getTags());
+        TextField tagwords = new TextField(ref.getTags().replace(',', ' '));
         GridPane.setConstraints(tagwords, 1, y++);
 
         Label taginfo = new Label("Tags are keywords separated by whitespace.");
@@ -120,10 +120,10 @@ public class EditReference {
                     App.getGUI().setScene();
                 }
             }
-            validator.getAlertGenerator().alert("Confirmation", "Reference has been saved.");
-            App.getGUI().setScene();
-            window.close();
-            App.getGUI().setScene();
+            //validator.getAlertGenerator().alert("Confirmation", "Reference has been saved.");
+//            App.getGUI().setScene();
+//            window.close();
+//            App.getGUI().setScene();
         });
 
         layout.getChildren().addAll(source, setSource, close, edit, optional, required, citkey, citation, tags, tagwords, taginfo);
