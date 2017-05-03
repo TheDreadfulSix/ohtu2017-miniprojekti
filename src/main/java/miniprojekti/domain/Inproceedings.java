@@ -29,6 +29,7 @@ public class Inproceedings extends Reference {
     
     public Inproceedings(String citationKey, Collection<Field> fields, String tags) {
         this(citationKey, createFieldMap(fields));
+        tags = "";
         this.setTags(tags);
     }
     
