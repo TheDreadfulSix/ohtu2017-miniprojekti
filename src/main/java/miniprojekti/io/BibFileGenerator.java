@@ -45,12 +45,12 @@ public class BibFileGenerator {
             File file = newFile(path, name);
             Files.write(contents, file, Charsets.UTF_8);
             return true;
-        } catch (IOException e) {
+        } catch (Exception e) {
             return false;
         }
     }
     
-    private File newFile(String path, String name) {
+    private File newFile(String path, String name) throws Exception {
         name = name.replace(".bib", "");
         
         File file = new File(path + name + ".bib");
