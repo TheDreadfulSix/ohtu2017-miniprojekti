@@ -113,27 +113,4 @@ public class ReferenceDAO extends BaseDAO {
         }
         return (Reference) reference;
     }
-
-    public List<Reference> getFilteredReferences(String word) {
-        //first word to lowercase, then the first letter capitalized,
-        // this ONLY works for the Class column, because it is the only one with the values
-        //capitalized.
-        word.toLowerCase();
-        String capitalized = word.substring(0, 1).toUpperCase() + word.substring(1);
-        List<Reference> references = new ArrayList<>();
-        try {
-            String sql = "SELECT * FROM references WHERE Class LIKE '%" + capitalized + "%'";
-            initializeQuery(sql);
-            implementQuery();
-            while (results.next()) {
-                Reference ref = returnReference();
-                references.add(ref);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ReferenceDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            close();
-        }
-        return references;
-    }
 }
