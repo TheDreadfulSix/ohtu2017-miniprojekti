@@ -39,11 +39,10 @@ public class BibFileGenerator {
      * @see miniprojekti.domain.Reference
      */
     public boolean createFile(String path, String name, Collection<Reference> references) {
-        File file = newFile(path, name);
-        
         String contents = formatter.generateContents(references);
         
         try {
+            File file = newFile(path, name);
             Files.write(contents, file, Charsets.UTF_8);
             return true;
         } catch (IOException e) {
