@@ -110,7 +110,7 @@ public class GUI {
             deleteButton.setOnAction(e -> {
                 if(alertG.alertWithChoice("Confirm deletion", "Are you sure?")) {
                     App.getLogic().delete(ref);
-                    setScene();
+                    refreshReferenceList();
                 }
             });
 
