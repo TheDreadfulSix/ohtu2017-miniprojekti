@@ -23,7 +23,6 @@ public class Article extends Reference {
     
     public Article(String citationKey, Collection<Field> fields, String tags) {
         this(citationKey, createFieldMap(fields));
-        tags = "";
         this.setTags(tags);
     }
     
