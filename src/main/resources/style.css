@@ -21,7 +21,26 @@
     -fx-background-insets: 0, 0 0 1 1 ;
 }
 
+.menuBar {
+    -fx-background-color: linear-gradient(from 0% 0% to 200% 100%, white 0%, #EEEEEE 50%);
+}
+
 .filterBar {
-    -fx-background-color: #ECECEC ;
+    -fx-background-color: linear-gradient(from 0% 0% to 200% 100%, white 0%, #EEEEEE 50%);
+    -fx-border-style: solid;
+    -fx-padding: 5px;
+    -fx-border-width: 2; 
+    -fx-border-color: #555555 transparent #555555 transparent;
+}
+
+.referenceView {
+    -fx-background-color: linear-gradient(from 0% 0% to 200% 100%, #EEEEEE 0%, white 50%);
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.referenceItem {
+    -fx-background-color: linear-gradient(from 0% 0% to 200% 100%, white 0%, #EEEEEE 50%);
+    -fx-effect: dropshadow(gaussian, #444444, 10, 0, 0, 0);
 }
 
