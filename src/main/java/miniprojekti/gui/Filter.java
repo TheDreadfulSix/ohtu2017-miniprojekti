@@ -41,18 +41,23 @@ public class Filter {
 
         TextField filterInput = new TextField();
         filterPane.add(filterInput, 2, 0);
-
-        Button filterButton = new Button("Filter");
-        filterPane.add(filterButton, 3, 0);
-        filterButton.setOnAction(e -> {
-            if (!filterInput.getText().equals("")) {
-                //Filter with filterInput buttons String.
-                App.getLogic().filter(filterInput.getText());
-                App.getGUI().setScene();
-            } else {
-                // Filter references so that all the references are shown.
+        
+        filterInput.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.equals("")) {
                 App.getLogic().emptyFilter();
-                App.getGUI().setScene();
+                //Filter with filterInput buttons String. Filtering happens in referenceDAO(when it gets merged).
+                //TODO Make the Map for database here if possible. :D Did not do that. Fix it maybe?
+                App.getLogic().filter(newValue);
+                //App.getGUI().setScene();
+                App.getGUI().refreshReferenceList();
+
+            } else {
+                App.getLogic().emptyFilter();
+                App.getLogic().filter(newValue);
+                // Filter references so that all the references are shown.
+                
+                //App.getGUI().setScene();
+                App.getGUI().refreshReferenceList();
             }
         });
 
