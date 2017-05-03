@@ -75,7 +75,7 @@ public abstract class Reference {
     
     public void setTags(String tagInput) {
         tags = "";
-        if (!tags.isEmpty() && !tagInput.isEmpty()) tags += ",";
+        if (tagInput == null) return;
         tags += tagInput.replace(' ', ',');
     }
     
