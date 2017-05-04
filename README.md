@@ -56,4 +56,9 @@ ja ohjelma näyttää viitteet joissa sana esiintyy jossakin viitteen kentässä
 Jos avainsanalla ei löydy yhtään viitettä, ohjelma antaa tyhjän näkymän. 
 Jos taas Käyttäjä haluaa takaisin kaikkien viitteiden listaan, voi "Filter by keyword"-kentän jättää tyhjäksi,
 jolloin kaikki viitteet taas näytetään.
+
+##### "Tagien" eli avainsanojen lisääminen viitteeseen
+Sekä "Create reference"- , että "Edit reference" -ikkunoissa on kaikkien viitteen attribuuttikenttien jälkeen kenttä nimeltä "Tags"
+johon voi syöttää avainsanoja viitteen löytämistä helpottamaan. Avainsanat tulee erottaa kentässä välilyönnillä eivätkä ne saa
+sisältää muita merkkejä kuin kirjaimia tai numeroita.
   
