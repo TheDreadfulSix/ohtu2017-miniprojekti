@@ -1,4 +1,4 @@
-package miniprojekti.gui;
+package miniprojekti.logic;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -11,6 +11,7 @@ import java.util.Set;
 import miniprojekti.domain.Article;
 import miniprojekti.domain.Field;
 import miniprojekti.domain.FieldName;
+import miniprojekti.domain.Inproceedings;
 import miniprojekti.domain.Reference;
 import miniprojekti.logic.Logic;
 import org.junit.After;
@@ -24,6 +25,13 @@ public class Stepdefs {
     Set<Field> fields;
     String citationKey;
     Logic logic;
+    
+    @BeforeClass
+    public void cleanFilesBefore() {
+        this.logic.getAllReferences().forEach((reference1) -> {
+            this.logic.delete(reference1);
+        });
+    }
 
     @Given("^user chooses to edit reference that exists$")
     public void user_chooses_to_edit_reference_that_exists() throws Throwable {
@@ -63,11 +71,48 @@ public class Stepdefs {
         } else {
             assertTrue(false);
         }
-        this.logic.delete(ref);
+        emptyList();
+    }
+    
+    @Given("^user has added multiple references$")
+    public void user_has_added_multiple_references() throws Throwable {
+        this.logic = new Logic();
+        this.logic.referenceDAO.useTestDatabase(true);
+        this.citationKey = "test_key";
+        
+        fields = new HashSet<>();
+        fields.add(new Field(FieldName.AUTHOR, "Anthony Smith"));
+        fields.add(new Field(FieldName.JOURNAL, "Computer Science Education Super Edition!"));
+        fields.add(new Field(FieldName.TITLE, "Learning: Java"));
+        fields.add(new Field(FieldName.YEAR, "0002"));
+        fields.add(new Field(FieldName.VOLUME, "13"));
+        fields.add(new Field(FieldName.PAGES, "137-172"));
+        
+        ref = new Article(this.citationKey, this.fields);
+        this.logic.add(ref);
+        
+        HashSet<Field> fields2 = new HashSet<>();
+        fields2.add(new Field(FieldName.AUTHOR, "Anthony Robins and Janet Rountree and Nathan Rountree"));
+        fields2.add(new Field(FieldName.BOOKTITLE, "Computer Science Education"));
+        fields2.add(new Field(FieldName.TITLE, "Learning and teaching programming: A review and discussion"));
+        fields2.add(new Field(FieldName.YEAR, "20003"));
+        ref = new Inproceedings("anotherKey", fields2, "tag1 tag2");
+        this.logic.add(ref);
     }
 
-    @BeforeClass
-    public void cleanFilesBefore() {
+    @When("^user filters references with a keyword$")
+    public void user_filters_references_with_a_keyword() throws Throwable {
+        this.logic.filter("Super");
+    }
+
+    @Then("^logic return only filtered list$")
+    public void logic_return_only_filtered_list() throws Throwable {
+        assertEquals(this.logic.getList().size(), 1);
+        emptyList();
+    }
+    
+    public void emptyList() {
+        this.logic.emptyFilter();
         this.logic.getAllReferences().forEach((reference1) -> {
             this.logic.delete(reference1);
         });

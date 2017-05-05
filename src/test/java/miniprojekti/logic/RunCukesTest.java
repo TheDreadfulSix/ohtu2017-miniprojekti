@@ -1,4 +1,4 @@
-package miniprojekti.gui;
+package miniprojekti.logic;
 
 import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
