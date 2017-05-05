@@ -17,7 +17,8 @@ import java.util.logging.Logger;
  */
 public abstract class BaseDAO {
 
-    public static boolean test = false;
+    public static boolean test = false; //public for tests
+    public static boolean guiTests = false;
     
     protected Connection conn;
     protected PreparedStatement statement;
@@ -43,7 +44,8 @@ public abstract class BaseDAO {
     /**
      * Method for setting the DAO to use test database.
      */
-    protected void useTestDatabase() {
+    public void useTestDatabase(Boolean GuiTests) {
+        guiTests = GuiTests;
         test = true;
     }
 
@@ -68,7 +70,7 @@ public abstract class BaseDAO {
      */
     private Connection connectToTestDatabase() {
         try {
-            return DBManager.getTestConnection();
+            return DBManager.getTestConnection(guiTests);
         } catch (SQLException ex) {
             Logger.getLogger(BaseDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

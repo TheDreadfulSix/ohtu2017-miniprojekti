@@ -50,23 +50,29 @@ public class DBManager {
      * Create new database connection. We'll want to create every time so that the test database is flushed and initialized
      * every time new connection to it is called.
      *
+     * @param forGuiTests to tell if it is for GUI tests.
      * @return Connection to the database
      *
      * @throws java.sql.SQLException
      */
-    public static Connection getTestConnection() throws SQLException {
+    public static Connection getTestConnection(Boolean forGuiTests) throws SQLException {
             try {
                 manager = new DBManager();
-                initializeTestDatabase();
+                initializeTestDatabase(forGuiTests);
             } catch (Exception ex) {
                 Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, "Problem creating H2 database connection", ex);
             }
         return ds.getConnection();
     }
 
-    private static void initializeTestDatabase() {
-        ds.setURL("jdbc:h2:~/referencedatabase/data/test;" +
+    private static void initializeTestDatabase(Boolean forGuiTests) {
+        if (forGuiTests) {
+            ds.setURL("jdbc:h2:~/referencedatabase/data/guiTest;" +
+                "INIT=RUNSCRIPT FROM 'classpath:create.sql'");
+        } else {
+            ds.setURL("jdbc:h2:~/referencedatabase/data/test;" +
                 "INIT=RUNSCRIPT FROM 'classpath:create.sql'\\;RUNSCRIPT FROM 'classpath:initializeTest.sql'");
+        }
         ds.setUser("sa");
         ds.setPassword("");
     }

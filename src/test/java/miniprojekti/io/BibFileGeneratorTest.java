@@ -5,12 +5,11 @@ import com.google.common.io.Files;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import miniprojekti.domain.*;
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -35,6 +34,7 @@ public class BibFileGeneratorTest {
                             "  YEAR = {20003}\n"+
                             "}";
     String path = "src" + File.separator + "test" + File.separator +"resources" + File.separator;
+    
     @Before
     public void setUp() throws IOException {
         formatter = mock(BibFileFormatter.class);
@@ -113,10 +113,13 @@ public class BibFileGeneratorTest {
         }
     }
     
-    @After
-    public void cleanFiles() {
-        Arrays.stream(new File(path).listFiles(
-                (File file) -> file.getName().endsWith(".bib"))
-        ).forEach(File::delete);
+    @AfterClass
+    public static void cleanfiles() {
+        File folder = new File("src" + File.separator + "test" + File.separator +"resources" + File.separator);
+        for (File fileEntry : folder.listFiles()) {
+            if (fileEntry.isFile() && fileEntry.getName().contains(".bib")) {
+                fileEntry.delete();
+            }
+        }
     }
 }

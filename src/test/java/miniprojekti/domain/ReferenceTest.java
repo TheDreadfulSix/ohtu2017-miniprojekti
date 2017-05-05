@@ -54,7 +54,6 @@ public class ReferenceTest {
         // Invalid field
         fields.add(new Field(FieldName.EDITION, "5"));
         
-        System.out.println("HELLLOOOO");
         expected.expect(IllegalArgumentException.class);
         expected.expectMessage("Invalid optional fields");
         
@@ -106,7 +105,4 @@ public class ReferenceTest {
         book = new Book(citationKey, fields);
     }
     
-    @Test
-    public void bookWithNoAlternativeFieldsThrows() {
-    }
 }

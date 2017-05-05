@@ -21,36 +21,27 @@ public class DBManagerTest {
             fail();
         }
     }
-    
-    //Test for Exception. Needs some sort of powerMockito or something else.
-    /*@Test
-    public void getConnectionConnectsToDatabaseWithException() {
-        try {
-            DBManager.getConnection();
-            DBManager.getConnection().close();
-        } catch (SQLException e) {
-            assertTrue(true);
-        }
-    }*/
 
     @Test
     public void getTestConnectionConnectsToTestDatabaseWithoutExceptions() {
         try {
-            DBManager.getTestConnection();
+            DBManager.getTestConnection(false);
             DBManager.getConnection().close();
         } catch (SQLException e) {
             e.printStackTrace();
             fail();
         }
     }
-    //Test for Exception. Needs some sort of powerMockito or something else.
-    /*@Test
-    public void getConnectionConnectsToTestDatabaseWithException() {
+    
+    @Test
+    public void getTestConnectionConnectsToGuiTestDatabaseWithoutExceptions() {
         try {
-            DBManager.getTestConnection();
+            DBManager.getTestConnection(true);
             DBManager.getConnection().close();
         } catch (SQLException e) {
-            assertTrue(true);
+            e.printStackTrace();
+            fail();
         }
-    }*/
+    }
+    
 }

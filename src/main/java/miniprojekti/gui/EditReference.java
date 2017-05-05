@@ -103,7 +103,7 @@ public class EditReference {
         GridPane.setRowIndex(taginfo, y++);
         GridPane.setColumnSpan(taginfo, 2);
         
-        Button close = new Button("Close");
+        Button close = new Button("Cancel");
         GridPane.setConstraints(close, 0, y);
         close.setOnAction(e -> window.close());
 

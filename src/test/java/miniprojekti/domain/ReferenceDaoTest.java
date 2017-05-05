@@ -5,8 +5,6 @@
  */
 package miniprojekti.domain;
 
-import java.io.File;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,7 +27,7 @@ public class ReferenceDaoTest {
     @Before
     public void setUp() {
         referenceDAO = new ReferenceDAO();
-        referenceDAO.useTestDatabase();
+        referenceDAO.useTestDatabase(false);
     }
 
     @Test
@@ -66,12 +64,8 @@ public class ReferenceDaoTest {
     
     @After
     public void cleanFiles() {
-        try {
-            Arrays.stream(new File("~" + File.pathSeparator + "referencedatabase"+ File.pathSeparator +"data").listFiles(
-                (File file) -> file.getName().endsWith(".db"))
-            ).forEach(File::delete);
-        } catch (Exception e) {
+        for (Reference reference1 : referenceDAO.getReferences()) {
+            referenceDAO.deleteReference(reference1);
         }
-        
     }
 }
