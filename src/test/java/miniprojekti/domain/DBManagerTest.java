@@ -16,8 +16,8 @@ public class DBManagerTest {
     @Test
     public void getConnectionConnectsToDatabaseWithoutExceptions() {
         try {
-            DBManager.getConnection();
-            DBManager.getConnection().close();
+            DBManager.getConnection(DBType.NORMAL);
+            DBManager.getConnection(DBType.NORMAL).close();
         } catch (SQLException e) {
             e.printStackTrace();
             fail();
@@ -29,8 +29,8 @@ public class DBManagerTest {
         File file = new File("~" + File.pathSeparator + "referencedatabase" + File.pathSeparator + "references.mv.db");
         try {
             file.setReadable(false); //"locks" file so that connection gives error.
-            DBManager.getConnection();
-            DBManager.getConnection().close();
+            DBManager.getConnection(DBType.NORMAL);
+            DBManager.getConnection(DBType.NORMAL).close();
         } catch (SQLException e) {
             file.setReadable(true); //release the "lock"
             assertTrue(true);
@@ -40,8 +40,8 @@ public class DBManagerTest {
     @Test
     public void getTestConnectionConnectsToTestDatabaseWithoutExceptions() {
         try {
-            DBManager.getTestConnection(false);
-            DBManager.getConnection().close();
+            DBManager.getConnection(DBType.TEST);
+            DBManager.getConnection(DBType.TEST).close();
         } catch (SQLException e) {
             e.printStackTrace();
             fail();
@@ -52,8 +52,8 @@ public class DBManagerTest {
         File file = new File("~" + File.pathSeparator + "referencedatabase" + File.pathSeparator + "data" + File.pathSeparator + "test.mv.db");
         try {
             file.setReadable(false);
-            DBManager.getTestConnection(false);
-            DBManager.getConnection().close();
+            DBManager.getConnection(DBType.TEST);
+            DBManager.getConnection(DBType.TEST).close();
         } catch (SQLException e) {
             file.setReadable(true);
             assertTrue(true);
@@ -63,8 +63,8 @@ public class DBManagerTest {
     @Test
     public void getTestConnectionConnectsToGuiTestDatabaseWithoutExceptions() {
         try {
-            DBManager.getTestConnection(true);
-            DBManager.getConnection().close();
+            DBManager.getConnection(DBType.GUITEST);
+            DBManager.getConnection(DBType.GUITEST).close();
         } catch (SQLException e) {
             e.printStackTrace();
             fail();
