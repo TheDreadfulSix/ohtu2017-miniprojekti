@@ -20,7 +20,7 @@ public class Logic {
 
     private List<Reference> list; //this will contain all references, at all times.
     private List<Reference> filtered; //this has only ones that have been through filter.
-    private ReferenceDAO referenceDAO;
+    public ReferenceDAO referenceDAO; //public for tests.
     private String filter = "";
 
     public Logic() {
@@ -32,23 +32,18 @@ public class Logic {
     public void add(Reference ref) {
         list.add(ref);
         referenceDAO.insertReference(ref);
-        //TODO Might have to call filter here to get new refreshed list.
-        //now only empties the filter and lists all references.
         App.getLogic().emptyFilter();
     }
 
     public void delete(Reference ref) {
         list.remove(ref);
         referenceDAO.deleteReference(ref);
-        //TODO Might have to call filter here to get new refreshed list.
-        //now only empties the filter and lists all references.
         App.getLogic().emptyFilter();
     }
     
-
     public void edit(Reference ref) {
-        delete(ref);
-        add(ref);
+        this.delete(ref);
+        this.add(ref);
     }
 
     public void filter(String word) {

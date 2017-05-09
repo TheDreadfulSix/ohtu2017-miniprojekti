@@ -28,7 +28,6 @@
 .filterBar {
     -fx-background-color: linear-gradient(from 0% 0% to 200% 100%, white 0%, #EEEEEE 50%);
     -fx-border-style: solid;
-    -fx-padding: 5px;
     -fx-border-width: 2; 
     -fx-border-color: #555555 transparent #555555 transparent;
 }

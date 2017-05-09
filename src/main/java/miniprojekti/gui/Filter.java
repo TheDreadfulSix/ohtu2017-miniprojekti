@@ -6,7 +6,7 @@
 package miniprojekti.gui;
 
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
@@ -23,23 +23,18 @@ public class Filter {
         GridPane filterPane = new GridPane();
         ColumnConstraints col1 = new ColumnConstraints();
         col1.setPercentWidth(60);//this needs to be edited if more content(text, elements etc.) are added to this pane.
-        col1.fillWidthProperty();
-        ColumnConstraints col2 = new ColumnConstraints();
-        col2.fillWidthProperty();
-        ColumnConstraints col3 = new ColumnConstraints();
-        col3.fillWidthProperty();
-        ColumnConstraints col4 = new ColumnConstraints();
-        col4.fillWidthProperty();
-        filterPane.getColumnConstraints().addAll(col1, col2, col3, col4);
+        filterPane.getColumnConstraints().addAll(col1);
 
         Label dummyLabel = new Label("");
-        dummyLabel.setPadding(new Insets(10, 10, 20, 10));
+        dummyLabel.setPadding(new Insets(10, 10, 10, 10));
         filterPane.add(dummyLabel, 0, 0);
 
         Label filterLabel = new Label("Filter by keyword: ");
+        filterLabel.setMinWidth(Control.USE_PREF_SIZE);
         filterPane.add(filterLabel, 1, 0);
 
         TextField filterInput = new TextField();
+        filterInput.setMinWidth(Control.USE_PREF_SIZE);
         filterPane.add(filterInput, 2, 0);
         
         filterInput.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -61,7 +56,6 @@ public class Filter {
             }
         });
 
-        filterPane.getStyleClass().add("filterBar");
         return filterPane;
     }
 }

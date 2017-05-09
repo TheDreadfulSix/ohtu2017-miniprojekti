@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  */
 public abstract class BaseDAO {
 
-    public static boolean test = false;
+    public DBType dbt = DBType.NORMAL;
     
     protected Connection conn;
     protected PreparedStatement statement;
@@ -32,19 +32,19 @@ public abstract class BaseDAO {
         conn = null;
         statement = null;
         results = null;
-        if (test) {
-            conn = connectToTestDatabase();
-        } else {
-            conn = connectToDatabase();
-        }
+        conn = connectToDatabase();
         statement = prepareQuery(sql);
     }
 
     /**
      * Method for setting the DAO to use test database.
      */
-    protected void useTestDatabase() {
-        test = true;
+    public void useTestDatabase(Boolean GuiTests) {
+        if (GuiTests) {
+            dbt = DBType.GUITEST;
+        } else {
+            dbt = DBType.TEST;
+        }
     }
 
     /**
@@ -54,21 +54,7 @@ public abstract class BaseDAO {
      */
     protected Connection connectToDatabase() {
         try {
-            return DBManager.getConnection();
-        } catch (SQLException ex) {
-            Logger.getLogger(BaseDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
-
-    /**
-     * Establish connection to the test database via DB Manager.
-     *
-     * @return Connection to test database
-     */
-    private Connection connectToTestDatabase() {
-        try {
-            return DBManager.getTestConnection();
+            return DBManager.getConnection(this.dbt);
         } catch (SQLException ex) {
             Logger.getLogger(BaseDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

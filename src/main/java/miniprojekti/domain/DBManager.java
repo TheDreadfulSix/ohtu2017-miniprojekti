@@ -35,38 +35,39 @@ public class DBManager {
      * 
      * @throws java.sql.SQLException
      */
-    public static Connection getConnection() throws SQLException {
-        if (manager == null) {
-            try {
-                manager = new DBManager();
-            } catch (Exception ex) {
-                Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, "Problem creating H2 database connection", ex);
+    public static Connection getConnection(DBType dbt) throws SQLException {
+        try {
+            if (null == dbt) {
+            } else switch (dbt) {
+                case NORMAL:
+                    if (manager == null) {
+                        manager = new DBManager();
+                    }
+                    break;
+                case GUITEST:
+                    manager = new DBManager();
+                    initializeTestDatabase(true);
+                    break;
+                case TEST:
+                    manager = new DBManager();
+                    initializeTestDatabase(false);
+                    break;
             }
+
+        } catch (Exception ex) {
+            Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, "Problem creating H2 database connection", ex);
         }
         return ds.getConnection();
     }
 
-    /**
-     * Create new database connection. We'll want to create every time so that the test database is flushed and initialized
-     * every time new connection to it is called.
-     *
-     * @return Connection to the database
-     *
-     * @throws java.sql.SQLException
-     */
-    public static Connection getTestConnection() throws SQLException {
-            try {
-                manager = new DBManager();
-                initializeTestDatabase();
-            } catch (Exception ex) {
-                Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, "Problem creating H2 database connection", ex);
-            }
-        return ds.getConnection();
-    }
-
-    private static void initializeTestDatabase() {
-        ds.setURL("jdbc:h2:~/referencedatabase/data/test;" +
+    private static void initializeTestDatabase(Boolean forGuiTests) {
+        if (forGuiTests) {
+            ds.setURL("jdbc:h2:~/referencedatabase/data/guiTest;" +
+                "INIT=RUNSCRIPT FROM 'classpath:create.sql'");
+        } else {
+            ds.setURL("jdbc:h2:~/referencedatabase/data/test;" +
                 "INIT=RUNSCRIPT FROM 'classpath:create.sql'\\;RUNSCRIPT FROM 'classpath:initializeTest.sql'");
+        }
         ds.setUser("sa");
         ds.setPassword("");
     }

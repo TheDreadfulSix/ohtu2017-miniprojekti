@@ -27,6 +27,8 @@ public class App {
         return logic;
     }
 
+    /* Methods currently not in use.
+    
     public static void setGUI(GUI newGui) {
         gui = newGui;
     }
@@ -37,7 +39,7 @@ public class App {
 
     public static void close() {
         Main.close();
-    }
+    }*/
 
     public static void setScene(Scene newScene) {
         Main.setScene(newScene);

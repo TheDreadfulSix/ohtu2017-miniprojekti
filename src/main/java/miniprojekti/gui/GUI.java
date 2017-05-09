@@ -5,20 +5,16 @@
  */
 package miniprojekti.gui;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import miniprojekti.domain.Reference;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Control;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Separator;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -58,9 +54,14 @@ public class GUI {
         
         MenuBar menuBar = new MenuBar();
         menuBar.getMenus().add(new ActionMenu());
-        menuBar.getStyleClass().add("menuBar");
+        menuBar.setMinWidth(Control.USE_PREF_SIZE);
         
-        layout.getChildren().addAll(menuBar, Filter.createFilterBar(), sp);
+        GridPane topBar = new GridPane();
+        topBar.add(menuBar, 0, 0);
+        topBar.add(Filter.createFilterBar(), 1, 0);
+        topBar.getStyleClass().add("filterBar");
+        
+        layout.getChildren().addAll(topBar, sp);
         scene = new Scene(layout, 1240, 720);
         scene.getStylesheets().add("style.css");
         

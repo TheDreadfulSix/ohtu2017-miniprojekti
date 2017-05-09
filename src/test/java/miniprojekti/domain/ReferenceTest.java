@@ -54,7 +54,6 @@ public class ReferenceTest {
         // Invalid field
         fields.add(new Field(FieldName.EDITION, "5"));
         
-        System.out.println("HELLLOOOO");
         expected.expect(IllegalArgumentException.class);
         expected.expectMessage("Invalid optional fields");
         
@@ -107,6 +106,38 @@ public class ReferenceTest {
     }
     
     @Test
-    public void bookWithNoAlternativeFieldsThrows() {
+    public void initializationForInproceedingsWorksWithTags() {
+        fields = new HashSet<>();
+        
+        fields.add(new Field(FieldName.AUTHOR, "Anthony Robins and Janet Rountree and Nathan Rountree"));
+        fields.add(new Field(FieldName.BOOKTITLE, "Computer Science Education"));
+        fields.add(new Field(FieldName.TITLE, "Learning and teaching programming: A review and discussion"));
+        fields.add(new Field(FieldName.YEAR, "20003"));
+        Reference ref = new Inproceedings(citationKey, fields, "tag1 tag2");
     }
+    
+    @Test
+    public void testToStringOutput() {
+        fields = new HashSet<>();
+        
+        fields.add(new Field(FieldName.AUTHOR, "Anthony Robins and Janet Rountree and Nathan Rountree"));
+        fields.add(new Field(FieldName.BOOKTITLE, "Computer Science Education"));
+        fields.add(new Field(FieldName.TITLE, "Learning and teaching programming: A review and discussion"));
+        fields.add(new Field(FieldName.YEAR, "20003"));
+        Reference ref = new Inproceedings(citationKey, fields, "tag1 tag2");
+        assertTrue(ref.toString().contains("\n\tINPROCEEDINGS\t\t\t\tCitation Key: testkey"));
+        assertTrue(ref.toString().contains("\n\t\t\tYEAR: 20003"));
+        assertTrue(ref.toString().contains("\n\t\t\tBOOKTITLE: Computer Science Education"));
+        assertTrue(ref.toString().contains("\n\t\t\tAUTHOR: Anthony Robins and Janet Rountree and Nathan Rountree"));
+        assertTrue(ref.toString().contains("\n\t\t\tTITLE: Learning and teaching programming: A review and discussion"));
+        assertTrue(ref.toString().contains("\n\t\t\tTags: tag1, tag2\n"));
+    }
+    
+    @Test
+    public void constructorsCauseNoErrors() {
+        Reference temp = new Article();
+        temp = new Book();
+        temp = new Inproceedings();
+    }
+    
 }
