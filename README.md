@@ -9,6 +9,8 @@ Hyvä linkki remote/branch komentoihin: https://git-scm.com/book/en/v2/Git-Basic
 
 UML(karkea prototype vaiheen versio):https://yuml.me/42d7b4a0 (edit linkki:http://yuml.me/edit/42d7b4a0)
 
+[Raportti](https://docs.google.com/document/d/1P0FGusCrL7LmG9ktupC4H3TnG8W_0slGIfYpjto4sbc/edit?usp=sharing)
+
 ### Käyttöohjeet:
 
 ##### Ohjelman avaaminen
